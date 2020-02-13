@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/cli": "^7.0.0",
     "@babel/core": "7.8.4",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
@@ -11,12 +12,11 @@
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
     "axios": "^0.19.2",
-    "babel-cli": "^6.26.0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "10.0.3",
-    "babel-jest": "^24.9.0",
+    "babel-jest": "^23.4.2",
     "babel-loader": "8.0.6",
     "babel-plugin-named-asset-import": "^0.3.6",
-    "babel-preset-react-app": "^9.1.1",
     "body-parser": "^1.19.0",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
@@ -65,13 +65,14 @@
     "terser-webpack-plugin": "2.3.4",
     "ts-pnp": "1.1.5",
     "url-loader": "2.3.0",
-    "webpack": "4.41.5",
+    "webpack": "^4.41.6",
     "webpack-dev-server": "3.10.1",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "webpack": "webpack",
+    "start": "export NODE_ENV=development&&export BABEL_ENV=development&&npm run webpack && nodemon --exec babel-node -- bin/www",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },
@@ -144,5 +145,13 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "babel-preset-react-app": "^9.1.1",
+    "webpack-cli": "^3.3.11"
   }
 }
