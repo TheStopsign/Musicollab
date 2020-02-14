@@ -71,8 +71,8 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
-    "webpack": "webpack",
-    "start": "export NODE_ENV=development&&export BABEL_ENV=development&&npm run webpack && nodemon --exec babel-node -- bin/www",
+    "webpack": "webpack --mode development",
+    "start": "SET NODE_ENV=development&&SET BABEL_ENV=development&&npm run webpack&& nodemon --exec babel-node -- bin/www",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },

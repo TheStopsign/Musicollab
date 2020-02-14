@@ -11,10 +11,6 @@
 # production
 /build
 
-package.json
-package-lock.json
-/client/bundle.js
-
 # misc
 .DS_Store
 .env.local
