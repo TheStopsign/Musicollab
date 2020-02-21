@@ -118,37 +118,37 @@ class SignUp extends Component {
 class Home extends Component {
   render() {
     return(
-      <div class="App">
+      <div className="App">
 
-        <div class="container-fluid">
+        <div className="container-fluid">
 
-          <div class="row align-items-center head">
-            <div class="col-3 title">
+          <div className="row align-items-center head">
+            <div className="col-3 title">
               <p>Musicollab</p>
             </div>
 
-            <div class="col-6">
+            <div className="col-6">
               <input type="text" id="search" name="search" placeholder="Search"/>
             </div>
 
-            <div class="col-1">
-              <img class="float-right pic" src="profile.jpg" alt="prfile picture"/>
+            <div className="col-1">
+              <img className="float-right pic" src="profile.jpg" alt="prfile picture"/>
             </div>
 
-            <div class = "col-2 user">
+            <div className = "col-2 user">
               <ul>
                 <li>Username</li>
-                <li class="userID">User ID</li>
+                <li className="userID">User ID</li>
               </ul>
             </div>
           </div>
         </div>
 
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-2 filters">
-              <div class="row">
-                <div class="col">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-2 filters">
+              <div className="row">
+                <div className="col">
                   <h1> sort by: </h1>
                   <ul>
                     <li> Name </li>
@@ -160,8 +160,8 @@ class Home extends Component {
                   </ul>
                 </div>
               </div>
-              <div class="row">
-                <div class="col">
+              <div className="row">
+                <div className="col">
                   <h1> filters: </h1>
                   <ul>
                     <li> Owned by me </li>
@@ -175,8 +175,8 @@ class Home extends Component {
               </div>
             </div>
 
-            <div class="col-10 projects">
-              <div class="create">
+            <div className="col-10 projects">
+              <div className="create">
 
               </div>
 
@@ -185,10 +185,10 @@ class Home extends Component {
         </div>
 
 
-        <div class="container-fluid">
+        <div className="container-fluid">
 
-          <div class="row footer">
-            <div class="col">
+          <div className="row footer">
+            <div className="col">
               Musicollab is a 2020 SD&D project
             </div>
           </div>
