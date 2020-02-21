@@ -17,7 +17,7 @@ class App extends Component {
                 <Route exact path='/' component={Login} />
                 <Route path="/sign-in" component={Login} />
                 <Route path="/sign-up" component={SignUp} />
-                <Route path="/submit" component={Submit} />
+                <Route path="/home" component={Home} />
               </Switch>
             </div>
           </div>
@@ -61,7 +61,7 @@ class Login extends Component {
               </div>
             </div>
             <div className="SubmitButton">
-              <Link to="/submit" className="btn btn-primary btn-block">Submit</Link>
+              <Link to="/home" className="btn btn-primary btn-block">Submit</Link>
             </div>
             <p className="forgot-password">
                 Forgot <a href="#">password?</a>
@@ -115,21 +115,90 @@ class SignUp extends Component {
   }
 }
 
-class Submit extends Component {
+class Home extends Component {
   render() {
     return(
-      <div>
-        <div className="container">
-          <div className="Name">
-            <h1>Musicollab</h1>
-          </div>
-          <div className="search">
-          <div className="form-group">
-            <input type="text" className="form-control" placeholder="Search" />
-          </div>
+      <div class="App">
+
+        <div class="container-fluid">
+
+          <div class="row align-items-center head">
+            <div class="col-3 title">
+              <p>Musicollab</p>
+            </div>
+
+            <div class="col-6">
+              <input type="text" id="search" name="search" placeholder="Search"/>
+            </div>
+
+            <div class="col-1">
+              <img class="float-right pic" src="profile.jpg" alt="prfile picture"/>
+            </div>
+
+            <div class = "col-2 user">
+              <ul>
+                <li>Username</li>
+                <li class="userID">User ID</li>
+              </ul>
+            </div>
           </div>
         </div>
+
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-2 filters">
+              <div class="row">
+                <div class="col">
+                  <h1> sort by: </h1>
+                  <ul>
+                    <li> Name </li>
+                    <li> Owner </li>
+                    <li> Last Modified </li>
+                    <li> Size </li>
+                    <li> Share Date </li>
+                    <li> sort 6 </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h1> filters: </h1>
+                  <ul>
+                    <li> Owned by me </li>
+                    <li> Shared with me </li>
+                    <li> Starred </li>
+                    <li> Archived </li>
+                    <li> filter 5 </li>
+                    <li> filter 6 </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-10 projects">
+              <div class="create">
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="container-fluid">
+
+          <div class="row footer">
+            <div class="col">
+              Musicollab is a 2020 SD&D project
+            </div>
+          </div>
+        </div>
+
+
+
       </div>
+
+
     );
   }
 }

@@ -1,5 +1,15 @@
 .App {
-  
+  /* font-size: calc(10px + 2vmin); */
+  color: white;
+}
+
+.title {
+  font-size:3em;
+  padding-left: .5em;
+}
+
+.create {
+  height:35em;
 }
 
 .container{
@@ -11,13 +21,6 @@
   text-align: left;
   color: #4adbe8;
   font: italic bold 30px Georgia;
-}
-
-.search{
-  margin: 0;
-  margin-top: 0;
-  padding-left: 350px;
-  max-width: 700px;
 }
 
 .box{
@@ -33,4 +36,52 @@
 
 .SubmitButton{
   max-width: 300px;
+}
+
+
+
+.head {
+  background-color: #204da1;
+}
+
+.pic{
+  border: 3px solid #DCDCDC;
+}
+
+.filters {
+  background-color: #355185;
+  border: 5px solid #DCDCDC;
+}
+
+.projects{
+  background-color: #DCDCDC;
+  border: 5px solid #DCDCDC;
+
+}
+
+.back {
+  background-color: #DCDCDC;
+}
+
+
+.footer{
+  background-color: #41506c;
+  border: 1em solid #DCDCDC;
+}
+
+.userID {
+  font-size:.8em;
+  color: #DCDCDC;
+}
+
+input{
+  width: 90%;
+  color: black;
+  font-size: 1.75em;
+}
+
+.user ul{
+  margin-top: .5em;
+  font-size: 1.25em;
+  list-style-type: none;
 }
