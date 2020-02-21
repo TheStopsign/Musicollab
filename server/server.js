@@ -18,3 +18,8 @@ app.listen(port, function () {
 });
 
 module.exports = app;
+
+app.get("/*", function(req, res) {
+    res.render(__dirname + "/../client/index.ejs");
+});
+
