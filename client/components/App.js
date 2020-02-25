@@ -18,6 +18,7 @@ class App extends Component {
                 <Route path="/sign-in" component={Login} />
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/home" component={Home} />
+                <Route path="/profile" component={Profile} />
               </Switch>
             </div>
           </div>
@@ -137,7 +138,7 @@ class Home extends Component {
 
             <div className = "col-2 user">
               <ul>
-                <li>Username</li>
+                <li><a href = "profile"> username</a></li>
                 <li className="userID">User ID</li>
               </ul>
             </div>
@@ -193,13 +194,49 @@ class Home extends Component {
             </div>
           </div>
         </div>
-
-
-
       </div>
 
 
     );
   }
 }
+
+class Profile extends Component{
+ render() {
+    return(
+      <div className="App">
+        <div className="container-fluid">
+
+            <div className="row align-items-center head">
+              <div className="col-3 title">
+                <p>Musicollab</p>
+              </div>
+
+              <div className="col-6">
+                <input type="text" id="search" name="search" placeholder="Search"/>
+              </div>
+
+              <div className="col-1">
+                <img className="float-right pic" src="profile.jpg" alt="prfile picture"/>
+              </div>
+
+              <div className = "col-2 user">
+                <ul>
+                  <li><a href = "profile"> username</a></li>
+                  <li className="userID">User ID</li>
+                </ul>
+              </div>
+            </div>
+        </div>
+
+        <div className="row footer">
+          <div className="col">
+            Musicollab is a 2020 SD&D project
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
 export default App;
