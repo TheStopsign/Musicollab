@@ -213,7 +213,6 @@ class Profile extends Component{
               </div>
 
               <div className="col-6">
-                <input type="text" id="search" name="search" placeholder="Search"/>
               </div>
 
               <div className="col-1">
