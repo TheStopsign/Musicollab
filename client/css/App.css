@@ -1,6 +1,8 @@
 .App {
   /* font-size: calc(10px + 2vmin); */
   color: white;
+  min-height:100vh;
+  position:relative;
 }
 
 .title {
@@ -63,8 +65,10 @@
   background-color: #DCDCDC;
 }
 
-
 .footer{
+  position:absolute;
+  bottom:0;
+  width:100%;
   background-color: #41506c;
   border: 1em solid #DCDCDC;
 }
