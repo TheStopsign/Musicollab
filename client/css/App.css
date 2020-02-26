@@ -5,67 +5,79 @@
   position:relative;
 }
 
-.title {
+/*Login.css, SignUp.css*/
+.Login .LoginBox label,h3, .SignUp label,h3{
+  color: #204da1; 
+}
+
+.Login .SignInTitle, .SignUp .SignUpTitle{
+  margin-bottom: 20px;
+}
+
+.Login .SubmitButton, .SignUp .SubmitButton{
+  margin-top: 5px;
+  max-width: 150px;
+}
+
+/*Login.css*/
+.Login .colLoginBox{
+  width: 350px;
+  margin-top: 100px;
+}
+
+.Login .Email{
+  margin-bottom: 20px;
+}
+
+.Login .checkbox label{
+  margin-top: 6px;
+  font-size: 15px;
+}
+
+.Login .GoogleLogin{
+  margin-top: 100px;
+}
+
+/*SignUp.css*/
+.SignUp .colSignUpBox{
+  width: 250px;
+  margin-top: 100px;
+}
+
+.SignUp .FirstName{
+  margin-bottom: 10px;
+}
+
+.SignUp .LastName{
+  margin-bottom: 10px;
+}
+
+.SignUp .Email{
+  margin-bottom: 10px;
+}
+
+/*Home.css, Profile.css, Login.css, SignUp.css*/
+.Home .head, .Profile .head, .Login .head, .SignUp .head{
+  background-color: #204da1;
+}
+
+.Home .title, .Profile .title, .Login .title, .SignUp .title{
   font-size:3em;
   padding-left: .5em;
 }
 
-.create {
-  height:35em;
+.Home .searchBar input, .Profile .searchBar input{
+  width: 90%;
+  color: black;
+  font-size: 1.75em;
 }
 
-.container{
-  display: inline-block;
-  margin:0;
-}
-.Name{
-  margin-top: 30px;
-  text-align: left;
-  color: #4adbe8;
-  font: italic bold 30px Georgia;
-}
-
-.box{
-  padding-right: 30px;
-}
-
-.form{
-  margin: 0 auto;
-  text-align:center;
-  width: 300px;
-  margin-top: 70px;
-}
-
-.SubmitButton{
-  max-width: 300px;
-}
-
-
-
-.head {
-  background-color: #204da1;
-}
-
-.pic{
+/*Home.css, Profile.css*/
+.Home .pic, .Profile .pic{
   border: 3px solid #DCDCDC;
 }
 
-.filters {
-  background-color: #355185;
-  border: 5px solid #DCDCDC;
-}
-
-.projects{
-  background-color: #DCDCDC;
-  border: 5px solid #DCDCDC;
-
-}
-
-.back {
-  background-color: #DCDCDC;
-}
-
-.footer{
+.Home .footer, .Profile .footer{
   position:absolute;
   bottom:0;
   width:100%;
@@ -73,19 +85,29 @@
   border: 1em solid #DCDCDC;
 }
 
-.userID {
+.Home .userID, .Profile .userID{
   font-size:.8em;
   color: #DCDCDC;
 }
 
-input{
-  width: 90%;
-  color: black;
-  font-size: 1.75em;
-}
-
-.user ul{
+.Home .user ul, .Profile .user ul{
   margin-top: .5em;
   font-size: 1.25em;
   list-style-type: none;
+}
+
+/*Home.css*/
+.Home .filters{
+  background-color: #355185;
+  border: 5px solid #DCDCDC;
+}
+
+.Home .projects{
+  background-color: #DCDCDC;
+  border: 5px solid #DCDCDC;
+
+}
+
+.Home .create{
+  height:30em;
 }
