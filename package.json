@@ -73,7 +73,7 @@
   "scripts": {
     "webpack": "webpack --watch --mode development",
     "nodemon": "nodemon --exec babel-node -- server/server.js",
-    "start": "SET NODE_ENV=development&&SET BABEL_ENV=development&&npm-run-all -p nodemon webpack",
+    "start": "set NODE_ENV=development&&set BABEL_ENV=development&&npm-run-all -p nodemon webpack",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },

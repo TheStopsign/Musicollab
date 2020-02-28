@@ -1,8 +1,8 @@
 //client/components/App.js
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import '../css/App.css';
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 class App extends Component {
   render() {
@@ -31,66 +31,66 @@ class Login extends Component {
     return (
       <div className="Login">
 
-        <div class="container-fluid">
+        {/* <div class="container-fluid"> */}
 
-          <div className="row align-items-center head">
-            <div className="col-3 title">
-              <p>Musicollab</p>
-            </div>
+        <div className="row align-items-center head section">
+          <div className="col-3 title">
+            <h1>Musicollab</h1>
           </div>
+        </div>
 
-          <div className="d-flex justify-content-center LoginBox">
-            <div className="row rowLoginBox">
-              <div className="col align-items-center colLoginBox">
+        <div className="d-flex justify-content-center LoginBox">
+          <div className="row rowLoginBox">
+            <div className="col align-items-center colLoginBox">
 
-                <div className="row justify-content-center">
-                  <div className="col-xlg SignInTitle">
-                    <h3>Sign In</h3>
-                  </div>
-                </div>
-
-                <div className="row Email">
-                  <input type="email" className="form-control" placeholder="Enter email" />
-                </div>
-
-                <div className="row Password">
-                  <input type="password" className="form-control" placeholder="Enter password" />
-                </div>
-
-                <div className="row">
-                  <div className="col-xlg checkbox">
-
-                    <div className="custom-control custom-checkbox">
-                      <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                      <label className="custom-control-label" htmlFor="customCheck1">Remember Me</label>
-                    </div>
-
-                  </div>
-
-                  <div className="col flex-grow"></div>
-
-                  <div className="col-xlg SignupButton">
-                    <Link to="/sign-up" className="btn btn-link btn-sm">Sign up</Link>
-                  </div>
-                </div>
-
-                <div className="row justify-content-center">
-                  <div className="SubmitButton">
-                    <Link to="/home" className="btn btn-primary btn-block">Submit</Link>
-                  </div>
+              <div className="row justify-content-center">
+                <div className="col-xlg SignInTitle">
+                  <h3>Sign In</h3>
                 </div>
               </div>
 
-              <div className="col">
-                <div className="row justify-content-center GoogleLogin">
-                  <h3> Google </h3>
+              <div className="row Email">
+                <input type="email" className="form-control concave" placeholder="Enter email" />
+              </div>
+
+              <div className="row Password">
+                <input type="password" className="form-control concave" placeholder="Enter password" />
+              </div>
+
+              <div className="row">
+                <div className="col-xlg checkbox">
+
+                  <div className="custom-control custom-checkbox">
+                    <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                    <label className="custom-control-label" htmlFor="customCheck1">Remember Me</label>
+                  </div>
+
+                </div>
+
+                <div className="col flex-grow"></div>
+
+                <div className="col-xlg SignupButton">
+                  <Link to="/sign-up" className="btn btn-link btn-sm raised">Sign up</Link>
+                </div>
+              </div>
+
+              <div className="row justify-content-center">
+                <div className="SubmitButton">
+                  <Link to="/home" className="btn btn-primary btn-block">Submit</Link>
                 </div>
               </div>
             </div>
-
+            <div className="col-0 v-line"></div>
+            <div className="col">
+              <div className="row justify-content-center GoogleLogin">
+                <h3> Google </h3>
+              </div>
+            </div>
           </div>
 
         </div>
+
+        {/* </div> */}
 
       </div>
     );
@@ -126,7 +126,7 @@ class SignUp extends Component {
                 <div className="row LastName">
                   <input type="text" className="form-control" placeholder="Last name" />
                 </div>
-                
+
                 <div className="row Email">
                   <input type="email" className="form-control" placeholder="Enter email" />
                 </div>
@@ -158,36 +158,33 @@ class SignUp extends Component {
 
 class Home extends Component {
   render() {
-    return(
+    return (
       <div className="Home">
 
-        <div className="container-fluid">
+        <div className="row align-items-center head section">
+          <div className="col-3 title">
+            <p>Musicollab</p>
+          </div>
 
-          <div className="row align-items-center head">
-            <div className="col-3 title">
-              <p>Musicollab</p>
-            </div>
+          <div className="col-6 searchBar">
+            <input type="text" id="search" name="search" placeholder="Search" />
+          </div>
 
-            <div className="col-6 searchBar">
-              <input type="text" id="search" name="search" placeholder="Search"/>
-            </div>
+          <div className="col-1">
+            <img className="float-right pic" src="profile.jpg" alt="prfile picture" />
+          </div>
 
-            <div className="col-1">
-              <img className="float-right pic" src="profile.jpg" alt="prfile picture"/>
-            </div>
-
-            <div className = "col-2 user">
-              <ul>
-                <li><a href = "/profile"> Username</a></li>
-                <li className="userID">User ID</li>
-              </ul>
-            </div>
+          <div className="col-2 user">
+            <ul>
+              <li><a href="/profile"> Username</a></li>
+              <li className="userID">User ID</li>
+            </ul>
           </div>
         </div>
 
         <div className="container-fluid">
           <div className="row">
-            <div className="col-2 filters">
+            <div className="col-2 filters section">
               <div className="row">
                 <div className="col">
                   <h1> sort by: </h1>
@@ -216,11 +213,10 @@ class Home extends Component {
               </div>
             </div>
 
-            <div className="col-10 projects">
+            <div className="col projects section">
               <div className="create">
 
               </div>
-
             </div>
           </div>
         </div>
@@ -228,10 +224,8 @@ class Home extends Component {
 
         <div className="container-fluid">
 
-          <div className="row footer">
-            <div className="col">
-              Musicollab is a 2020 SD&D project
-            </div>
+          <div className="row footer section">
+            Musicollab is a 2020 SD&D project
           </div>
         </div>
       </div>
@@ -239,9 +233,9 @@ class Home extends Component {
   }
 }
 
-class Profile extends Component{
- render() {
-    return(
+class Profile extends Component {
+  render() {
+    return (
       <div className="Profile">
         <div className="container-fluid">
 
@@ -251,16 +245,16 @@ class Profile extends Component{
             </div>
 
             <div className="col-6 searchBar">
-              <input type="text" id="search" name="search" placeholder="Search"/>
+              <input type="text" id="search" name="search" placeholder="Search" />
             </div>
 
             <div className="col-1">
-              <img className="float-right pic" src="profile.jpg" alt="prfile picture"/>
+              <img className="float-right pic" src="profile.jpg" alt="prfile picture" />
             </div>
 
-            <div className = "col-2 user">
+            <div className="col-2 user">
               <ul>
-                <li><a href = "profile"> Username</a></li>
+                <li><a href="profile"> Username</a></li>
                 <li className="userID">User ID</li>
               </ul>
             </div>
