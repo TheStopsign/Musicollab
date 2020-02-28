@@ -12,8 +12,10 @@ class Login extends Component {
 				{/* <div class="container-fluid"> */}
 
 				<div className="row align-items-center head section">
-					<div className="col-3 title">
-						<h1>Musicollab</h1>
+					<div className="col-3">
+						<a href="/home" class="svg">
+							<object type="image/svg+xml" data="../logo.svg" height="80"></object>
+						</a>
 					</div>
 				</div>
 

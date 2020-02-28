@@ -11,9 +11,11 @@ class SignUp extends Component {
 
 				<div className="container-fluid">
 
-					<div className="row align-items-center head">
-						<div className="col-3 title">
-							<p>Musicollab</p>
+					<div className="row align-items-center section">
+						<div className="col-3">
+							<a href="/home" class="svg">
+								<object type="image/svg+xml" data="../logo.svg" height="80"></object>
+							</a>
 						</div>
 					</div>
 					<div className="d-flex justify-content-center SignUpBox">
