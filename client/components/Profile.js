@@ -12,7 +12,7 @@ class Profile extends Component {
 
 					<div className="row align-items-center head section">
 						<div className="col-3">
-							<a href="/home" class="svg">
+							<a href="/home" className="svg">
 								<object type="image/svg+xml" data="../logo.svg" height="80"></object>
 							</a>
 						</div>
