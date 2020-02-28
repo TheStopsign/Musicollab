@@ -10,7 +10,7 @@ class Profile extends Component {
 			<div className="Profile">
 				<div className="container-fluid">
 
-					<div className="row align-items-center head">
+					<div className="row align-items-center head section">
 						<div className="col-3 title">
 							<p>Musicollab</p>
 						</div>
