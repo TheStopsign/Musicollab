@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import '../css/App.css';
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Home extends Component {
 	render() {
