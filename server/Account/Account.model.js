@@ -5,8 +5,8 @@ let Permission = require('../Permission/Permission.model');
 
 //Define collection and schema for Account
 let Account = new Schema({
-	first_name: String,
-	last_name: String,
+	firstName: String,
+	lastName: String,
 	email: String,
 	password: String,
 	isOnline: {
