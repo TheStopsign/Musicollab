@@ -4,6 +4,7 @@ var express = require('express');
 var router = require('./routes/routes.js')
 var path = require('path');
 var app = express();
+const connectDB = require('./database/db')
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../client'));
@@ -11,6 +12,9 @@ app.set('views', path.join(__dirname, '../client'));
 
 app.use(express.static(path.join(__dirname, '../client')));
 app.use('/', router);
+
+// Connect database
+connectDB();
 
 var port = 8000
 app.listen(port, function () {

@@ -92,3 +92,4 @@ yarn-debug.log*
 yarn-error.log*
 
 /client/bundle.js
+/server/database/config.js
