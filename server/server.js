@@ -1,11 +1,14 @@
 //server/server.js
 
 var express = require('express');
-var router = require('./routes/routes.js')
+var router = require('./routes/routes')
 var path = require('path');
 var app = express();
 const connectDB = require('./database/db')
 const seedDB = require('./database/seed')
+var accountRouter = require('./Account/Account.route')
+var permissionRouter = require('./Permission/Permission.route')
+var documentRouter = require('./Document/Document.route')
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../client'));
@@ -13,6 +16,8 @@ app.set('views', path.join(__dirname, '../client'));
 
 app.use(express.static(path.join(__dirname, '../client')));
 app.use('/', router);
+app.use('/accounts', accountRouter);
+
 
 // Connect database
 seedDB();

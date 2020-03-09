@@ -33,54 +33,81 @@ const seedDB = async () => {
 	});
 }
 
+var d1 = new Document({
+	musicData: ""
+})
+
+var p1 = new Permission({
+	document: d1,
+	isOwner: true,
+	canEdit: true,
+	canView: true
+})
+
+var p2 = new Permission({
+	document: d1,
+	isOwner: false,
+	canEdit: true,
+	canView: true
+})
+
+var p3 = new Permission({
+	document: d1,
+	isOwner: false,
+	canEdit: false,
+	canView: true
+})
+
+var p4 = new Permission({
+	document: d1,
+	isOwner: false,
+	canEdit: false,
+	canView: false
+})
+
 var a1 = new Account({
 	firstName: "UserA",
 	lastName: "LastName",
 	email: "usera@gmail.com",
-	password: "passa"
+	password: "passa",
+	permissions: [
+		p1
+	]
 })
 
 var a2 = new Account({
 	firstName: "UserB",
 	lastName: "LastName",
 	email: "userb@gmail.com",
-	password: "passb"
+	password: "passb",
+	permissions: [
+		p2
+	]
 })
 
 var a3 = new Account({
 	firstName: "UserC",
 	lastName: "LastName",
 	email: "userc@gmail.com",
-	password: "passc"
+	password: "passc",
+	permissions: [
+		p3
+	]
 })
 
-var p1 = new Permission({
-
+var a4 = new Account({
+	firstName: "UserD",
+	lastName: "LastName",
+	email: "userd@gmail.com",
+	password: "passd",
+	permissions: [
+		p4
+	]
 })
 
-var p2 = new Permission({
-
-})
-
-var p3 = new Permission({
-
-})
-
-var d1 = new Document({
-
-})
-
-var d2 = new Document({
-
-})
-
-var d3 = new Document({
-
-})
-
-var testAccounts = [a1, a2, a3]
-var testPermissions = [p1, p2, p3]
-var testDocuments = [d1, d2, d3]
+var testAccounts = [a1, a2, a3, a4]
+var testPermissions = [p1, p2, p3, p4]
+var testDocuments = [d1]
 
 const data = [
 	{

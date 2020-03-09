@@ -14,10 +14,8 @@ let Account = new Schema({
 		default: false
 	},
 	permissions: [{
-		permission: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Permission'
-		}
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Permission'
 	}]
 });
 
