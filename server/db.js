@@ -4,10 +4,11 @@ const db = config.MONGO_URI;
 
 const connectDB = async () => {
   try {
+    mongoose.Promise = global.Promise;
     await mongoose.connect(
       db,
       {
-        useNewUrlParser: true, useUnifiedTopology: true
+        useNewUrlParser: true
       }
     );
 

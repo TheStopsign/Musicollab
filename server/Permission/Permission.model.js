@@ -23,4 +23,4 @@ let Permission = new Schema({
 	}
 });
 
-module.exports = mongoose.model('Permission', Permission);
+module.exports = mongoose.model('Permission', Permission, 'Permission');

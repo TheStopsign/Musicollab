@@ -1,8 +1,10 @@
 //client/components/Home.js
 
 import React, { Component } from 'react';
-import '../css/App.css';
-import { Link } from "react-router-dom";
+import '../App.css';
+import axios from 'axios'
+import { Link } from 'react-router-dom'
+import Logo from '../logo.svg';
 
 class Home extends Component {
 	render() {
@@ -12,7 +14,7 @@ class Home extends Component {
 				<div className="row align-items-center head section">
 					<div className="col-3">
 						<a href="/home" className="svg">
-							<object type="image/svg+xml" data="../logo.svg" height="80"></object>
+							<img src={Logo} alt="Logo" height="80px" />
 						</a>
 					</div>
 
@@ -65,7 +67,11 @@ class Home extends Component {
 
 						<div className="col projects section">
 							<div className="create">
-
+								{this.state.documents.map(function (document) {
+									return <div className="documentCard" key={document._id}>
+										<Link to={"/documents/" + document._id}><h4>{document.title}</h4></Link>
+									</div>
+								})}
 							</div>
 						</div>
 					</div>
@@ -76,10 +82,28 @@ class Home extends Component {
 
 					<div className="row footer section">
 						Musicollab is a 2020 SD&D project
-          </div>
+          			</div>
 				</div>
-			</div>
+			</div >
 		);
+	}
+	constructor(props) {
+		super(props);
+		this.state = {
+			documents: []
+		}
+	}
+	componentDidMount() {
+		this.getDocuments();
+	}
+	async getDocuments() {
+		axios.get('http://localhost:8000/documents')
+			.then(res => {
+				this.setState({ documents: res.data });
+			})
+			.catch(function (error) {
+				console.log(error);
+			})
 	}
 }
 

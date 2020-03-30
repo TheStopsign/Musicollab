@@ -19,4 +19,4 @@ let Account = new Schema({
 	}]
 });
 
-module.exports = mongoose.model('Account', Account);
+module.exports = mongoose.model('Account', Account, 'Account');

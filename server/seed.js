@@ -1,8 +1,8 @@
 var seeder = require('mongoose-seed');
 var config = require('./config');
-let Account = require('../Account/Account.model');
-let Permission = require('../Permission/Permission.model');
-let Document = require('../Document/Document.model');
+let Account = require('./Account/Account.model');
+let Permission = require('./Permission/Permission.model');
+let Document = require('./Document/Document.model');
 
 // Connect to MongoDB via Mongoose
 const seedDB = async () => {
@@ -10,9 +10,9 @@ const seedDB = async () => {
 
 		// Load Mongoose models
 		seeder.loadModels([
-			'./server/Account/Account.model.js',
-			'./server/Permission/Permission.model.js',
-			'./server/Document/Document.model.js'
+			'./Account/Account.model.js',
+			'./Permission/Permission.model.js',
+			'./Document/Document.model.js'
 		]);
 
 		// Clear specified collections
@@ -34,6 +34,17 @@ const seedDB = async () => {
 }
 
 var d1 = new Document({
+	title: "Test Doc 1",
+	musicData: ""
+})
+
+var d2 = new Document({
+	title: "Test Doc 2",
+	musicData: ""
+})
+
+var d3 = new Document({
+	title: "Test Doc 3",
 	musicData: ""
 })
 
@@ -107,7 +118,7 @@ var a4 = new Account({
 
 var testAccounts = [a1, a2, a3, a4]
 var testPermissions = [p1, p2, p3, p4]
-var testDocuments = [d1]
+var testDocuments = [d1, d2, d3]
 
 const data = [
 	{

@@ -1,35 +1,39 @@
 //server/server.js
 
-var express = require('express');
-var router = require('./routes/routes')
-var path = require('path');
+let express = require('express');
+let cors = require('cors');
+let bodyParser = require('body-parser');
+
+const path = require('path');
+const PORT = 8000; //server port
+
+const connectDB = require('./db')
+const seedDB = require('./seed')
+
+const router = require('./routes')
+const accountRouter = require('./Account/Account.route')
+const documentRouter = require('./Document/Document.route')
+
+seedDB(); // Populate database with test data
+
 var app = express();
-const connectDB = require('./database/db')
-const seedDB = require('./database/seed')
-var accountRouter = require('./Account/Account.route')
-var permissionRouter = require('./Permission/Permission.route')
-var documentRouter = require('./Document/Document.route')
-
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../client'));
-
-
-app.use(express.static(path.join(__dirname, '../client')));
-app.use('/', router);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
+app.use(cors());
+// app.use('/', router);
 app.use('/accounts', accountRouter);
+app.use('/documents', documentRouter);
 
+app.set('view engine', 'html');
+app.set('views', path.join(__dirname, '../public'));
+app.engine('html', require('ejs').renderFile);
 
-// Connect database
-seedDB();
-connectDB();
+// app.get('/hey', (req, res) => res.send('ho!'))
 
-var port = 8000
-app.listen(port, function () {
-	console.log('running at localhost: ' + port);
+app.listen(PORT, function () {
+	console.log('running at localhost: ' + PORT);
 });
 
 module.exports = app;
-
-app.get("/*", function (req, res) {
-	res.render(__dirname + "/../client/index.ejs");
-});
