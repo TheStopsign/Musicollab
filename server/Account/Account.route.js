@@ -5,11 +5,11 @@ const config = require('../config');
 
 let Account = mongoose.model('Account')
 
-accountRouter.route('/').get(function (req, res) {
+accountRouter.route('/').get(function (req, res) { //when the server receives a request to the /accounts route
 	console.log("/accounts GET received")
 	mongoose.connect(config.MONGO_URI)
 		.then(() => {
-			Account.find(function (err, accounts) {
+			Account.find(function (err, accounts) { //query for all accounts
 				if (err) {
 					console.log("ERROR!");
 					res.status(400).json(err);
@@ -23,12 +23,12 @@ accountRouter.route('/').get(function (req, res) {
 		})
 });
 
-accountRouter.route('/:id').get(function (req, res) {
+accountRouter.route('/:id').get(function (req, res) { //when the server receives a request to the /accounts/ACCOUNT_OBJ_ID route
 	let id = req.params.id;
 	console.log("/accounts/" + id + "GET received")
 	mongoose.connect(config.MONGO_URI)
 		.then(() => {
-			Account.findById(id, function (err, user) {
+			Account.findById(id, function (err, user) { //query for specific account
 				if (err) {
 					res.status(400).json(err);
 				} else {

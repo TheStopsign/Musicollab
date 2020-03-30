@@ -1,4 +1,4 @@
-//client/components/Login.js
+//src/components/Login.js
 
 import React, { Component } from 'react';
 import '../App.css';

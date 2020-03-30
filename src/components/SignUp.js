@@ -1,4 +1,4 @@
-//client/components/SignUp.js
+//src/components/SignUp.js
 
 import React, { Component } from 'react';
 import '../App.css';

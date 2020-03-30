@@ -1,4 +1,4 @@
-//client/components/Accounts.js
+//src/components/Accounts.js
 
 import React, { Component } from 'react';
 import '../App.css';
@@ -20,16 +20,16 @@ class EditAccount extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			account: {}
+			account: {} //holds the specified account
 		}
 	}
 	componentDidMount() {
-		this.getAccount();
+		this.getAccount(); //when page loads, first get the account info
 	}
 	async getAccount() {
-		axios.get(`http://localhost:8000/accounts/` + this.props.match.params.id)
+		axios.get(`http://localhost:8000/accounts/` + this.props.match.params.id) //make a GET request to the server
 			.then(res => {
-				this.setState({ account: res.data });
+				this.setState({ account: res.data }); //handle the result payload
 			})
 			.catch(function (error) {
 				console.log(error);

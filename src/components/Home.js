@@ -1,4 +1,4 @@
-//client/components/Home.js
+//src/components/Home.js
 
 import React, { Component } from 'react';
 import '../App.css';
@@ -90,16 +90,16 @@ class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			documents: []
+			documents: [] //holds all the documents data
 		}
 	}
 	componentDidMount() {
-		this.getDocuments();
+		this.getDocuments(); //first, get the document data
 	}
 	async getDocuments() {
-		axios.get('http://localhost:8000/documents')
+		axios.get('http://localhost:8000/documents') //make GET request to server
 			.then(res => {
-				this.setState({ documents: res.data });
+				this.setState({ documents: res.data }); //handle response payload
 			})
 			.catch(function (error) {
 				console.log(error);

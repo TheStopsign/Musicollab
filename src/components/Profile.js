@@ -1,4 +1,4 @@
-//client/components/Profile.js
+//src/components/Profile.js
 
 import React, { Component } from 'react';
 import '../App.css';

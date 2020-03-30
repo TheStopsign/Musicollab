@@ -1,11 +1,11 @@
-//client/components/Accounts.js
+//src/components/Accounts.js
 
 import React, { Component } from 'react';
 import '../App.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
-class Accounts extends Component {
+class Accounts extends Component { //lists all accounts
 	render() {
 		return (
 			<div className="accountsList">
@@ -22,7 +22,7 @@ class Accounts extends Component {
 					</thead>
 					<tbody>
 						{
-							this.state.accounts.map(function (account) {
+							this.state.accounts.map(function (account) {//display all accounts and their info, with button to an edit account page
 								return <tr key={account._id}>
 									<td>{account.firstName}</td>
 									<td>{account.lastName}</td>
@@ -41,16 +41,16 @@ class Accounts extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			accounts: []
+			accounts: [] //holds all accounts
 		}
 	}
 	componentDidMount() {
-		this.getAccounts();
+		this.getAccounts(); //when the page loads, first get all the accounts info
 	}
 	async getAccounts() {
-		axios.get('http://localhost:8000/accounts')
+		axios.get('http://localhost:8000/accounts') //make a GET request to the server
 			.then(res => {
-				this.setState({ accounts: res.data });
+				this.setState({ accounts: res.data }); //handle the result payload
 			})
 			.catch(function (error) {
 				console.log(error);

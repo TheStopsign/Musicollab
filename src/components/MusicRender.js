@@ -16,20 +16,20 @@ export default class MusicRender extends Component {
 	}
 	componentDidMount() {
 		const svgContainer = document.createElement('div');
-		const { notes } = this.props;
+		const { notes } = this.props; //set the music notes from props
 		var vf = new VF.Factory({
 			renderer: { elementId: svgContainer, width: 500, height: 200 }
 		});
-		var score = vf.EasyScore();
-		var system = vf.System();
+		var score = vf.EasyScore(); // initial setup
+		var system = vf.System(); //initial setup
 
 		system.addStave({
 			voices: [
-				score.voice(score.notes(notes)),
+				score.voice(score.notes(notes)), //set the music notes
 			]
-		}).addClef('treble').addTimeSignature('4/4');
+		}).addClef('treble').addTimeSignature('4/4'); //set misc music sheet info
 
-		vf.draw();
-		this.refs.outer.appendChild(svgContainer);
+		vf.draw(); //finalize
+		this.refs.outer.appendChild(svgContainer); //attach the result to the rendering object
 	}
 }

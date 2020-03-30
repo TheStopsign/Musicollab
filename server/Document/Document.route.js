@@ -5,11 +5,11 @@ const config = require('../config');
 
 let Document = mongoose.model('Document')
 
-documentRouter.route('/').get(function (req, res) {
+documentRouter.route('/').get(function (req, res) { //when the server receives a request to the /documents route
 	console.log("/documents GET received")
 	mongoose.connect(config.MONGO_URI)
 		.then(() => {
-			Document.find(function (err, accounts) {
+			Document.find(function (err, accounts) { //query for all documents
 				if (err) {
 					console.log("ERROR!");
 					res.status(400).json(err);
@@ -23,12 +23,12 @@ documentRouter.route('/').get(function (req, res) {
 		})
 });
 
-documentRouter.route('/:id').get(function (req, res) {
+documentRouter.route('/:id').get(function (req, res) { //when the server receives a request to the /documents/DOC_OBJ_ID route
 	let id = req.params.id;
 	console.log("/documents/" + id + "GET received")
 	mongoose.connect(config.MONGO_URI)
 		.then(() => {
-			Document.findById(id, function (err, user) {
+			Document.findById(id, function (err, user) { //query for specific document
 				if (err) {
 					res.status(400).json(err);
 				} else {
