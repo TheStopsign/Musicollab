@@ -7,24 +7,16 @@ import MusicRender from './MusicRender';
 
 class EditDocument extends Component {
 	render() {
-		// syntax: C#5/q means a C-sharp in the 5th octave as a quarter note
-		// All notes require octave
-		// Notes must match time signature (4/4 only for now)
-		// the quarter note is applied to subsequent notes
-		const notes = 'C#5/q, B4, A4/8, B4, C#5, D4';
-
 		return (
 			<div className="document">
-				<div className="account">
-					<h1>Edit Document</h1>
-					<input id="titlefield" placeholder={this.state.document.title} />
-					<button>Update</button>
-				</div>
+				<h1>Edit Document</h1>
+				<input id="titlefield" placeholder={this.state.document.title} />
+				<button>Update</button>
 
-				<div className="musicsheet">							
-					<div id={'sheet'}>
-					<MusicRender notes={notes} />
-					</div>				
+				<div className="musicsheet">
+					<div id='sheet'>
+						<MusicRender notes={this.state.notes} />
+					</div>
 				</div>
 			</div>
 		);
@@ -32,6 +24,11 @@ class EditDocument extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			// syntax: C#5/q means a C-sharp in the 5th octave as a quarter note
+			// All notes require octave
+			// Notes must match time signature (4/4 only for now)
+			// the quarter note is applied to subsequent notes
+			notes: 'C#5/q, B4, A4/8, B4, C#5, D4',
 			document: {}
 		}
 	}
