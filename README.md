@@ -3,6 +3,21 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 # Musicollab
 Free, open source, real-time collaborative music composition website.
 
+# Requirements
+Please update the server/config.js file to use the correct database URI
+Please install a CORS browser plugin and enable it. Otherwise, localhost->localhost requests will fail.
+
+# Running the project for testing
+To run the project...
+
+FIRST make sure the database is running. Open a new terminal window, navigate to 'musicollab/server' and run 'mongod'
+
+SECOND make sure the server is running. Open a new terminal window, navigate to 'musicollab/server' and run 'nodemon server.js'
+
+THIRD make sure the react client is running. Open a new terminal window, navigate to 'musicollab' and run 'npm start'
+
+#################################################################################################################################################
+
 ## Available Scripts
 
 In the project directory, you can run:
