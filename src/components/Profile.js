@@ -36,9 +36,9 @@ class Profile extends Component {
 
 				</div>
 				<div className="container-fluid">
-					<div className="row footer section">
+					<footer className="footer section">
 							Musicollab is a 2020 SD&D project
-					</div>
+					</footer>
 				</div>
 			</div>
 		);
