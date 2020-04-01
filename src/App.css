@@ -122,7 +122,8 @@ h3 {
 .Home .head,
 .Profile .head,
 .Login .head,
-.SignUp .head {
+.SignUp .head,
+.EditDocument .head{
   background-color: #727272;
   margin-bottom: 0;
 }
@@ -184,4 +185,47 @@ h3 {
   background-color: #727272;
   margin-left: 0px;
   /* border: 5px solid #DCDCDC; */
+}
+
+/* EditDocument.css */
+.EditDocument .document {
+  background-color: #727272;
+  margin-left: 0px;
+}
+
+.EditDocument .inpNotes {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.EditDocument .footer {
+  position: absolute;
+  bottom: 0;
+  background-color: #727272;
+  margin-left: 1%;
+  /* border: 1em solid #DCDCDC; */
+  padding-left: 12px;
+  /* margin-left: 0px; */
+  width: 96%;
+  max-width: 98%
+}
+
+.EditDocument .musicsheet {
+  padding-bottom: 15px;
+}
+
+
+.padding-0{
+    padding-right:0;
+    padding-left:0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.dropdown {
+  padding-top: 5px;
+  padding-left: -30px;
+  padding-right: 0;
 }

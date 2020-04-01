@@ -8,16 +8,88 @@ import MusicRender from './MusicRender';
 class EditDocument extends Component {
 	render() {
 		return (
-			<div className="document">
-				<h1>Edit Document</h1>
-				<input id="titlefield" placeholder={this.state.document.title} />
-				<button>Update</button>
+			<div className="EditDocument">
 
-				<div className="musicsheet">
-					<div id='sheet'>
-						<MusicRender notes={this.state.notes} />
+				<div className="row align-items-center head section">
+					<div className="col-2">
+						CLEFS
+					</div>
+
+					<div className="col-3">
+						<div className="row">
+							<div className="col-8 padding-0">
+								<h4 className="float-right"> Key Signature:&nbsp; </h4>
+							</div>
+
+							<div className="col padding-0">
+								<div className="dropdown">
+									<select>
+										<option value="1">C major</option>
+										<option value="2">G major</option>
+										<option value="3">D major</option>
+
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div className="col-3">
+						<div className="row">
+							<div className="col-6 padding-0">
+								<h4 className="float-right"> Time Signature:&nbsp; </h4>
+							</div>
+
+							<div className="col padding-0">
+								<div className="dropdown">
+									<select>
+										<option value="1">4/4 time</option>
+										<option value="2">3/4 time</option>
+										<option value="3">2/4 time</option>
+
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+
+				<div className="main container-fluid">
+					<div className="row">
+						<div className="col-1 quickbar section">
+							<h4> quickbar </h4>
+						</div>
+
+
+						<div className="col document section">
+							<input class="inpNotes" id="titlefield" placeholder={this.state.document.title} />
+							<button>Update</button>
+
+							<div className="musicsheet">
+								<div id='sheet'>
+									<MusicRender notes={this.state.notes} />
+								</div>
+							</div>
+
+							<div className="musicsheet">
+								<div id='sheet'>
+									<MusicRender notes={this.state.notes} />
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
+
+				<div className="container-fluid">
+					<footer className="footer section">
+							Current Users:
+					</footer>
+				</div>
+
+
 			</div>
 		);
 	}
