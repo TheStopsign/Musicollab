@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import axios from 'axios';
-import MusicRender from './MusicRender';
+import Staff from './Staff';
 
 class EditDocument extends Component {
 	render() {
@@ -15,7 +15,8 @@ class EditDocument extends Component {
 
 				<div className="musicsheet">
 					<div id='sheet'>
-						<MusicRender notes={this.state.notes} />
+						<Staff />
+						<Staff />
 					</div>
 				</div>
 			</div>

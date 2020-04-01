@@ -1,0 +1,27 @@
+.note {
+	z-index: 1;
+	margin-top: -100px;
+	height: 100px;
+	/* outline: solid 1px black; */
+	display: inline-block;
+	margin-right: 45px;
+}
+
+.note:hover {
+	background: darkred;
+}
+
+.vline {
+	width: 100%;
+	height: 87.5px;
+	border-right: solid 4px black;
+}
+
+.circle {
+	margin-top: -12.5px;
+	width: 30px;
+	height: 25px;
+	border-radius: 50%;
+	z-index: 2;
+	background: black;
+}
