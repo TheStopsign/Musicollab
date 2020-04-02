@@ -1,10 +1,68 @@
 .note {
+	position: relative;
 	z-index: 1;
 	margin-top: -100px;
 	height: 100px;
 	/* outline: solid 1px black; */
 	display: inline-block;
 	margin-right: 45px;
+	border-bottom: none;
+}
+
+.note.E {
+	margin-top: -90px;
+}
+
+.note.F {
+	margin-top: -100px;
+}
+
+.note.G {
+	margin-top: -112.5px;
+}
+
+.note.A {
+	margin-top: -124px;
+}
+
+.note.B {
+	margin-top: -137.5px;
+}
+
+.note.C {
+	margin-top: -149px;
+}
+
+.note.D {
+	margin-top: -162.5px;
+}
+
+.flagnote.E {
+	margin-top: -45px;
+}
+
+.flagnote.F {
+	margin-top: -50px;
+}
+
+.flagnote.G {
+	margin-top: -56px;
+}
+
+.flagnote.A {
+	margin-top: -62px;
+}
+
+.flagnote.B {
+	margin-top: -68px;
+}
+
+.flagnote.C {
+	margin-top: -74px;
+}
+
+.flagnote.D {
+	margin-top: -81px;
 }
 
 .note:hover {

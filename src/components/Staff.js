@@ -3,6 +3,12 @@
 import React, { Component } from 'react';
 import '../css/Staff.css';
 import Note from './Note';
+import WholeNote from './WholeNote';
+import HalfNote from './HalfNote';
+import WholeRest from './WholeRest';
+import HalfRest from './HalfRest';
+import EighthNote from './EighthNote';
+import QuarterNote from './QuarterNote';
 
 class Staff extends Component {
 	render() {
@@ -37,10 +43,12 @@ class Staff extends Component {
 		this.getNotes()
 	}
 	getNotes() {
-		this.addNote(new Note)
-		this.addNote(new Note)
-		this.addNote(new Note)
-		this.addNote(new Note)
+		this.addNote(new EighthNote({ note: "B" }))
+		this.addNote(new QuarterNote({ note: "C" }))
+		this.addNote(new HalfNote({ note: "D" }))
+		this.addNote(new WholeNote({ note: "E" }))
+		this.addNote(new WholeRest({ note: "F" }))
+		this.addNote(new HalfRest({ note: "G" }))
 	}
 	addNote(note) {
 		let nextNotes = this.state.notes
