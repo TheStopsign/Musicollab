@@ -17,6 +17,8 @@ class EditDocument extends Component {
 					<div id='sheet'>
 						<Staff />
 						<Staff />
+						<Staff />
+						<Staff />
 					</div>
 				</div>
 			</div>

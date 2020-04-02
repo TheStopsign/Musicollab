@@ -47,13 +47,16 @@ class Staff extends Component {
 		this.addNote(new QuarterNote({ note: "C" }))
 		this.addNote(new HalfNote({ note: "D" }))
 		this.addNote(new WholeNote({ note: "E" }))
-		this.addNote(new WholeRest({ note: "F" }))
+		this.changeNote(2, new EighthNote({ note: "D" }))
 		this.addNote(new HalfRest({ note: "G" }))
 	}
 	addNote(note) {
 		let nextNotes = this.state.notes
 		nextNotes.push(note)
 		this.setState({ notes: nextNotes })
+	}
+	changeNote(i, component) {
+		this.state.notes[i] = component;
 	}
 }
 
