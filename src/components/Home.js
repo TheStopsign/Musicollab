@@ -34,7 +34,7 @@ class Home extends Component {
 					</div>
 				</div>
 
-				<div className="container-fluid">
+				<div className="main container-fluid">
 					<div className="row">
 						<div className="col-2 filters section">
 							<div className="row">
@@ -66,24 +66,23 @@ class Home extends Component {
 						</div>
 
 						<div className="col projects section">
-							<div className="create">
 								{this.state.documents.map(function (document) {
 									return <div className="documentCard" key={document._id}>
 										<Link to={"/documents/" + document._id}><h4>{document.title}</h4></Link>
 									</div>
 								})}
-							</div>
 						</div>
 					</div>
 				</div>
 
-
 				<div className="container-fluid">
-
-					<div className="row footer section">
-						Musicollab is a 2020 SD&D project
-          			</div>
+						<footer className="footer section">
+							Musicollab is a 2020 SD&D project
+	        			</footer>
 				</div>
+
+
+
 			</div >
 		);
 	}

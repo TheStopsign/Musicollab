@@ -1,9 +1,13 @@
-.App {
+.main {
   /* font-size: calc(10px + 2vmin); */
-  top: 0;
-  color: white;
-  min-height: 100vh;
+  /* top: 0; */
+
+  min-height: 100%;
   position: relative;
+}
+
+.root {
+  color: white;
 }
 
 a.svg:after {
@@ -46,6 +50,19 @@ a.svg:after {
   margin-top: 20%;
   margin-left: 10%;
   margin-right: 10%;
+}
+
+.EditDocument .document {
+  height: 700px;
+  overflow-y: hidden;
+}
+
+.EditDocument .quickbar h4 {
+  font-size: 100%;
+}
+
+.EditDocument .users h1 {
+  font-size: 100%;
 }
 
 /*Login.css, SignUp.css*/
@@ -119,7 +136,8 @@ h3 {
 .Home .head,
 .Profile .head,
 .Login .head,
-.SignUp .head {
+.SignUp .head,
+.EditDocument .head {
   background-color: #727272;
   margin-bottom: 0;
 }
@@ -149,12 +167,13 @@ h3 {
 .Profile .footer {
   position: absolute;
   bottom: 0;
-  width: 100%;
   background-color: #727272;
+  margin-left: 1%;
   /* border: 1em solid #DCDCDC; */
   padding-left: 12px;
-  margin-left: 0px;
-  width: 97%;
+  /* margin-left: 0px; */
+  width: 96%;
+  max-width: 98%
 }
 
 .Home .userID,
@@ -182,6 +201,45 @@ h3 {
   /* border: 5px solid #DCDCDC; */
 }
 
-.Home .create {
-  height: 30em;
+/* EditDocument.css */
+.EditDocument .document {
+  background-color: #727272;
+  margin-left: 0px;
+}
+
+.EditDocument .inpNotes {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.EditDocument .footer {
+  position: absolute;
+  bottom: 0;
+  background-color: #727272;
+  margin-left: 1%;
+  /* border: 1em solid #DCDCDC; */
+  padding-left: 12px;
+  /* margin-left: 0px; */
+  width: 96%;
+  max-width: 98%
+}
+
+.EditDocument .musicsheet {
+  padding-bottom: 15px;
+}
+
+
+.padding-0 {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.dropdown {
+  padding-top: 5px;
+  padding-left: -30px;
+  padding-right: 0;
 }

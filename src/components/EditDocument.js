@@ -9,25 +9,131 @@ import EighthNote from './EighthNote';
 class EditDocument extends Component {
 	render() {
 		return (
-			<div className="document">
-				<h1>Edit Document</h1>
-				<div className="musicsheet">
-					<div className='sheet'>
-						<center>
-							<h1 className="doc_title">{this.state.document.title}</h1>
-						</center>
-						{
-							this.state.staffs.map(function (staff) {
-								return staff.render()
-							})
-						}
-						<div className="addStaffBtnContainer">
-							<center>
-								<button id="addStaffBtn" className="btn">+</button>
-							</center>
+			<div className="EditDocument">
+
+				<div className="row align-items-center head section">
+					<div className="col-2">
+						<div className="row">
+							<div className="col-6 padding-0">
+								<h4 className="float-right"> CLEFS:&nbsp; </h4>
+							</div>
+
+							<div className="col padding-0">
+								<div className="dropdown">
+									<select>
+										<option value="1">Treble</option>
+										<option value="2">Bass</option>
+										<option value="3">Alto</option>
+										<option value="4">Tenor</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div className="col-3">
+						<div className="row">
+							<div className="col-7 padding-0">
+								<h4 className="float-right"> Key Signature:&nbsp; </h4>
+							</div>
+
+							<div className="col padding-0">
+								<div className="dropdown">
+									<select>
+										<option value="1">C major</option>
+										<option value="2">G major</option>
+										<option value="3">D major</option>
+
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div className="col-3">
+						<div className="row">
+							<div className="col-8 padding-0">
+								<h4 className="float-right"> Time Signature:&nbsp; </h4>
+							</div>
+
+							<div className="col padding-0">
+								<div className="dropdown">
+									<select>
+										<option value="1">4/4</option>
+										<option value="2">3/4</option>
+										<option value="3">2/4</option>
+
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div className="col-2">
+						<div className="row">
+							<div className="col-3 padding-0">
+								<h4 className="float-right"> Notes:&nbsp; </h4>
+							</div>
+
+							<div className="col padding-0">
+								<div className="dropdown">
+									<select>
+										<option value="1">Whole</option>
+										<option value="2">Half</option>
+										<option value="3">Quarter</option>
+										<option value="4">Eigth</option>
+										<option value="5">Sixteenth</option>
+										<option value="6">Thirty-Second</option>
+									</select>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
+
+				<div className="main container-fluid">
+					<div className="row subMain">
+						<div className="col-1 quickbar section">
+							<h4> quickbar </h4>
+						</div>
+
+
+						<div className="col document section">
+
+							<div className="musicsheet">
+								<div className='sheet'>
+									<center>
+										<h1 className="doc_title">{this.state.document.title}</h1>
+									</center>
+									{
+										this.state.staffs.map(function (staff) {
+											return staff.render()
+										})
+									}
+									<div className="addStaffBtnContainer">
+										<center>
+											<button id="addStaffBtn" className="btn">+</button>
+										</center>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					<div className="row section users">
+						<div className="col">
+							<h1> Owner: </h1>
+						</div>
+						<div className="col">
+							<h1> Current Editors: </h1>
+						</div>
+						<div className="col">
+							<h1> Current Viewers: </h1>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		);
 	}
@@ -45,12 +151,7 @@ class EditDocument extends Component {
 				this.addStaff()
 				this.addStaff()
 				this.addStaff()
-				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
 				this.getStaff(2).addNote(new EighthNote({ note: "D" }))
-				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
-				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
-				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
-				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
 				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
 				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
 				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
