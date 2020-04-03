@@ -97,7 +97,7 @@ class EditDocument extends Component {
 
 
 						<div className="col document section">
-							<input class="inpNotes" id="titlefield" placeholder={this.state.document.title} />
+							<input className="inpNotes" id="titlefield" placeholder={this.state.document.title} />
 							<button>Update</button>
 
 							<div className="musicsheet">
