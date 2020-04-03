@@ -1,0 +1,8 @@
+.whole_rest {
+	position: relative;
+	background: black;
+	top: 20px;
+	height: 12.5px;
+	width: 30px;
+	display: inline-block;
+}

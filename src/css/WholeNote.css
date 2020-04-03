@@ -1,0 +1,9 @@
+.whole_circle {
+	margin-top: 75px;
+	width: 30px;
+	height: 25px;
+	border-radius: 50%;
+	z-index: 2;
+	border: solid 6px black;
+	background: none;
+}
