@@ -76,9 +76,9 @@ class Home extends Component {
 				</div>
 
 				<div className="container-fluid">
-					<footer className="footer section">
-						Musicollab is a 2020 SD&D project
-        	</footer>
+						<footer className="footer section">
+							Musicollab is a 2020 SD&D project
+	        			</footer>
 				</div>
 
 

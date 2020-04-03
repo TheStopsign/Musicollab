@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import '../App.css';
 import axios from 'axios';
-import MusicRender from './MusicRender';
 
 class EditDocument extends Component {
 	render() {
@@ -12,12 +11,27 @@ class EditDocument extends Component {
 
 				<div className="row align-items-center head section">
 					<div className="col-2">
-						CLEFS
+						<div className="row">
+							<div className="col-6 padding-0">
+								<h4 className="float-right"> CLEFS:&nbsp; </h4>
+							</div>
+
+							<div className="col padding-0">
+								<div className="dropdown">
+									<select>
+										<option value="1">Treble</option>
+										<option value="2">Bass</option>
+										<option value="3">Alto</option>
+										<option value="4">Tenor</option>
+									</select>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<div className="col-3">
 						<div className="row">
-							<div className="col-8 padding-0">
+							<div className="col-7 padding-0">
 								<h4 className="float-right"> Key Signature:&nbsp; </h4>
 							</div>
 
@@ -36,16 +50,16 @@ class EditDocument extends Component {
 
 					<div className="col-3">
 						<div className="row">
-							<div className="col-6 padding-0">
+							<div className="col-8 padding-0">
 								<h4 className="float-right"> Time Signature:&nbsp; </h4>
 							</div>
 
 							<div className="col padding-0">
 								<div className="dropdown">
 									<select>
-										<option value="1">4/4 time</option>
-										<option value="2">3/4 time</option>
-										<option value="3">2/4 time</option>
+										<option value="1">4/4</option>
+										<option value="2">3/4</option>
+										<option value="3">2/4</option>
 
 									</select>
 								</div>
@@ -53,11 +67,30 @@ class EditDocument extends Component {
 						</div>
 					</div>
 
+					<div className="col-2">
+						<div className="row">
+							<div className="col-3 padding-0">
+								<h4 className="float-right"> Notes:&nbsp; </h4>
+							</div>
 
+							<div className="col padding-0">
+								<div className="dropdown">
+									<select>
+										<option value="1">Whole</option>
+										<option value="2">Half</option>
+										<option value="3">Quarter</option>
+										<option value="4">Eigth</option>
+										<option value="5">Sixteenth</option>
+										<option value="6">Thirty-Second</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div className="main container-fluid">
-					<div className="row">
+					<div className="row subMain">
 						<div className="col-1 quickbar section">
 							<h4> quickbar </h4>
 						</div>
@@ -69,26 +102,34 @@ class EditDocument extends Component {
 
 							<div className="musicsheet">
 								<div id='sheet'>
-									<MusicRender notes={this.state.notes} />
 								</div>
 							</div>
 
 							<div className="musicsheet">
 								<div id='sheet'>
-									<MusicRender notes={this.state.notes} />
+								</div>
+							</div>
+
+							<div className="musicsheet">
+								<div id='sheet'>
 								</div>
 							</div>
 						</div>
 
 					</div>
-				</div>
 
-				<div className="container-fluid">
-					<footer className="footer section">
-							Current Users:
-					</footer>
+					<div className="row section users">
+						<div className="col">
+							<h1> Owner: </h1>
+						</div>
+						<div className="col">
+							<h1> Current Editors: </h1>
+						</div>
+						<div className="col">
+							<h1> Current Viewers: </h1>
+						</div>
+					</div>
 				</div>
-
 
 			</div>
 		);

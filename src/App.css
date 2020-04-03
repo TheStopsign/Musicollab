@@ -50,7 +50,16 @@ a.svg:after {
   margin-left: 10%;
   margin-right: 10%;
 }
-
+.EditDocument .document {
+  max-height: 500px;
+  overflow-y: auto;
+}
+.EditDocument .quickbar h4{
+  font-size: 100%;
+}
+.EditDocument .users h1{
+  font-size: 100%;
+}
 /*Login.css, SignUp.css*/
 .Login .title h1 {
   margin: 0px;
