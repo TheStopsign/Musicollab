@@ -9,6 +9,7 @@
 .root {
   color: white;
 }
+
 a.svg:after {
   content: "";
   position: absolute;
@@ -50,16 +51,20 @@ a.svg:after {
   margin-left: 10%;
   margin-right: 10%;
 }
+
 .EditDocument .document {
-  max-height: 500px;
-  overflow-y: auto;
+  height: 700px;
+  overflow-y: hidden;
 }
-.EditDocument .quickbar h4{
+
+.EditDocument .quickbar h4 {
   font-size: 100%;
 }
-.EditDocument .users h1{
+
+.EditDocument .users h1 {
   font-size: 100%;
 }
+
 /*Login.css, SignUp.css*/
 .Login .title h1 {
   margin: 0px;
@@ -132,7 +137,7 @@ h3 {
 .Profile .head,
 .Login .head,
 .SignUp .head,
-.EditDocument .head{
+.EditDocument .head {
   background-color: #727272;
   margin-bottom: 0;
 }
@@ -224,9 +229,9 @@ h3 {
 }
 
 
-.padding-0{
-    padding-right:0;
-    padding-left:0;
+.padding-0 {
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .full-width {
