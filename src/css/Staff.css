@@ -1,0 +1,19 @@
+.staff {
+	display: inline-block;
+	margin-top: 100px;
+}
+
+.bar {
+	background: none;
+	border: solid 3px black;
+	border-bottom: none;
+	height: 25px;
+}
+
+.E {
+	border-bottom: solid 3px black;
+}
+
+.notes {
+	margin-left: 30px;
+}

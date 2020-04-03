@@ -1,0 +1,33 @@
+.musicsheet {
+	height: 800px;
+	width: 80%;
+	overflow-y: scroll;
+	margin-right: 5%;
+	margin-left: auto;
+}
+
+.sheet {
+	width: 100%;
+	height: 11in;
+	background: white;
+	padding: 0 1in;
+}
+
+.doc_title {
+	color: black;
+}
+
+.addStaffBtnContainer {
+	position: relative;
+	width: 60px;
+	height: 100px;
+	display: inline-block;
+}
+
+#addStaffBtn {
+	position: relative;
+	top: 35px;
+	height: 100px;
+	background: white;
+	color: black;
+}
