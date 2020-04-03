@@ -33,22 +33,10 @@ class Staff extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			prevStaff: null, //holds prev staff
-			nextStaff: null,//holds next staff
+			index: null,
 			init_notes: "",
-			notes: []
+			notes: [new WholeRest({ note: "R" })]
 		}
-	}
-	componentDidMount() {
-		this.getNotes()
-	}
-	getNotes() {
-		this.addNote(new EighthNote({ note: "B" }))
-		this.addNote(new QuarterNote({ note: "C" }))
-		this.addNote(new HalfNote({ note: "D" }))
-		this.addNote(new WholeNote({ note: "E" }))
-		this.changeNote(2, new EighthNote({ note: "D" }))
-		this.addNote(new HalfRest({ note: "G" }))
 	}
 	addNote(note) {
 		let nextNotes = this.state.notes
