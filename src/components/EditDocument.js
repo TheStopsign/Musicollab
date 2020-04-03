@@ -45,8 +45,15 @@ class EditDocument extends Component {
 				this.addStaff()
 				this.addStaff()
 				this.addStaff()
-				this.getStaff(0).addNote(new EighthNote({ note: "A" }))
-				this.getStaff(0).addNote(new EighthNote({ note: "A" }))
+				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
+				this.getStaff(2).addNote(new EighthNote({ note: "D" }))
+				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
+				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
+				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
+				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
+				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
+				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
+				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
 			}); //when page loads, first get the document info
 	}
 	async joinEditSession() {

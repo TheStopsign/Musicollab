@@ -43,6 +43,9 @@ class Staff extends Component {
 		nextNotes.push(note)
 		this.setState({ notes: nextNotes })
 	}
+	getNote(i) {
+		return this.state.notes[i]
+	}
 	changeNote(i, component) {
 		this.state.notes[i] = component;
 	}
