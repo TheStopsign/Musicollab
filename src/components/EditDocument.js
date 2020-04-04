@@ -112,9 +112,9 @@ class EditDocument extends Component {
 										})
 									}
 									<div className="addStaffBtnContainer">
-										<center>
-											<button id="addStaffBtn" className="btn">+</button>
-										</center>
+										{/* <center> */}
+										<button id="addStaffBtn" className="btn">+</button>
+										{/* </center> */}
 									</div>
 								</div>
 							</div>
