@@ -5,6 +5,7 @@ import '../css/EditDocument.css';
 import axios from 'axios';
 import Staff from './Staff';
 import EighthNote from './EighthNote';
+import io from 'socket.io-client';
 
 class EditDocument extends Component {
 	render() {
@@ -129,11 +130,10 @@ class EditDocument extends Component {
 							<h1> Current Editors: </h1>
 						</div>
 						<div className="col">
-							<h1> Current Viewers: </h1>
+							<h1> Current Viewers: {this.state.usercount}</h1>
 						</div>
 					</div>
 				</div>
-
 			</div>
 		);
 	}
@@ -141,13 +141,17 @@ class EditDocument extends Component {
 		super(props);
 		this.state = {
 			staffs: [],
-			document: {} //holds the document info
+			document: {}, //holds the document info
+			socket: {},
+			usercount: 0
 		}
 	}
 	componentDidMount() {
 		this.joinEditSession()
 			.then(() => {
-				document.getElementById("addStaffBtn").addEventListener("click", () => { this.addStaff() })
+				document.getElementById("addStaffBtn").addEventListener("click", () => {
+					this.state.socket.emit('addstaff', { room: "" + this.state.document._id });
+				})
 				this.addStaff()
 				this.addStaff()
 				this.addStaff()
@@ -161,10 +165,25 @@ class EditDocument extends Component {
 		axios.get(`http://localhost:8000/documents/` + this.props.match.params.id) //make a GET request to the server
 			.then(res => {
 				this.setState({ document: res.data }); //handle the response payload
+				const sock = io.connect("http://localhost:3001");
+				sock.on('connect', () => {
+					console.log(sock.id);
+					sock.emit("joinsession", { room: "" + this.state.document._id });
+				});
+				sock.on('addstaff', () => {
+					this.addStaff()
+				});
+				sock.on('usercount', (count) => {
+					this.setState({ usercount: count })
+				});
+				this.setState({ socket: sock })
 			})
 			.catch(function (error) {
 				console.log(error);
 			})
+	}
+	getSocket() {
+		return this.state.socket
 	}
 	addStaff() {
 		let nextStaffs = this.state.staffs
