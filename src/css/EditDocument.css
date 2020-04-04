@@ -19,14 +19,16 @@
 
 .addStaffBtnContainer {
 	position: relative;
+	margin-top: 100px;
+	top: 35px;
 	width: 60px;
 	height: 100px;
 	display: inline-block;
 }
 
 #addStaffBtn {
-	position: relative;
-	top: 35px;
+	margin: 0;
+	margin-left: 15px;
 	height: 100px;
 	background: white;
 	color: black;
