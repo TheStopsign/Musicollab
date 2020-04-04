@@ -152,13 +152,6 @@ class EditDocument extends Component {
 				document.getElementById("addStaffBtn").addEventListener("click", () => {
 					this.state.socket.emit('addstaff', { room: "" + this.state.document._id });
 				})
-				this.addStaff()
-				this.addStaff()
-				this.addStaff()
-				this.getStaff(2).addNote(new EighthNote({ note: "D" }))
-				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
-				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
-				this.getStaff(2).addNote(new EighthNote({ note: "A" }))
 			}); //when page loads, first get the document info
 	}
 	async joinEditSession() {
