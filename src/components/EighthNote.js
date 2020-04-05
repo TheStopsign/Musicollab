@@ -9,7 +9,7 @@ class EighthNote extends Note {
 	render() {
 		return (
 			<div className={"flagnote eighthnote " + this.state.note}>
-				<div className={"note flagnote eighthnote " + this.state.note}>
+				<div className={"note flagnote eighthnote " + this.state.note} id="eighthnote">
 					<div className="vline"></div>
 					<div className="circle"></div>
 				</ div>

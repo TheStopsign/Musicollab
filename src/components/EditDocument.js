@@ -185,7 +185,7 @@ class EditDocument extends Component {
 	}
 	addStaff() {
 		let nextStaffs = this.state.staffs
-		nextStaffs.push(new Staff())
+		nextStaffs.push(new Staff(this.state.selectedNote.id))
 		this.setState({ staffs: nextStaffs })
 	}
 	getStaff(i) {

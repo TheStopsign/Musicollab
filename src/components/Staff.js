@@ -32,10 +32,28 @@ class Staff extends Component {
 	}
 	constructor(props) {
 		super(props);
+		let n = 0;
+		switch (props) {
+			case "wholenote":
+				n = new WholeNote({ note: "D" });
+				break;
+			case "halfnote":
+				n = new HalfNote({ note: "D" });
+				break;
+			case "quarternote":
+				n = new QuarterNote({ note: "D" });
+				break;
+			case "eighthnote":
+				n = new EighthNote({ note: "D" });
+				break;
+			default:
+				n = new WholeRest({ note: "D" });
+
+		}
 		this.state = {
 			index: null,
 			init_notes: "",
-			notes: [new WholeRest({ note: "R" })]
+			notes: [n]
 		}
 	}
 	addNote(note) {
