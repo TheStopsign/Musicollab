@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import '../css/EditDocument.css';
 import axios from 'axios';
 import Staff from './Staff';
+import NoteTB from './noteToolbar';
 import EighthNote from './EighthNote';
 import io from 'socket.io-client';
 
@@ -70,26 +71,18 @@ class EditDocument extends Component {
 						</div>
 					</div>
 
-					<div className="col-2">
-						<div className="row">
-							<div className="col-3 padding-0">
-								<h4 className="float-right"> Notes:&nbsp; </h4>
-							</div>
 
-							<div className="col padding-0">
-								<div className="dropdown">
-									<select>
-										<option value="1">Whole</option>
-										<option value="2">Half</option>
-										<option value="3">Quarter</option>
-										<option value="4">Eigth</option>
-										<option value="5">Sixteenth</option>
-										<option value="6">Thirty-Second</option>
-									</select>
-								</div>
-							</div>
+					<div className="col padding-0">
+
+						<div className="noteBar">
+								{
+									new NoteTB().render()
+								}
 						</div>
+
 					</div>
+
+
 				</div>
 
 				<div className="main container-fluid">
@@ -119,8 +112,10 @@ class EditDocument extends Component {
 						</div>
 
 					</div>
+				</div>
 
-					<div className="row section users">
+				<div className="container-fluid">
+					<div className="row section footer users">
 						<div className="col">
 							<h1> Owner: </h1>
 						</div>
@@ -132,6 +127,7 @@ class EditDocument extends Component {
 						</div>
 					</div>
 				</div>
+
 			</div>
 		);
 	}

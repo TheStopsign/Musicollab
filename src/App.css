@@ -4,6 +4,7 @@
 
   min-height: 100%;
   position: relative;
+  margin-bottom: 0;
 }
 
 .root {
@@ -164,7 +165,8 @@ h3 {
 }
 
 .Home .footer,
-.Profile .footer {
+.Profile .footer,
+.EditDocument .footer {
   position: absolute;
   bottom: 0;
   background-color: #727272;
@@ -173,7 +175,7 @@ h3 {
   padding-left: 12px;
   /* margin-left: 0px; */
   width: 96%;
-  max-width: 98%
+  margin-bottom: 15px;
 }
 
 .Home .userID,
