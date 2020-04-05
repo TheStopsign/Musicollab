@@ -11,31 +11,22 @@ import EighthNote from './EighthNote';
 import QuarterNote from './QuarterNote';
 
 class NoteTB extends Component {
-  render() {
+  render(i) {
     return (
-      <div className="staff">
-
-        <div className="notes row">
-          {
-            this.state.notes.map(function (note) {
-              return note.render()
-            })
-          }
-        </div>
-      </div >
+      this.state.notes[i].render()
     );
   }
-	constructor(props) {
-		super(props);
-		this.state = {
-			index: null,
-			init_notes: "",
-			notes: [new EighthNote({ note: "G" }),new QuarterNote({ note: "G" }),new HalfNote({ note: "G" }),new WholeNote({ note: "G" })]
-		}
-	}
-	getNote(i) {
-		return this.state.notes[i]
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      index: null,
+      init_notes: "",
+      notes: [new EighthNote({ note: "E" }), new QuarterNote({ note: "E" }), new HalfNote({ note: "E" }), new WholeNote({ note: "E" })]
+    }
+  }
+  getNote(i) {
+    return this.state.notes[i]
+  }
 
 }
 
