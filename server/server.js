@@ -51,6 +51,9 @@ io.on('connection', function (socket) {
 		console.log("Staff added in " + data.room)
 		io.in("" + data.room).emit("addstaff");
 	})
+	socket.on('disconnect', function () {
+		console.log('user disconnected');
+	});
 })
 io.on('disconnect', function (socket) {
 	console.log("User disconnected")
