@@ -3,13 +3,16 @@
 import React, { Component } from 'react';
 import '../App.css';
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import Logo from '../logo.svg';
 
 class Home extends Component {
 	render() {
-		return (
-			<div className="Home">
+		if(this.state.redirectTo){
+			return <Redirect to={{ pathname: this.state.redirectTo }} />
+		}else{
+			return(
+				 <div className="Home">
 
 				<div className="row align-items-center head section">
 					<div className="col-3">
@@ -23,8 +26,20 @@ class Home extends Component {
 					</div>
 
 					<div className="col-1">
+						<div className="LogoutButton">
+							<button 
+								className="btn btn-primary btn-block"
+								onClick={this.handleLogout}
+								type="logout"
+							>Logout</button>
+						</div>
+					</div>
+
+					<div className="col-1">
 						<img className="float-right pic" src="profile.jpg" alt="prfile picture" />
 					</div>
+
+					
 
 					<div className="col-2 user">
 						<ul>
@@ -80,17 +95,18 @@ class Home extends Component {
 							Musicollab is a 2020 SD&D project
 	        	</footer>
 				</div>
-
-
-
-			</div >
-		);
+			</div>
+			);
+		}
+		
 	}
 	constructor(props) {
 		super(props);
 		this.state = {
-			documents: [] //holds all the documents data
+			documents: [], //holds all the documents data
+			redirectTo: null
 		}
+		this.handleLogout = this.handleLogout.bind(this)
 	}
 	componentDidMount() {
 		this.getDocuments(); //first, get the document data
@@ -103,6 +119,10 @@ class Home extends Component {
 			.catch(function (error) {
 				console.log(error);
 			})
+	}
+	handleLogout(event){
+		this.setState({redirectTo: '/'})
+	
 	}
 }
 

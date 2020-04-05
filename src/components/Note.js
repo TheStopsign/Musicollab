@@ -8,7 +8,9 @@ class Note extends Component {
 		super(props)
 		this.state = {
 			note: props.note,
-			offset: 0
+			offset: 0,
+			measure: props.measure,
+			location: props.location
 		}
 	}
 	componentDidMount() {

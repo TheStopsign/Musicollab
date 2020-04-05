@@ -4,10 +4,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Free, open source, real-time collaborative music composition website.
 
 # Requirements
-Please add a server/config.js file, with the following contents:
+Add a server/config.js file, with the following contents:
 		module.exports.MONGO_URI = "YOURDATABASEURI";
 
-Please install a CORS browser plugin and enable it. Otherwise, localhost->localhost requests will fail.
+Install mongodb
+
+Install a CORS browser plugin and enable it. Otherwise, localhost->localhost requests will fail.
 
 # Running the project for testing
 To run the project...

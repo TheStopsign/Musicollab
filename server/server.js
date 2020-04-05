@@ -7,6 +7,7 @@ let bodyParser = require('body-parser');
 const path = require('path');
 const PORT = 8000; //server port
 
+const mongoose = require("mongoose")
 const connectDB = require('./db')
 const seedDB = require('./seed')
 
@@ -14,13 +15,34 @@ const router = require('./routes')
 const accountRouter = require('./Account/Account.route')
 const documentRouter = require('./Document/Document.route')
 
+const passport = require('passport');
+require('./passport-config')(passport);
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session)
+const flash = require('connect-flash');
+
 seedDB(); // Populate database with test data
 
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-	extended: true
+	extended: false
 }));
+
+// Express Session
+app.use(
+	session({
+		secret: 'spooky', //pick a random string to make the hash that is generated secure
+		resave: false, //required
+		saveUninitialized: false //required
+	})
+)
+app.use(flash());
+
+// Passport
+app.use(passport.initialize())
+app.use(passport.session()) // calls serializeUser and deserializeUser
+
 app.use(cors());
 // app.use('/', router);
 app.use('/accounts', accountRouter);
@@ -46,14 +68,16 @@ io.on('connection', function (socket) {
 		var room = io.sockets.adapter.rooms[data.room];
 		console.log("\t" + room.length + " user(s) connected")
 		io.in("" + data.room).emit('usercount', room.length);
+
+		socket.on('addstaff', function (data) {
+			console.log("Staff added in " + data.room)
+			io.in("" + data.room).emit("addstaff");
+		})
+		socket.on('disconnect', function () {
+			io.in("" + data.room).emit('usercount', room.length);
+			console.log('User Disconnected')
+		});
 	})
-	socket.on('addstaff', function (data) {
-		console.log("Staff added in " + data.room)
-		io.in("" + data.room).emit("addstaff");
-	})
-	socket.on('disconnect', function () {
-		console.log('user disconnected');
-	});
 })
 io.on('disconnect', function (socket) {
 	console.log("User disconnected")
