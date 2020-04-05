@@ -6,12 +6,15 @@ import '../css/EighthNote.css';
 import Flag from './Flag'
 
 class EighthNote extends Note {
+	getSize() {
+		return 4;
+	}
 	render() {
 		return (
 			<div className={"flagnote eighthnote " + this.state.note}>
 				<div className={"note flagnote eighthnote " + this.state.note}>
-					<div className="vline"></div>
-					<div className="circle"></div>
+					<div className={"vline measure:" + this.state.measure + " location:" + this.state.location}></div>
+					<div className={"circle measure:" + this.state.measure + " location:" + this.state.location}></div>
 				</ div>
 				<Flag />
 			</div>

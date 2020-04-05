@@ -5,11 +5,14 @@ import Note from './Note';
 import '../css/QuarterNote.css';
 
 class QuarterNote extends Note {
+	getSize() {
+		return 8;
+	}
 	render() {
 		return (
 			<div className={"note quarternote " + this.state.note}>
-				<div className="vline"></div>
-				<div className="circle"></div>
+				<div className={"vline measure:" + this.state.measure + " location:" + this.state.location}></div>
+				<div className={"circle measure:" + this.state.measure + " location:" + this.state.location}></div>
 			</ div>
 		);
 	}
