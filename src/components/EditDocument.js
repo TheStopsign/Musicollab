@@ -74,7 +74,7 @@ class EditDocument extends Component {
 
 					<div className="col padding-0">
 
-						<div className="noteBar">
+						<div className="noteBar" id ="noteBar">
 								{
 									new NoteTB().render()
 								}
@@ -137,6 +137,7 @@ class EditDocument extends Component {
 			staffs: [],
 			document: {}, //holds the document info
 			socket: {},
+			selectedNote: 0,
 			usercount: 0
 		}
 	}
@@ -145,6 +146,16 @@ class EditDocument extends Component {
 			.then(() => {
 				document.getElementById("addStaffBtn").addEventListener("click", () => {
 					this.state.socket.emit('addstaff', { room: "" + this.state.document._id });
+				});
+				document.getElementById("noteBar").addEventListener("click", (event) => {
+					if (event.path[1].classList[0] == "note") {
+						if(this.state.selectedNote != 0) {
+							// this.state.selectedNote.remove("selected");
+							this.state.selectedNote.className = this.state.selectedNote.className.slice(0,-8);
+						}
+						event.path[1].classList.add("selected");
+						this.state.selectedNote = event.path[1];
+					}
 				})
 			}); //when page loads, first get the document info
 	}
