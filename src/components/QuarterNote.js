@@ -10,7 +10,7 @@ class QuarterNote extends Note {
 	}
 	render() {
 		return (
-			<div className={"note quarternote " + this.state.note}>
+			<div className={"note quarternote " + this.state.note} id="8">
 				<div className={"vline measure:" + this.state.measure + " location:" + this.state.location}></div>
 				<div className={"circle measure:" + this.state.measure + " location:" + this.state.location}></div>
 			</ div>

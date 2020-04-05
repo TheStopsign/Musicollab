@@ -32,53 +32,71 @@ class Staff extends Component {
 	}
 	constructor(props) {
 		super(props);
+		let n = 0;
+		switch (props) {
+			case "wholenote":
+				n = new WholeNote({ note: "D" });
+				break;
+			case "halfnote":
+				n = new HalfNote({ note: "D" });
+				break;
+			case "quarternote":
+				n = new QuarterNote({ note: "D" });
+				break;
+			case "eighthnote":
+				n = new EighthNote({ note: "D" });
+				break;
+			default:
+				n = new WholeRest({ note: "D" });
+
+		}
 		this.state = {
 			index: null,
 			init_notes: "",
-			notes: [new WholeRest({ note: "R",measure: props.staffNum,location:0 })],
+			notes: [new WholeRest({ note: "R", measure: props.staffNum, location: 0 })],
 			noteCount: props.noteCount
 		}
 	}
-	makeNote(note,noteValue, measure,locationCount){
-		if(noteValue == 1){
+	makeNote(note, noteValue, measure, locationCount) {
+		if (noteValue == 1) {
 			alert("32nd note note implemented yet")
 			return null;
 		}
 		//16th Note
-		else if(noteValue == 2){
+		else if (noteValue == 2) {
 			alert("32nd note note implemented yet")
 			return null;
 		}
 		//8th Note
-		else if(noteValue == 4){
-			if(note == "R")
-				return new EighthNote({ note: "F",measure: measure, location: locationCount  });
+		else if (noteValue == 4) {
+			if (note == "R")
+				return new EighthNote({ note: "F", measure: measure, location: locationCount });
 			else
-				return new EighthNote({ note: note,measure: measure, location: locationCount  });
+				return new EighthNote({ note: note, measure: measure, location: locationCount });
 		}
 		//quarter Note
-		else if(noteValue == 8){
-			if(note == "R")
-				return new QuarterNote({ note: "F",measure: measure, location: locationCount  });
+		else if (noteValue == 8) {
+			if (note == "R")
+				return new QuarterNote({ note: "F", measure: measure, location: locationCount });
 			else
-				return new QuarterNote({ note: note,measure: measure, location: locationCount  });
+				return new QuarterNote({ note: note, measure: measure, location: locationCount });
 
 		}
 		//half Note
-		else if(noteValue == 16){
-			if(note == "R")
-				return new HalfRest({ note: note,measure: measure, location: locationCount  });
+		else if (noteValue == 16) {
+			if (note == "R")
+				return new HalfRest({ note: note, measure: measure, location: locationCount });
 			else
-				return new HalfNote({ note: note,measure: measure, location: locationCount  });
+				return new HalfNote({ note: note, measure: measure, location: locationCount });
 		}
 		//whole Note
-		else if(noteValue == 32){
-			if(note == "R")
-				return new WholeRest({ note: note,measure: measure, location: locationCount  });
+		else if (noteValue == 32) {
+			if (note == "R")
+				return new WholeRest({ note: note, measure: measure, location: locationCount });
 			else
-				return new WholeNote({ note: note,measure: measure, location: locationCount  });
+				return new WholeNote({ note: note, measure: measure, location: locationCount });
 		}
-		else{
+		else {
 			alert("makeNote given invalid input");
 			return null;
 		}
@@ -88,37 +106,37 @@ class Staff extends Component {
 		var pos = note.state.location
 		var measure = note.state.measure
 
-		if(this.state.notes.length < pos){
+		if (this.state.notes.length < pos) {
 			alert("addNote was given invalid note");
 			return;
 		}
 
-		var totalLength = 0; 
+		var totalLength = 0;
 		var locationCount = 0;
 		let nextNotes = [];
-		for(var i=0; i < this.state.notes.length; i++){
+		for (var i = 0; i < this.state.notes.length; i++) {
 
 
-			if(i == pos){
+			if (i == pos) {
 
 				var lengthChange = (note.getSize() - this.getNote(i).getSize());
 				totalLength += this.getNote(i).getSize();
-				if(lengthChange > 0){
-					if(totalLength + lengthChange > this.state.noteCount){
+				if (lengthChange > 0) {
+					if (totalLength + lengthChange > this.state.noteCount) {
 						var newLength = this.state.noteCount - totalLength + this.getNote(i).getSize();
 
 						var oldNote = this.getNote(i).state.note;
 						var noteValue = 1;
 						var addNote;
-						while(newLength > 0){
+						while (newLength > 0) {
 							addNote = newLength % 2;
-							newLength = Math.floor(newLength/2);
+							newLength = Math.floor(newLength / 2);
 
-							if(addNote == 0){
+							if (addNote == 0) {
 								noteValue *= 2;
 								continue;
 							}
-							var newNote = this.makeNote(oldNote,noteValue,measure,locationCount);
+							var newNote = this.makeNote(oldNote, noteValue, measure, locationCount);
 							nextNotes.push(newNote);
 
 							noteValue *= 2;
@@ -127,13 +145,13 @@ class Staff extends Component {
 						break;
 
 					}
-					else{
+					else {
 						var oldNote = this.getNote(i).state.note;
-						var newNote = this.makeNote(oldNote,note.getSize(),measure,locationCount);
+						var newNote = this.makeNote(oldNote, note.getSize(), measure, locationCount);
 						nextNotes.push(newNote);
 						locationCount += 1;
 
-						while(lengthChange > 0){
+						while (lengthChange > 0) {
 							i += 1;
 							totalLength += this.getNote(i).getSize();
 							lengthChange -= this.getNote(i).getSize()
@@ -144,15 +162,15 @@ class Staff extends Component {
 						oldNote = this.getNote(i).state.note;
 						var noteValue = 1;
 						var addNote;
-						while(lengthChange > 0){
+						while (lengthChange > 0) {
 							addNote = lengthChange % 2;
-							lengthChange = Math.floor(lengthChange/2);
+							lengthChange = Math.floor(lengthChange / 2);
 
-							if(addNote == 0){
+							if (addNote == 0) {
 								noteValue *= 2;
 								continue;
 							}
-							var newNote = this.makeNote(oldNote,noteValue,measure,locationCount);
+							var newNote = this.makeNote(oldNote, noteValue, measure, locationCount);
 							nextNotes.push(newNote);
 
 							noteValue *= 2;
@@ -160,7 +178,7 @@ class Staff extends Component {
 						}
 					}
 				}
-				else if(lengthChange <= 0){
+				else if (lengthChange <= 0) {
 					lengthChange = Math.abs(lengthChange)
 					nextNotes.push(note);
 					locationCount += 1;
@@ -168,15 +186,15 @@ class Staff extends Component {
 					var oldNote = this.getNote(i).state.note;
 					var noteValue = 1;
 					var addNote;
-					while(lengthChange > 0){
+					while (lengthChange > 0) {
 						addNote = lengthChange % 2;
-						lengthChange = Math.floor(lengthChange/2);
+						lengthChange = Math.floor(lengthChange / 2);
 
-						if(addNote == 0){
+						if (addNote == 0) {
 							noteValue *= 2;
 							continue;
 						}
-						var newNote = this.makeNote(oldNote,noteValue,measure,locationCount);
+						var newNote = this.makeNote(oldNote, noteValue, measure, locationCount);
 						nextNotes.push(newNote);
 
 						noteValue *= 2;
@@ -184,7 +202,7 @@ class Staff extends Component {
 					}
 				}
 			}
-			else{
+			else {
 				totalLength += this.getNote(i).getSize();
 				this.getNote(i).state.location = locationCount
 				nextNotes.push(this.getNote(i));

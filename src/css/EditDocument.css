@@ -6,6 +6,15 @@
 	margin-left: auto;
 }
 
+.noteBar {
+	height: 130px;
+	/* width: 90%; */
+}
+
+.selected {
+	background: red;
+}
+
 .sheet {
 	width: 100%;
 	height: 11in;

@@ -79,9 +79,6 @@ io.on('connection', function (socket) {
 		});
 	})
 })
-io.on('disconnect', function (socket) {
-	console.log("User disconnected")
-})
 
 ioserver.listen(3001);
 

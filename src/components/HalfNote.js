@@ -10,7 +10,7 @@ class HalfNote extends Note {
 	}
 	render() {
 		return (
-			<div className={"note halfnote " + this.state.note}>
+			<div className={"note halfnote " + this.state.note} id="16">
 				<div className={"vline measure:" + this.state.measure + " location:" + this.state.location}></div>
 				<div className={"half_circle measure:" + this.state.measure + " location:" + this.state.location}></div>
 			</ div>

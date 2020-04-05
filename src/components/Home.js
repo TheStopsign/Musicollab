@@ -93,7 +93,7 @@ class Home extends Component {
 				<div className="container-fluid">
 						<footer className="footer section">
 							Musicollab is a 2020 SD&D project
-	        			</footer>
+	        	</footer>
 				</div>
 			</div>
 			);
