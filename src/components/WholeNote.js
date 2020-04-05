@@ -11,6 +11,7 @@ class WholeNote extends Note {
 	render() {
 		return (
 			<div className={"note wholenote " + this.state.note} id="32">
+				<div className="vlineInvis"></div>
 				<div className={"whole_circle measure:" + this.state.measure + " location:" + this.state.location}></div>
 			</ div>
 		);

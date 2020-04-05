@@ -13,6 +13,7 @@ import WholeNote from './WholeNote';
 
 const notetb = new NoteTB()
 
+
 class EditDocument extends Component {
 	render() {
 		return (
@@ -76,27 +77,17 @@ class EditDocument extends Component {
 						</div>
 					</div>
 
-					<div className="col padding-0">
-						<div className="dropdown">
-							<select id="currentNote">
-								<option value="32">WholeNote</option>
-								<option value="16">Half</option>
-								<option value="8">Quarter</option>
-								<option value="4">Eighth</option>
-								<option value="2">Sixteenth</option>
-								<option value="1">Thirty-Second</option>
-							</select>
-						</div>
-					</div>
 
 					<div className="col padding-0">
-						<div id="currentNote" className="row">
-							<div value="4">{notetb.render(0)}</div>
-							<div value="8">{notetb.render(1)}</div>
-							<div value="16">{notetb.render(2)}</div>
-							<div value="32">{notetb.render(3)}</div>
+
+						<div className="noteBar" id ="noteBar">
+								{
+									new NoteTB().render()
+								}
 						</div>
+
 					</div>
+
 
 				</div>
 
@@ -162,17 +153,6 @@ class EditDocument extends Component {
 	componentDidMount() {
 		this.joinEditSession()
 			.then(() => {
-				// document.getElementById("noteBar").addEventListener("click", (event) => {
-				// 	if (event.path[1].classList[0] == "note") {
-				// 		if (this.state.selectedNote != 0) {
-				// 			// this.state.selectedNote.remove("selected");
-				// 			this.state.selectedNote.className = this.state.selectedNote.className.slice(0, -8);
-				// 		}
-				// 		event.path[1].classList.add("selected");
-				// 		this.state.selectedNote = event.path[1];
-				// 	}
-				// })
-				////////////////////////////////////////////////////
 				document.getElementById("addStaffBtn").addEventListener("click", () => {
 					this.state.socket.emit('addstaff', { room: "" + this.state.document._id });
 				})
@@ -182,32 +162,43 @@ class EditDocument extends Component {
 
 
 				var docInfo = this;
-				document.addEventListener('click', function (e) {
+				document.addEventListener('click', (e) => {
+					//find path to current element
+					let path = [e.target];
+					let elem = e.target;
+					for(var i =0; i<3; i++) {
+						path.push(elem.parentElement);
+						elem = elem.parentElement;
+					}
+					//use path to check if current element is a note
+					if (path[1].classList[0] == "note") {
 
-					// isNote is true if clicked element is a note/rest component
-					var isNote = e.target.classList.contains('vline');
-					isNote = isNote || e.target.classList.contains('circle');
-					isNote = isNote || e.target.classList.contains('whole_circle');
-					isNote = isNote || e.target.classList.contains('half_circle');
-					isNote = isNote || e.target.classList.contains('whole_rest');
-					isNote = isNote || e.target.classList.contains('half_rest');
+						// if current note is on the toolbar at the top, select it
+						if (path[2].id == "ntb" || path[3].id == "ntb") {
+							if (this.state.selectedNote != 0) {
+								this.state.selectedNote.className = this.state.selectedNote.className.slice(0, -8);
+							}
+							path[1].classList.add("selected");
+							this.state.selectedNote = path[1];
 
+						}
+						//otherwise change current note value using selected note
+						else {
+							//gets the currently selected notelength from the dropdown menu
+							var noteSelection = this.state.selectedNote.id;
 
-					if (e.target && isNote) {
-						//gets the currently selected notelength from the dropdown menu
-						var noteSelection = document.getElementById("currentNote");
-						noteSelection = noteSelection.options[noteSelection.selectedIndex].value;
+							//gets the newNote information and creates it
+							var measure = Number(e.target.classList[1].slice(8));
+							var location = Number(e.target.classList[2].slice(9));
+							var newPitch = docInfo.getPitch(measure);
 
-						//gets the newNote information and creates it
-						var measure = Number(e.target.classList[1].slice(8));
-						var location = Number(e.target.classList[2].slice(9));
-						var newPitch = docInfo.getPitch(measure);
+							var newNote = docInfo.getStaff(measure).makeNote(newPitch, noteSelection, measure, location);
 
-						var newNote = docInfo.getStaff(measure).makeNote(newPitch, noteSelection, measure, location);
+							//adds note to the measure and updates render
+							docInfo.getStaff(measure).addNote(newNote)
+							docInfo.setState({ staffs: docInfo.state.staffs })
 
-						//adds note to the measure and updates render
-						docInfo.getStaff(measure).addNote(newNote)
-						docInfo.setState({ staffs: docInfo.state.staffs })
+						}
 					}
 				});
 				this.setState({ staffs: docInfo.state.staffs })
@@ -244,22 +235,22 @@ class EditDocument extends Component {
 		//variables to store the topleft position of the measure
 		var xPos = 0;
   	var yPos = 0;
- 
+
 	  while (el) {
 	    if (el.tagName == "BODY") {
 	      // deal with browser quirks with body/window/document and page scroll
 	      var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
 	      var yScroll = el.scrollTop || document.documentElement.scrollTop;
-	 
+
 	      xPos += (el.offsetLeft - xScroll + el.clientLeft);
 	      yPos += (el.offsetTop - yScroll + el.clientTop);
-	    } 
+	    }
 	    else {
 	      // for all other non-BODY elements
 	      xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
 	      yPos += (el.offsetTop - el.scrollTop + el.clientTop);
 	    }
-	 
+
 	    el = el.offsetParent;
 	  }
 		alert("x: " + xPos+ ", y: " + yPos);
