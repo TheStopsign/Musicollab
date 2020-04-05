@@ -7,7 +7,7 @@ import Profile from './components/Profile';
 import Accounts from './components/Accounts';
 import EditAccount from './components/EditAccount';
 import EditDocument from './components/EditDocument';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends Component {
   render() {
