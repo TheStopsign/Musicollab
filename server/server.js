@@ -46,14 +46,16 @@ io.on('connection', function (socket) {
 		var room = io.sockets.adapter.rooms[data.room];
 		console.log("\t" + room.length + " user(s) connected")
 		io.in("" + data.room).emit('usercount', room.length);
+
+		socket.on('addstaff', function (data) {
+			console.log("Staff added in " + data.room)
+			io.in("" + data.room).emit("addstaff");
+		})
+		socket.on('disconnect', function () {
+			io.in("" + data.room).emit('usercount', room.length);
+			console.log('User Disconnected')
+		});
 	})
-	socket.on('addstaff', function (data) {
-		console.log("Staff added in " + data.room)
-		io.in("" + data.room).emit("addstaff");
-	})
-	socket.on('disconnect', function () {
-		console.log('user disconnected');
-	});
 })
 io.on('disconnect', function (socket) {
 	console.log("User disconnected")
