@@ -5,10 +5,12 @@ import '../css/Staff.css';
 import Note from './Note';
 import WholeNote from './WholeNote';
 import HalfNote from './HalfNote';
+import QuarterNote from './QuarterNote';
+import EighthNote from './EighthNote';
 import WholeRest from './WholeRest';
 import HalfRest from './HalfRest';
-import EighthNote from './EighthNote';
-import QuarterNote from './QuarterNote';
+import QuarterRest from './QuarterRest';
+import EighthRest from './EighthRest';
 
 class Staff extends Component {
 	render() {
@@ -70,14 +72,14 @@ class Staff extends Component {
 		//8th Note
 		else if (noteValue == 4) {
 			if (note == "R")
-				return new EighthNote({ note: "F", measure: measure, location: locationCount });
+				return new EighthRest({ note: note, measure: measure, location: locationCount });
 			else
 				return new EighthNote({ note: note, measure: measure, location: locationCount });
 		}
 		//quarter Note
 		else if (noteValue == 8) {
 			if (note == "R")
-				return new QuarterNote({ note: "F", measure: measure, location: locationCount });
+				return new QuarterRest({ note: note, measure: measure, location: locationCount });
 			else
 				return new QuarterNote({ note: note, measure: measure, location: locationCount });
 
