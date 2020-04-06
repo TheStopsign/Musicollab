@@ -14,6 +14,7 @@ const seedDB = require('./seed')
 const router = require('./routes')
 const accountRouter = require('./Account/Account.route')
 const documentRouter = require('./Document/Document.route')
+const permissionRouter = require('./Permission/Permission.route')
 
 const passport = require('passport');
 require('./passport-config')(passport);
@@ -47,6 +48,7 @@ app.use(cors());
 // app.use('/', router);
 app.use('/accounts', accountRouter);
 app.use('/documents', documentRouter);
+app.use('/permissions', permissionRouter);
 
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, '../public'));

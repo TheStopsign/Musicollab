@@ -8,97 +8,98 @@ import Logo from '../logo.svg';
 
 class Home extends Component {
 	render() {
-		if(this.state.redirectTo){
+		if (this.state.redirectTo) {
 			return <Redirect to={{ pathname: this.state.redirectTo }} />
-		}else{
-			return(
-				 <div className="Home">
+		} else {
+			return (
+				<div className="Home">
 
-				<div className="row align-items-center head section">
-					<div className="col-3">
-						<a href="/home" className="svg">
-							<img src={Logo} alt="Logo" height="80px" />
-						</a>
-					</div>
-
-					<div className="col-6 searchBar">
-						<input type="text" id="search" name="search" placeholder="Search" />
-					</div>
-
-					<div className="col-1">
-						<div className="LogoutButton">
-							<button 
-								className="btn btn-primary btn-block"
-								onClick={this.handleLogout}
-								type="logout"
-							>Logout</button>
+					<div className="row align-items-center head section">
+						<div className="col-3">
+							<a href="/home" className="svg">
+								<img src={Logo} alt="Logo" height="80px" />
+							</a>
 						</div>
-					</div>
 
-					<div className="col-1">
-						<img className="float-right pic" src="profile.jpg" alt="prfile picture" />
-					</div>
+						<div className="col-6 searchBar">
+							<input type="text" id="search" name="search" placeholder="Search" />
+						</div>
 
-					
-
-					<div className="col-2 user">
-						<ul>
-							<li><a href="/profile"> Username</a></li>
-							<li className="userID">User ID</li>
-						</ul>
-					</div>
-				</div>
-
-				<div className="main container-fluid">
-					<div className="row">
-						<div className="col-2 filters section">
-							<div className="row">
-								<div className="col">
-									<h1> sort by: </h1>
-									<ul>
-										<li> Name </li>
-										<li> Owner </li>
-										<li> Last Modified </li>
-										<li> Size </li>
-										<li> Share Date </li>
-										<li> sort 6 </li>
-									</ul>
-								</div>
-							</div>
-							<div className="row">
-								<div className="col">
-									<h1> filters: </h1>
-									<ul>
-										<li> Owned by me </li>
-										<li> Shared with me </li>
-										<li> Starred </li>
-										<li> Archived </li>
-										<li> filter 5 </li>
-										<li> filter 6 </li>
-									</ul>
-								</div>
+						<div className="col-1">
+							<div className="LogoutButton">
+								<button
+									className="btn btn-primary btn-block"
+									onClick={this.handleLogout}
+									type="logout"
+								>Logout</button>
 							</div>
 						</div>
 
-						<div className="col projects section">
+						<div className="col-1">
+							<img className="float-right pic" src="profile.jpg" alt="prfile picture" />
+						</div>
+
+
+
+						<div className="col-2 user">
+							<ul>
+								<li><a href="/profile"> Username</a></li>
+								<li className="userID">User ID</li>
+							</ul>
+						</div>
+					</div>
+
+					<div className="main container-fluid">
+						<div className="row">
+							<div className="col-2 filters section">
+								<div className="row">
+									<div className="col">
+										<h1> sort by: </h1>
+										<ul>
+											<li> Name </li>
+											<li> Owner </li>
+											<li> Last Modified </li>
+											<li> Size </li>
+											<li> Share Date </li>
+											<li> sort 6 </li>
+										</ul>
+									</div>
+								</div>
+								<div className="row">
+									<div className="col">
+										<h1> filters: </h1>
+										<ul>
+											<li> Owned by me </li>
+											<li> Shared with me </li>
+											<li> Starred </li>
+											<li> Archived </li>
+											<li> filter 5 </li>
+											<li> filter 6 </li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							<div className="col projects section">
 								{this.state.documents.map(function (document) {
 									return <div className="documentCard" key={document._id}>
 										<Link to={"/documents/" + document._id}><h4>{document.title}</h4></Link>
 									</div>
 								})}
+								<button className="btn btn-primary" onClick={this.newDoc}>+</button>
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<div className="container-fluid">
+					<div className="container-fluid">
 						<footer className="footer section">
 							Musicollab is a 2020 SD&D project
 	        	</footer>
+					</div>
 				</div>
-			</div>
 			);
 		}
-		
+
 	}
 	constructor(props) {
 		super(props);
@@ -107,11 +108,12 @@ class Home extends Component {
 			redirectTo: null
 		}
 		this.handleLogout = this.handleLogout.bind(this)
+		this.newDoc = this.newDoc.bind(this);
 	}
 	componentDidMount() {
-		this.getDocuments(); //first, get the document data
+		this.loadDocuments(); //first, get the document data
 	}
-	async getDocuments() {
+	async loadDocuments() {
 		axios.get('http://localhost:8000/documents') //make GET request to server
 			.then(res => {
 				this.setState({ documents: res.data }); //handle response payload
@@ -120,9 +122,23 @@ class Home extends Component {
 				console.log(error);
 			})
 	}
-	handleLogout(event){
-		this.setState({redirectTo: '/'})
-	
+	getDocuments() {
+		return this.state.documents
+	}
+	handleLogout(event) {
+		this.setState({ redirectTo: '/' })
+	}
+	async newDoc() {
+		axios.post('http://localhost:8000/documents/new')
+			.then(response => {
+				console.log(response.data)
+				let newDocs = this.getDocuments()
+				newDocs.push(response.data)
+				this.setState({ documents: newDocs })
+			}).catch(error => {
+				console.log('Error creating document')
+				console.log(error)
+			})
 	}
 }
 

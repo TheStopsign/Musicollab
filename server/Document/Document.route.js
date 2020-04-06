@@ -3,7 +3,8 @@ const documentRouter = express.Router();
 const mongoose = require('mongoose');
 const config = require('../config');
 
-let Document = mongoose.model('Document')
+let Document = require('../Document/Document.model');
+let Permission = require('../Permission/Permission.model');
 
 documentRouter.route('/').get(function (req, res) { //when the server receives a request to the /documents route
 	console.log("/documents GET received")
@@ -34,6 +35,22 @@ documentRouter.route('/:id').get(function (req, res) { //when the server receive
 				} else {
 					res.status(200).json(user);
 				}
+			}).then(() => {
+				mongoose.disconnect()
+			})
+		})
+});
+
+documentRouter.route('/new').post(function (req, res) {
+	console.log("/documents/new POST received");
+
+	// Create new doc and add to database
+	mongoose.connect(config.MONGO_URI)
+		.then(() => {
+			var newDoc = new Document()
+			newDoc.save((err, savedDoc) => {
+				if (err) res.json(err)
+				else res.json(savedDoc)
 			}).then(() => {
 				mongoose.disconnect()
 			})

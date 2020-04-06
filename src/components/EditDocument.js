@@ -6,13 +6,8 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import Staff from './Staff';
 import NoteTB from './noteToolbar';
-import EighthNote from './EighthNote';
-import QuarterNote from './QuarterNote';
-import HalfNote from './HalfNote';
-import WholeNote from './WholeNote';
 
 const notetb = new NoteTB()
-
 
 class EditDocument extends Component {
 	render() {
@@ -83,7 +78,7 @@ class EditDocument extends Component {
 
 						<div className="noteBar" id="noteBar">
 							{
-								new NoteTB().render()
+								notetb.render()
 							}
 						</div>
 
@@ -132,6 +127,9 @@ class EditDocument extends Component {
 						<div className="col">
 							<h1> Current Viewers: {this.state.usercount}</h1>
 						</div>
+						<div className="col">
+							<button className="btn btn-primary" onClick={this.shareDoc}> Share</button>
+						</div>
 					</div>
 				</div>
 
@@ -148,6 +146,7 @@ class EditDocument extends Component {
 			usercount: 0,
 			noteCount: 32
 		}
+		this.shareDoc = this.shareDoc.bind(this)
 	}
 	componentDidMount() {
 		this.joinEditSession()
@@ -268,6 +267,25 @@ class EditDocument extends Component {
 	}
 	getStaff(i) {
 		return this.state.staffs[i]
+	}
+	shareDoc() {
+		axios.post('http://localhost:8000/permissions/new', {
+			document: this.state.document._id,
+			isOwner: false,
+			canEdit: true,
+			canView: true,
+			email: 'userc@gmail.com'
+		}).then(response => {
+			console.log(response.data)
+			if (!response.data.errmsg) {
+				console.log('successful share')
+			} else {
+				console.log('error')
+			}
+		}).catch(error => {
+			console.log('share error: ')
+			console.log(error)
+		})
 	}
 }
 
