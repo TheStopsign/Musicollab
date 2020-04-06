@@ -73,6 +73,12 @@ io.on('connection', function (socket) {
 			console.log("Staff added in " + data.room)
 			io.in("" + data.room).emit("addstaff");
 		})
+		socket.on('addnote', function (data) {
+			console.log("addnote")
+			console.log(data)
+			io.in("" + data.room).emit("addnote", data.staff, data.note);
+		})
+
 		socket.on('disconnect', function () {
 			io.in("" + data.room).emit('usercount', room.length);
 			console.log('User Disconnected')

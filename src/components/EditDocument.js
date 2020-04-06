@@ -17,6 +17,7 @@ const notetb = new NoteTB()
 class EditDocument extends Component {
 	render() {
 		return (
+
 			<div className="EditDocument">
 
 				<div className="row align-items-center head section">
@@ -80,10 +81,10 @@ class EditDocument extends Component {
 
 					<div className="col padding-0">
 
-						<div className="noteBar" id ="noteBar">
-								{
-									new NoteTB().render()
-								}
+						<div className="noteBar" id="noteBar">
+							{
+								new NoteTB().render()
+							}
 						</div>
 
 					</div>
@@ -111,9 +112,7 @@ class EditDocument extends Component {
 										})
 									}
 									<div className="addStaffBtnContainer">
-										<center>
-											<button id="addStaffBtn" className="btn">+</button>
-										</center>
+										<button id="addStaffBtn" className="btn">+</button>
 									</div>
 								</div>
 							</div>
@@ -122,7 +121,7 @@ class EditDocument extends Component {
 					</div>
 				</div>
 
-				<div className="container-fluid">
+				<div className="container-fluid" style={{ position: "sticky", bottom: 0 }}>
 					<div className="row section footer users">
 						<div className="col">
 							<h1> Owner: </h1>
@@ -156,17 +155,13 @@ class EditDocument extends Component {
 				document.getElementById("addStaffBtn").addEventListener("click", () => {
 					this.state.socket.emit('addstaff', { room: "" + this.state.document._id });
 				})
-				this.addStaff()
-				this.addStaff()
-				this.addStaff()
-
 
 				var docInfo = this;
 				document.addEventListener('click', (e) => {
 					//find path to current element
 					let path = [e.target];
 					let elem = e.target;
-					for(var i =0; i<3; i++) {
+					for (var i = 0; i < 3; i++) {
 						path.push(elem.parentElement);
 						elem = elem.parentElement;
 					}
@@ -192,12 +187,9 @@ class EditDocument extends Component {
 							var location = Number(e.target.classList[2].slice(9));
 							var newPitch = docInfo.getPitch(measure);
 
-							var newNote = docInfo.getStaff(measure).makeNote(newPitch, noteSelection, measure, location);
+							var newNote = { pitch: newPitch, noteLength: noteSelection, loc: location }
 
-							//adds note to the measure and updates render
-							docInfo.getStaff(measure).addNote(newNote)
-							docInfo.setState({ staffs: docInfo.state.staffs })
-
+							this.state.socket.emit('addnote', { room: this.state.document._id, staff: measure, note: newNote });
 						}
 					}
 				});
@@ -219,11 +211,22 @@ class EditDocument extends Component {
 				sock.on('usercount', (count) => {
 					this.setState({ usercount: count })
 				});
+				sock.on('addnote', (measure, newNote) => {
+					console.log("Received addNote", newNote)
+					this.addNote(measure, newNote.pitch, newNote.noteLength, newNote.loc)
+				})
 				this.setState({ socket: sock })
 			})
 			.catch(function (error) {
 				console.log(error);
 			})
+	}
+	addNote(measure, newPitch, noteSelection, location) {
+		//adds note to the measure and updates render
+		let newNote = this.getStaff(measure).makeNote(newPitch, noteSelection, measure, location);
+		console.log(newNote)
+		this.getStaff(measure).addNote(newNote)
+		this.setState({ saffs: this.state.staffs })
 	}
 	getPitch(measure) {
 		//Getting pitch based on mouse x,y (WIP)
