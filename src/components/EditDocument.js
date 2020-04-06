@@ -16,7 +16,7 @@ class EditDocument extends Component {
 			<div className="EditDocument">
 
 				<div className="row align-items-center head section">
-					<div className="col-2">
+					<div className="col">
 						<div className="row">
 							<div className="col-6 padding-0">
 								<h4 className="float-right"> CLEFS:&nbsp; </h4>
@@ -35,7 +35,7 @@ class EditDocument extends Component {
 						</div>
 					</div>
 
-					<div className="col-3">
+					<div className="col">
 						<div className="row">
 							<div className="col-7 padding-0">
 								<h4 className="float-right"> Key Signature:&nbsp; </h4>
@@ -54,7 +54,7 @@ class EditDocument extends Component {
 						</div>
 					</div>
 
-					<div className="col-3">
+					<div className="col">
 						<div className="row">
 							<div className="col-8 padding-0">
 								<h4 className="float-right"> Time Signature:&nbsp; </h4>
@@ -74,7 +74,7 @@ class EditDocument extends Component {
 					</div>
 
 
-					<div className="col padding-0">
+					<div className="col-6 padding-0">
 
 						<div className="noteBar" id="noteBar">
 							{

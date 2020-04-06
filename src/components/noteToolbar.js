@@ -5,10 +5,12 @@ import '../css/noteToolbar.css';
 import Note from './Note';
 import WholeNote from './WholeNote';
 import HalfNote from './HalfNote';
-import WholeRest from './WholeRest';
-import HalfRest from './HalfRest';
-import EighthNote from './EighthNote';
 import QuarterNote from './QuarterNote';
+import EighthNote from './EighthNote';
+import WholeRest from './WholeRest';
+import QuarterRest from './QuarterRest';
+import HalfRest from './HalfRest';
+import EighthRest from './EighthRest';
 
 class NoteTB extends Component {
   render() {
@@ -25,16 +27,25 @@ class NoteTB extends Component {
       </div >
     );
   }
-	constructor(props) {
-		super(props);
-		this.state = {
-			index: null,
-			init_notes: "",
-			notes: [new EighthNote({ note: "G" }),new QuarterNote({ note: "G" }),new HalfNote({ note: "G" }),new WholeNote({ note: "G" })]
-		}
-	}
-	getNote(i) {
-		return this.state.notes[i]
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      index: null,
+      init_notes: "",
+      notes: [
+        new EighthNote({ note: "G" }),
+        new QuarterNote({ note: "G" }),
+        new HalfNote({ note: "G" }),
+        new WholeNote({ note: "G" }),
+        new EighthRest({ note: "R" }),
+        new QuarterRest({ note: "R" }),
+        new HalfRest({ note: "R" }),
+        new WholeRest({ note: "R" }),
+      ]
+    }
+  }
+  getNote(i) {
+    return this.state.notes[i]
+  }
 }
 export default NoteTB;
