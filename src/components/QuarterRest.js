@@ -11,7 +11,7 @@ class QuarterRest extends Note {
 	}
 	render() {
 		return (
-			<div className="note quarterrest">
+			<div className={"note quarterrest "+ this.state.note} id="8">
 				<img src={quarterRest} className={"quarter_rest measure:" + this.state.measure + " location:" + this.state.location} />
 			</ div>
 		);

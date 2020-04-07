@@ -1,12 +1,26 @@
 .note {
 	position: relative;
-	z-index: 1;
-	margin-top: -100px;
+	/* z-index: 1; */
+	/* margin-top: -100px; */
 	height: 100px;
 	/* outline: solid 1px black; */
 	display: inline-block;
 	margin-right: 45px;
 	border-bottom: none;
+}
+
+
+
+.note.NTB {
+	margin-top: 0;
+}
+
+.note.NTBR {
+	margin-top: 0;
+}
+
+.note.R {
+	margin-top: -100px;
 }
 
 .note.E {
@@ -38,7 +52,7 @@
 }
 
 .flagnote.E {
-	margin-top: -45px;
+	margin-top: -90px;
 }
 
 .flagnote.F {
@@ -50,7 +64,7 @@
 }
 
 .flagnote.A {
-	margin-top: -62px;
+	margin-top: -124px;
 }
 
 .flagnote.B {

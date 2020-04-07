@@ -7,8 +7,10 @@
 }
 
 .noteBar {
-	height: 130px;
+	height: 125px;
 	/* width: 90%; */
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 .selected {

@@ -10,7 +10,8 @@ class WholeRest extends Note {
 	}
 	render() {
 		return (
-			<div className="note">
+			<div className={"note wholerest "+ this.state.note} id="32">
+				<div className={"vlineInvis measure:" + this.state.measure + " location:" + this.state.location}></div>
 				<div className={"whole_rest measure:" + this.state.measure + " location:" + this.state.location}></div>
 			</ div>
 		);

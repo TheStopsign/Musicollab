@@ -1,8 +1,14 @@
+.vlineInvis {
+	width: 100%;
+	height: 87.5px;
+	border-right: solid 0px black;
+}
+
 .whole_rest {
-	position: relative;
+	margin-top: -63px;
 	background: black;
 	top: 20px;
 	height: 12.5px;
 	width: 30px;
-	display: inline-block;
+
 }

@@ -11,7 +11,7 @@ class EighthRest extends Note {
 	}
 	render() {
 		return (
-			<div className="note eighthrest">
+			<div className={"note eighthrest "+ this.state.note} id="4">
 				<img src={eighthRest} className={"eighth_rest measure:" + this.state.measure + " location:" + this.state.location} />
 			</ div>
 		);

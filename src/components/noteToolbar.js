@@ -20,7 +20,7 @@ class NoteTB extends Component {
         <div className="notes row" id="ntb">
           {
             this.state.notes.map(function (note) {
-              return note.render()
+              return <div className="space"> { note.render() } </div>
             })
           }
         </div>
@@ -30,17 +30,15 @@ class NoteTB extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: null,
-      init_notes: "",
       notes: [
-        new EighthNote({ note: "G" }),
-        new QuarterNote({ note: "G" }),
-        new HalfNote({ note: "G" }),
-        new WholeNote({ note: "G" }),
-        new EighthRest({ note: "R" }),
-        new QuarterRest({ note: "R" }),
-        new HalfRest({ note: "R" }),
-        new WholeRest({ note: "R" }),
+        new EighthNote({ note: "NTB" }),
+        new QuarterNote({ note: "NTB" }),
+        new HalfNote({ note: "NTB" }),
+        new WholeNote({ note: "NTB" }),
+        new EighthRest({ note: "NTBR" }),
+        new QuarterRest({ note: "NTBR" }),
+        new HalfRest({ note: "NTBR" }),
+        new WholeRest({ note: "NTBR" }),
       ]
     }
   }

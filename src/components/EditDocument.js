@@ -160,15 +160,16 @@ class EditDocument extends Component {
 					//find path to current element
 					let path = [e.target];
 					let elem = e.target;
-					for (var i = 0; i < 3; i++) {
+					for (var i = 0; i < 4; i++) {
 						path.push(elem.parentElement);
 						elem = elem.parentElement;
 					}
+
 					//use path to check if current element is a note
-					if (path[1].classList[0] == "note") {
+					if (path[1].classList[0] == "note" || path[1].classList[0] == "rest") {
 
 						// if current note is on the toolbar at the top, select it
-						if (path[2].id == "ntb" || path[3].id == "ntb") {
+						if (path[3].id == "ntb" || path[4].id == "ntb") {
 							if (this.state.selectedNote != 0) {
 								this.state.selectedNote.className = this.state.selectedNote.className.slice(0, -8);
 							}
@@ -182,9 +183,15 @@ class EditDocument extends Component {
 							var noteSelection = this.state.selectedNote.id;
 
 							//gets the newNote information and creates it
-							var measure = Number(e.target.classList[1].slice(8));
+							console.log(e.target.classList);
+							var measure = Number(e.target.classList[1].slice(8)); //wont this break with more than 9 measures?
 							var location = Number(e.target.classList[2].slice(9));
-							var newPitch = docInfo.getPitch(measure);
+							var newPitch = 0;
+							if (this.state.selectedNote.classList.contains("NTBR")) {
+								newPitch = "R"
+							} else {
+								newPitch = docInfo.getPitch(measure);
+							}
 
 							var newNote = { pitch: newPitch, noteLength: noteSelection, loc: location }
 
@@ -223,7 +230,6 @@ class EditDocument extends Component {
 	addNote(measure, newPitch, noteSelection, location) {
 		//adds note to the measure and updates render
 		let newNote = this.getStaff(measure).makeNote(newPitch, noteSelection, measure, location);
-		console.log(newNote)
 		this.getStaff(measure).addNote(newNote)
 		this.setState({ saffs: this.state.staffs })
 	}

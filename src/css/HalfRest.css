@@ -1,8 +1,14 @@
+.vlineInvis {
+	width: 100%;
+	height: 87.5px;
+	border-right: solid 0px black;
+}
+
 .half_rest {
-	position: relative;
+	margin-top: -48px;
 	background: black;
 	top: 35px;
 	height: 12.5px;
 	width: 30px;
-	display: inline-block;
+
 }
