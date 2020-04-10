@@ -61,14 +61,18 @@ class EditDocument extends Component {
 							</div>
 
 							<div className="col padding-0">
+								<textarea cols="5" rows="1" id="topTime"></textarea> 
 								<div className="dropdown">
-									<select>
-										<option value="1">4/4</option>
-										<option value="2">3/4</option>
-										<option value="3">2/4</option>
+									<select id="bottomTime">
+										<option value="2">2</option>
+										<option value="4">4</option>
+										<option value="8">8</option>
+										<option value="16">16</option>
+										<option value="32">32</option>
 
 									</select>
 								</div>
+								<button id="timeButton" type="button">Update</button>
 							</div>
 						</div>
 					</div>
@@ -154,6 +158,25 @@ class EditDocument extends Component {
 				document.getElementById("addStaffBtn").addEventListener("click", () => {
 					this.state.socket.emit('addstaff', { room: "" + this.state.document._id });
 				})
+				
+				document.getElementById("timeButton").addEventListener("click", () => {
+					// gets the current time sig from the temporary GUI
+					var topTime = document.getElementById("topTime").value;
+					var bottomTime = document.getElementById("bottomTime")
+					bottomTime = bottomTime.options[bottomTime.selectedIndex].value;
+
+					// if note count hasn't changed we don't have to update anything
+					if(this.state.noteCount == topTime * (32/bottomTime))
+						return;
+					// calculates the noteCount
+					this.state.noteCount = topTime * (32/bottomTime);
+					alert(topTime + "\n--\n" + bottomTime + "       =  " + this.state.noteCount);
+					// updates the number of notes in each measure
+					for(var i=0; i <this.state.staffs.length; i++){
+						this.getStaff(i).changeTime(this.state.noteCount);
+					}
+					this.setState({ staffs: this.state.staffs })
+				})
 
 				var docInfo = this;
 				document.addEventListener('click', (e) => {
@@ -231,7 +254,7 @@ class EditDocument extends Component {
 		//adds note to the measure and updates render
 		let newNote = this.getStaff(measure).makeNote(newPitch, noteSelection, measure, location);
 		this.getStaff(measure).addNote(newNote)
-		this.setState({ saffs: this.state.staffs })
+		this.setState({ staffs: this.state.staffs })
 	}
 	getPitch(measure) {
 		//Getting pitch based on mouse x,y (WIP)
