@@ -8,9 +8,9 @@ import axios from 'axios';
 class Login extends Component {
 	render() {
 		if (this.state.redirectTo) {
-            return <Redirect to={{ pathname: this.state.redirectTo }} />
-        } else {
-	        return (
+			return <Redirect to={{ pathname: this.state.redirectTo }} />
+		} else {
+			return (
 				<div className="Login">
 
 					{/* <div class="container-fluid"> */}
@@ -34,18 +34,18 @@ class Login extends Component {
 								</div>
 
 								<div className="row Email">
-									<input className="form-control concave" 
+									<input className="form-control"
 										type="text"
 										id="email"
 										name="email"
-										placeholder="Enter email" 
+										placeholder="Enter email"
 										value={this.state.email}
 										onChange={this.handleChange}
 									/>
 								</div>
 
 								<div className="row Password">
-									<input className="form-control concave"
+									<input className="form-control"
 										type="password"
 										name="password"
 										placeholder="Enter password"
@@ -73,7 +73,7 @@ class Login extends Component {
 
 								<div className="row justify-content-center">
 									<div className="SubmitButton">
-										<button 
+										<button
 											className="btn btn-primary btn-block"
 											onClick={this.handleSubmit}
 											type="submit">Submit</button>
@@ -96,47 +96,47 @@ class Login extends Component {
 	}
 
 	constructor() {
-        super()
-        this.state = {
-            email: '',
-            password: '',
-            redirectTo: null
-        }
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-  
-    }
+		super()
+		this.state = {
+			email: '',
+			password: '',
+			redirectTo: null
+		}
+		this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleChange = this.handleChange.bind(this)
 
-    // sets state to the text typed in the form (aka displays what you typed in the box)
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
-    }
+	}
 
-    handleSubmit(event) {
-        event.preventDefault()
-        console.log('login handleSubmit')
+	// sets state to the text typed in the form (aka displays what you typed in the box)
+	handleChange(event) {
+		this.setState({
+			[event.target.name]: event.target.value
+		})
+	}
 
-        axios.post('/accounts/login', {
+	handleSubmit(event) {
+		event.preventDefault()
+		console.log('login handleSubmit')
+
+		axios.post('/accounts/login', {
 			email: this.state.email,
 			password: this.state.password
 		})
 			.then(response => {
-                console.log('login response: ')
-                console.log(response)
-                if (response.status === 200) {
-                    // update the state to redirect to home
-                    this.setState({
-                        redirectTo: '/home'
-                    })
-                }
+				console.log('login response: ')
+				console.log(response)
+				if (response.status === 200) {
+					// update the state to redirect to home
+					this.setState({
+						redirectTo: '/home'
+					})
+				}
 			}).catch(error => {
-                console.log('login error: ')
-                console.log(error);
-                
-            })
-    }
+				console.log('login error: ')
+				console.log(error);
+
+			})
+	}
 }
 
 export default Login;
