@@ -170,7 +170,7 @@ class EditDocument extends Component {
 						return;
 					// calculates the noteCount
 					this.state.noteCount = topTime * (32/bottomTime);
-					alert(topTime + "\n--\n" + bottomTime + "       =  " + this.state.noteCount);
+					// alert(topTime + "\n--\n" + bottomTime + "       =  " + this.state.noteCount);
 					// updates the number of notes in each measure
 					for(var i=0; i <this.state.staffs.length; i++){
 						this.getStaff(i).changeTime(this.state.noteCount);
