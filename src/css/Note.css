@@ -9,8 +9,6 @@
 	border-bottom: none;
 }
 
-
-
 .note.NTB {
 	margin-top: 0;
 }
@@ -101,5 +99,37 @@
 	height: 25px;
 	border-radius: 50%;
 	z-index: 2;
+	background: black;
+}
+
+.dots {
+	display: inline-block;
+	position: relative;
+	top: -25px;
+	left: 35px;
+}
+
+.dot.first {
+	/* position: relative;
+	top: -10px;
+	left: 45px;
+	z-index: 100; */
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: black;
+}
+
+.dot.additional {
+	/* position: relative;
+	top: -20px;
+	left: 30px;
+	z-index: 100; */
+	margin-left: 5px;
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
 	background: black;
 }
