@@ -106,26 +106,18 @@
 	display: inline-block;
 	position: relative;
 	top: -25px;
-	left: 35px;
-}
-
-.dot.first {
-	/* position: relative;
-	top: -10px;
-	left: 45px;
-	z-index: 100; */
-	display: inline-block;
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-	background: black;
-}
-
-.dot.additional {
-	/* position: relative;
-	top: -20px;
 	left: 30px;
-	z-index: 100; */
+}
+
+.dots.special {
+	top: 25px;
+}
+
+.dots.special2 {
+	top: -12.5px;
+}
+
+.dot {
 	margin-left: 5px;
 	display: inline-block;
 	width: 8px;

@@ -26,15 +26,9 @@ class Note extends Component {
 	getDots() {
 		let dots = [];
 		for (var i = 0; i < this.state.dots; i++) {
-			if (i == 0) {
-				dots.push(
-					<div className="dot first" />
-				);
-			} else {
-				dots.push(
-					<div className="dot additional" />
-				);
-			}
+			dots.push(
+				<div className="dot" />
+			);
 		}
 		return dots;
 	}
