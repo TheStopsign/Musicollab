@@ -9,8 +9,6 @@
 	border-bottom: none;
 }
 
-
-
 .note.NTB {
 	margin-top: 0;
 }
@@ -101,5 +99,29 @@
 	height: 25px;
 	border-radius: 50%;
 	z-index: 2;
+	background: black;
+}
+
+.dots {
+	display: inline-block;
+	position: relative;
+	top: -25px;
+	left: 30px;
+}
+
+.dots.special {
+	top: 25px;
+}
+
+.dots.special2 {
+	top: -12.5px;
+}
+
+.dot {
+	margin-left: 5px;
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
 	background: black;
 }

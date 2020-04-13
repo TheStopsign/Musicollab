@@ -13,8 +13,9 @@ class EighthNote extends Note {
 		return (
 			<div className={"flagnote eighthnote " + this.state.note}>
 				<div className={"note flagnote eighthnote measure:" + this.state.measure + " location:" + this.state.location} id="4">
-					<div className={"vline measure:" + this.state.measure + " location:" + this.state.location }></div>
-					<div className={"circle measure:" + this.state.measure + " location:" + this.state.location }></div>
+					<div className={"vline measure:" + this.state.measure + " location:" + this.state.location}></div>
+					<div className={"circle measure:" + this.state.measure + " location:" + this.state.location}></div>
+					<div className="dots">{this.getDots()}</div>
 				</ div>
 				<Flag />
 			</div>
