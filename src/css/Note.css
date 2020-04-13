@@ -19,6 +19,10 @@
 	left: -3px;
 }
 
+.flag:only-of-type {
+	top: -70px;
+}
+
 .flag:nth-of-type(2) {
 	top: -33px;
 	left: -33px;
@@ -121,5 +125,29 @@
 	height: 25px;
 	border-radius: 50%;
 	z-index: 2;
+	background: black;
+}
+
+.dots {
+	display: inline-block;
+	position: relative;
+	top: -25px;
+	left: 30px;
+}
+
+.dots.special {
+	top: 25px;
+}
+
+.dots.special2 {
+	top: -12.5px;
+}
+
+.dot {
+	margin-left: 5px;
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
 	background: black;
 }
