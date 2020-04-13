@@ -13,6 +13,7 @@ class ThirtySecondRest extends Note {
 		return (
 			<div className={"note thirtysecondrest " + this.state.note} id="1">
 				<img src={thirtySecondRest} className={"thirtysecond_rest measure:" + this.state.measure + " location:" + this.state.location} />
+				<div className="dots special">{this.getDots()}</div>
 			</ div>
 		);
 	}
