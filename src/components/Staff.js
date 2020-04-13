@@ -7,6 +7,8 @@ import WholeNote from './WholeNote';
 import HalfNote from './HalfNote';
 import QuarterNote from './QuarterNote';
 import EighthNote from './EighthNote';
+import SixteenthNote from './SixteenthNote';
+import ThirtySecondNote from './ThirtySecondNote';
 import WholeRest from './WholeRest';
 import HalfRest from './HalfRest';
 import QuarterRest from './QuarterRest';
@@ -43,13 +45,17 @@ class Staff extends Component {
 	}
 	makeNote(note, noteValue, measure, locationCount) {
 		if (noteValue == 1) {
-			alert("32nd note note implemented yet")
-			return null;
+			if (note == "R")
+				return new ThirtySecondNote({ note: "A", measure: measure, location: locationCount });
+			else
+				return new ThirtySecondNote({ note: note, measure: measure, location: locationCount });
 		}
 		//16th Note
 		else if (noteValue == 2) {
-			alert("32nd note note implemented yet")
-			return null;
+			if (note == "R")
+				return new SixteenthNote({ note: "A", measure: measure, location: locationCount });
+			else
+				return new SixteenthNote({ note: note, measure: measure, location: locationCount });
 		}
 		//8th Note
 		else if (noteValue == 4) {
