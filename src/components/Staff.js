@@ -13,6 +13,8 @@ import WholeRest from './WholeRest';
 import HalfRest from './HalfRest';
 import QuarterRest from './QuarterRest';
 import EighthRest from './EighthRest';
+import SixteenthRest from './SixteenthRest';
+import ThirtySecondRest from './ThirtySecondRest';
 
 class Staff extends Component {
 	render() {
@@ -46,14 +48,14 @@ class Staff extends Component {
 	makeNote(note, noteValue, measure, locationCount) {
 		if (noteValue == 1) {
 			if (note == "R")
-				return new ThirtySecondNote({ note: "A", measure: measure, location: locationCount });
+				return new ThirtySecondRest({ note: note, measure: measure, location: locationCount });
 			else
 				return new ThirtySecondNote({ note: note, measure: measure, location: locationCount });
 		}
 		//16th Note
 		else if (noteValue == 2) {
 			if (note == "R")
-				return new SixteenthNote({ note: "A", measure: measure, location: locationCount });
+				return new SixteenthRest({ note: note, measure: measure, location: locationCount });
 			else
 				return new SixteenthNote({ note: note, measure: measure, location: locationCount });
 		}

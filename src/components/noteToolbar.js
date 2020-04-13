@@ -13,6 +13,8 @@ import WholeRest from './WholeRest';
 import QuarterRest from './QuarterRest';
 import HalfRest from './HalfRest';
 import EighthRest from './EighthRest';
+import SixteenthRest from './SixteenthRest';
+import ThirtySecondRest from './ThirtySecondRest';
 
 class NoteTB extends Component {
   render() {
@@ -21,8 +23,8 @@ class NoteTB extends Component {
 
         <div className="notes row" id="ntb">
           {
-            this.state.notes.map(function (note) {
-              return <div className="space"> {note.render()} </div>
+            this.state.notes.map(function (note, i) {
+              return <div className="space" key={i}> {note.render()} </div>
             })
           }
         </div>
@@ -39,6 +41,8 @@ class NoteTB extends Component {
         new QuarterNote({ note: "NTB" }),
         new HalfNote({ note: "NTB" }),
         new WholeNote({ note: "NTB" }),
+        new ThirtySecondRest({ note: "NTBR" }),
+        new SixteenthRest({ note: "NTBR" }),
         new EighthRest({ note: "NTBR" }),
         new QuarterRest({ note: "NTBR" }),
         new HalfRest({ note: "NTBR" }),
