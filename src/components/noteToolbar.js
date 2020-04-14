@@ -20,7 +20,7 @@ class NoteTB extends Component {
         <div className="notes row" id="ntb">
           {
             this.state.notes.map(function (note) {
-              return <div className="space"> { note.render() } </div>
+              return <div className="space" id="fakenote"> { note.render() } </div>
             })
           }
         </div>
