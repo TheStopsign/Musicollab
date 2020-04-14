@@ -133,6 +133,14 @@ h3 {
   margin-bottom: 10px;
 }
 
+.SignUp .Password {
+  margin-bottom: 10px;
+}
+
+.SignUp .FirstName p{
+  font-color: #FFF;
+}
+
 /*Home.css, Profile.css, Login.css, SignUp.css*/
 .Home .head,
 .Profile .head,

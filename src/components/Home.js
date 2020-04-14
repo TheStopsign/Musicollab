@@ -126,7 +126,20 @@ class Home extends Component {
 		return this.state.documents
 	}
 	handleLogout(event) {
-		this.setState({ redirectTo: '/' })
+		console.log('Attempting logout')
+		
+		axios.get('accounts/logout') 
+			.then(res => {
+				console.log('logout res:', res)
+				this.setState({ redirectTo: '/' });
+			})
+			.catch(function (error) {
+				console.log('Logout error')
+				console.log(error);
+			})
+		
+
+		//this.setState({ redirectTo: '/' });
 	}
 	async newDoc() {
 		axios.post('http://localhost:8000/documents/new')

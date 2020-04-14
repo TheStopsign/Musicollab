@@ -122,10 +122,10 @@ class Login extends Component {
 			email: this.state.email,
 			password: this.state.password
 		})
-			.then(response => {
+			.then(res => {
                 console.log('login response: ')
-                console.log(response)
-                if (response.status === 200) {
+                console.log(res)
+                if (res.status === 200) {
                     // update the state to redirect to home
                     this.setState({
                         redirectTo: '/home'

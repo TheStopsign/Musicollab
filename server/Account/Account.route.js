@@ -25,9 +25,9 @@ accountRouter.route('/').get(function (req, res) { //when the server receives a 
 		})
 });
 
-accountRouter.route('/:id').get(function (req, res) { //when the server receives a request to the /accounts/ACCOUNT_OBJ_ID route
+accountRouter.route('/user/:id').get(function (req, res) { //when the server receives a request to the /accounts/ACCOUNT_OBJ_ID route
 	let id = req.params.id;
-	console.log("/accounts/" + id + "GET received")
+	console.log("/accounts/user/" + id + "GET received")
 	mongoose.connect(config.MONGO_URI)
 		.then(() => {
 			Account.findById(id, function (err, user) { //query for specific account
@@ -53,7 +53,7 @@ accountRouter.route('/signup').post(function (req, res){
     mongoose.connect(config.MONGO_URI)
 		.then(() => {
 			// Check if account already exists w/ email
-			console.log('we findin the account')
+			//console.log('Finding the account..')
 			Account.findOne({ email: email }, function(err, account){
 			    if (err) {
 			        console.log('Account.route.js post error: ', err)
@@ -64,7 +64,7 @@ accountRouter.route('/signup').post(function (req, res){
 			    }
 			    // Account is new, add to database
 			    else {
-			    	console.log('we making the account now bois')
+			    	//console.log('Making account with email: ', email)
 			        const newAcc = new Account({
 			            firstName: firstName,
 			            lastName: lastName,
@@ -86,9 +86,27 @@ accountRouter.route('/signup').post(function (req, res){
 
 // ================= LOGIN ===========================
 accountRouter.post('/login', passport.authenticate('local', { failureFlash: true}),(req, res) => {
-        console.log('SUCCESS logged in', req.user._id);
+        console.log('/accounts/login POST received, user:', req.user);
         res.status(200).json(req.user)
     }
 );
+
+// =================== LOG OUT =====================
+accountRouter.get('/logout', (req, res, next) => {
+	console.log('/account/logout GET received, session:', req.session);
+	//console.log('user to be logged out:', req.user)
+
+	if(req.session) {
+		// delete the session
+		req.session.destroy(function(err){
+			if(err){
+				console.log('session destroy error:', err)
+				return next(err);
+			}
+		});
+		console.log('Session closed successfully');
+		return res.send({ success: true });
+	}
+});
 
 module.exports = accountRouter;
