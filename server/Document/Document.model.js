@@ -7,9 +7,42 @@ let Document = new Schema({
 		type: String,
 		default: "Untitled Document"
 	},
-	musicData: {
-		type: String,
-		default: ""
+	notes: {
+		type: Array,
+		default: [
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+			"NR450",
+		]
 	}
 });
 

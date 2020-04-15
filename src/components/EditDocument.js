@@ -222,10 +222,36 @@ class EditDocument extends Component {
 					this.addNote(measure, newNote.pitch, newNote.noteLength, newNote.loc)
 				})
 				this.setState({ socket: sock })
+				this.build()
 			})
 			.catch(function (error) {
 				console.log(error);
 			})
+	}
+	build() {
+		let notes = this.state.document.notes
+		let i = 0
+		let note = 0
+		let localnote = 0
+		let measure = -1
+		while (i < notes.length) {
+			if (i % 32 == 0) {
+				this.addStaff();
+				measure++;
+				localnote = 0;
+			}
+			//add note
+			let note = notes[i];
+			let accidental = note[0];
+			let letter = note[1];
+			let octave = parseInt(note[2])
+			let length = 2 ** parseInt(note[3]);
+			let dots = parseInt(note[4])
+			this.addNote(measure, letter, length, localnote)
+			note++;
+			localnote++;
+			i = i + length;
+		}
 	}
 	addNote(measure, newPitch, noteSelection, location) {
 		//adds note to the measure and updates render
