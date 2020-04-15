@@ -150,8 +150,6 @@ class EditDocument extends Component {
 	}
 	componentDidMount() {
 		this.joinEditSession()
-		// .then(() => {
-		// }); //when page loads, first get the document info
 	}
 	joinEditSession() {
 		axios.get(`http://localhost:8000/documents/` + this.props.match.params.id) //make a GET request to the server
@@ -171,7 +169,7 @@ class EditDocument extends Component {
 				})
 				sock.on('connect', () => {
 					console.log(sock.id);
-					sock.emit("joinsession", { room: "" + this.state.document._id });
+					sock.emit("joinsession", { room: "" + this.state.document._id, document: this.state.document });
 				});
 				this.setState({ socket: sock })
 

@@ -26,7 +26,7 @@ documentRouter.route('/').get(function (req, res) { //when the server receives a
 
 documentRouter.route('/:id').get(function (req, res) { //when the server receives a request to the /documents/DOC_OBJ_ID route
 	let id = req.params.id;
-	console.log("/documents/" + id + "GET received")
+	console.log("/documents/" + id + " GET received")
 	mongoose.connect(config.MONGO_URI)
 		.then(() => {
 			Document.findById(id, function (err, user) { //query for specific document
@@ -53,6 +53,33 @@ documentRouter.route('/new').post(function (req, res) {
 				else res.json(savedDoc)
 			}).then(() => {
 				mongoose.disconnect()
+			})
+		})
+});
+
+documentRouter.route('/update/:id').post(function (req, res) {
+	let id = req.params.id;
+	console.log("/documents/" + id + " POST received")
+
+	mongoose.connect(config.MONGO_URI)
+		.then(() => {
+			let updated_doc = req.body.updated_doc;
+			Document.findByIdAndUpdate(id,
+				{
+					title: updated_doc.title,
+					notes: updated_doc.notes
+				},
+				function (err, document) {
+					if (err)
+						res.status(404).send("submission not found");
+					else {
+						res.json(document);
+					}
+				}
+			).then(() => {
+				mongoose.disconnect();
+			}).catch(function (err) {
+				console.log("ERROR IN findByIdAndUpdate: ", err)
 			})
 		})
 });

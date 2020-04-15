@@ -22,6 +22,8 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session)
 const flash = require('connect-flash');
 
+const axios = require('axios');
+
 seedDB(); // Populate database with test data
 
 var app = express();
@@ -62,7 +64,52 @@ var io = socketio(ioserver, {
 	origins: allowedOrigins
 });
 
+function updateFromHistory(docID) {
+	let updated_notes = roomData.get(docID).notes;
+	let hist = roomHistory.get(docID);
+	for (let i = 0; i < hist.length; i++) {
+		let action = hist[i]
+		if (action[0] == "addstaff") {
+			updated_notes = updated_notes.concat(Array(32).fill("NR450"))
+		} else if (action[0] == "addnote") {
+			let staff_offset = action[1].staff * 32
+			let note_offset = action[1].note.loc
+			let n = 0
+			let localIndex = 0
+			while (n != note_offset) {
+				localIndex += 2 ** (parseInt(updated_notes[staff_offset + localIndex][3]))
+				console.log(localIndex)
+				n++;
+			}
+			let len = parseInt(action[1].note.noteLength)
+			toadd = "N" + action[1].note.pitch + "4" + Math.log2(len) + "0";
+			let j = 0
+			while (j < len) {
+				updated_notes[staff_offset + localIndex + j] = toadd
+				j++
+			}
+			console.log(updated_notes)
+			//FILL IN DYNAMICALLY ADDED NOTES
+		}
+	}
+	let updated_doc = {
+		title: roomData.get(docID).title,
+		notes: updated_notes
+	}
+	axios.post(`http://localhost:8000/documents/update/` + docID, { updated_doc })
+		.then(res => {
+			console.log("Successfully updated document")
+			roomHistory.delete(docID)
+			roomData.delete(docID)
+			console.log("History cleared in " + docID)
+		})
+		.catch(function (error) {
+			console.log(error);
+		})
+}
+
 var roomHistory = new Map()
+var roomData = new Map()
 
 io.on('connection', function (socket) {
 	console.log("User connected")
@@ -76,6 +123,7 @@ io.on('connection', function (socket) {
 		if (room.length == 1) {
 			//first to join room!
 			roomHistory.set(data.room, [])
+			roomData.set(data.room, data.document)
 			console.log("History", roomHistory.get(data.room))
 		} else {
 			console.log("History", roomHistory.get(data.room))
@@ -106,9 +154,9 @@ io.on('connection', function (socket) {
 
 		socket.on('disconnect', function () {
 			io.in("" + data.room).emit('usercount', room.length);
-			console.log('User Disconnected')
+			console.log('User disconnected from ' + data.room)
 			if (room.length == 0) {
-				// save to database
+				updateFromHistory(data.room)
 			}
 		});
 	})
