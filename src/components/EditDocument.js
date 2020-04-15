@@ -150,7 +150,31 @@ class EditDocument extends Component {
 	}
 	componentDidMount() {
 		this.joinEditSession()
-			.then(() => {
+		// .then(() => {
+		// }); //when page loads, first get the document info
+	}
+	joinEditSession() {
+		axios.get(`http://localhost:8000/documents/` + this.props.match.params.id) //make a GET request to the server
+			.then(res => {
+				this.setState({ document: res.data }); //handle the response payload
+				const sock = io.connect("http://localhost:3001");
+
+				sock.on('addstaff', () => {
+					this.addStaff()
+				});
+				sock.on('usercount', (count) => {
+					this.setState({ usercount: count })
+				});
+				sock.on('addnote', (measure, newNote) => {
+					console.log("Received addNote", newNote)
+					this.addNote(measure, newNote.pitch, newNote.noteLength, newNote.loc)
+				})
+				sock.on('connect', () => {
+					console.log(sock.id);
+					sock.emit("joinsession", { room: "" + this.state.document._id });
+				});
+				this.setState({ socket: sock })
+
 				document.getElementById("addStaffBtn").addEventListener("click", () => {
 					this.state.socket.emit('addstaff', { room: "" + this.state.document._id });
 				})
@@ -200,28 +224,6 @@ class EditDocument extends Component {
 					}
 				});
 				this.setState({ staffs: docInfo.state.staffs })
-			}); //when page loads, first get the document info
-	}
-	async joinEditSession() {
-		axios.get(`http://localhost:8000/documents/` + this.props.match.params.id) //make a GET request to the server
-			.then(res => {
-				this.setState({ document: res.data }); //handle the response payload
-				const sock = io.connect("http://localhost:3001");
-				sock.on('connect', () => {
-					console.log(sock.id);
-					sock.emit("joinsession", { room: "" + this.state.document._id });
-				});
-				sock.on('addstaff', () => {
-					this.addStaff()
-				});
-				sock.on('usercount', (count) => {
-					this.setState({ usercount: count })
-				});
-				sock.on('addnote', (measure, newNote) => {
-					console.log("Received addNote", newNote)
-					this.addNote(measure, newNote.pitch, newNote.noteLength, newNote.loc)
-				})
-				this.setState({ socket: sock })
 				this.build()
 			})
 			.catch(function (error) {

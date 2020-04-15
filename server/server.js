@@ -62,6 +62,8 @@ var io = socketio(ioserver, {
 	origins: allowedOrigins
 });
 
+var roomHistory = new Map()
+
 io.on('connection', function (socket) {
 	console.log("User connected")
 	socket.on('joinsession', function (data) {
@@ -71,19 +73,43 @@ io.on('connection', function (socket) {
 		console.log("\t" + room.length + " user(s) connected")
 		io.in("" + data.room).emit('usercount', room.length);
 
+		if (room.length == 1) {
+			//first to join room!
+			roomHistory.set(data.room, [])
+			console.log("History", roomHistory.get(data.room))
+		} else {
+			console.log("History", roomHistory.get(data.room))
+			let hist = roomHistory.get(data.room);
+			for (let i = 0; i < hist.length; i++) {
+				let action = hist[i]
+				console.log(action)
+				if (action[0] == "addstaff") {
+					console.log("executing history addstaff")
+					socket.emit(action[0]);
+				} else if (action[0] == "addnote") {
+					console.log("executing history addnote")
+					socket.emit(action[0], action[1].staff, action[1].note);
+				}
+			}
+		}
+
 		socket.on('addstaff', function (data) {
-			console.log("Staff added in " + data.room)
 			io.in("" + data.room).emit("addstaff");
+			roomHistory.get(data.room).push(["addstaff", data])
+			console.log("History", roomHistory.get(data.room))
 		})
 		socket.on('addnote', function (data) {
-			console.log("addnote")
-			console.log(data)
 			io.in("" + data.room).emit("addnote", data.staff, data.note);
+			roomHistory.get(data.room).push(["addnote", data])
+			console.log("History", roomHistory.get(data.room))
 		})
 
 		socket.on('disconnect', function () {
 			io.in("" + data.room).emit('usercount', room.length);
 			console.log('User Disconnected')
+			if (room.length == 0) {
+				// save to database
+			}
 		});
 	})
 })
