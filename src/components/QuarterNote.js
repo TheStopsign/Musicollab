@@ -6,7 +6,15 @@ import '../css/QuarterNote.css';
 
 class QuarterNote extends Note {
 	getSize() {
-		return 8;
+		var size = 8;
+		var dots = this.getDots().length;
+		var dotValue = 4;
+		while(dots > 0) {
+			size += dotValue;
+			dotValue /= 2;
+			dots -= 1;
+		}
+		return size;
 	}
 	render() {
 		return (

@@ -11,7 +11,7 @@ class Note extends Component {
 			offset: 0,
 			measure: props.measure,
 			location: props.location,
-			dots: 0 || props.dots
+			dots: (props.dots)
 		}
 	}
 	componentDidMount() {

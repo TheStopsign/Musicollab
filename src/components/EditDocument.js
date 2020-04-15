@@ -72,7 +72,13 @@ class EditDocument extends Component {
 							</div>
 						</div>
 					</div>
-
+					<div className="dropdown">
+									<select id = "dotCheck">
+										<option value="0">No Dot</option>
+										<option value="1">One Dot</option>
+										<option value="2">Two Dots</option>
+									</select>
+								</div>
 
 					<div className="col-6 padding-0">
 
@@ -187,13 +193,21 @@ class EditDocument extends Component {
 							var measure = Number(e.target.classList[1].slice(8)); //wont this break with more than 9 measures?
 							var location = Number(e.target.classList[2].slice(9));
 							var newPitch = 0;
+							var dotValue = document.getElementById("dotCheck").value
 							if (this.state.selectedNote.classList.contains("NTBR")) {
 								newPitch = "R"
 							} else {
 								newPitch = docInfo.getPitch(measure);
 							}
+							var multiplier = 0.5
+							var noteValue = Number(noteSelection);
+							while(dotValue > 0 || (multiplier * noteSelection) < 1){
+								noteValue += multiplier * noteSelection;
+								dotValue -= 1;
+								multiplier /= 2;
+							}
 
-							var newNote = { pitch: newPitch, noteLength: noteSelection, loc: location }
+							var newNote = { pitch: newPitch, noteLength: noteValue, loc: location }
 
 							this.state.socket.emit('addnote', { room: this.state.document._id, staff: measure, note: newNote });
 						}
