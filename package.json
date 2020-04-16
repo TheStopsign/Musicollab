@@ -14,7 +14,6 @@
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
-    "mongoose": "^5.9.7",
     "indicative": "^7.4.4",
     "mongoose": "^5.9.6",
     "mongoose-seed": "^0.6.0",

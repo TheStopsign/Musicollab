@@ -17,7 +17,7 @@ permissionRouter.route('/load').post(function (req, res) {
 
 permissionRouter.route('/:id').get(function (req, res) { //when the server receives a request to the /permissions/PERM_OBJ_ID route
 	let id = req.params.id;
-	console.log("/permissions/" + id + "GET received")
+	console.log("/permissions/" + id + " GET received")
 	mongoose.connect(config.MONGO_URI)
 		.then(() => {
 			Permission.findById(id, function (err, permission) { //query for specific document
