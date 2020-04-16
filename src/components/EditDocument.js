@@ -132,7 +132,7 @@ class EditDocument extends Component {
 							<h1> Current Viewers: {this.state.usercount}</h1>
 						</div>
 						<div className="col">
-							<Share />
+							<Share docID={this.props.match.params.id} />
 						</div>
 					</footer>
 				</div>
@@ -353,44 +353,44 @@ class EditDocument extends Component {
 			console.log(error)
 		})
 	}
-	shareDoc2(email, isOwner, canEdit, canView){
+	shareDoc2(email, isOwner, canEdit, canView) {
 		let sharedUserID; // To store the sharedUserID if found from /findEmail GET
 
 		// Query database for email (account) to share document with
-		axios.get('http://localhost:8000/accounts/findEmail/'+email)
-			.then(res =>{
+		axios.get('http://localhost:8000/accounts/findEmail/' + email)
+			.then(res => {
 				//found account
-				if(res.status == 200){
+				if (res.status == 200) {
 					console.log('Account found, database id:', res.data)
 					sharedUserID = res.data;
 
 					let permission; // to store new permission object from /new POST
 					// Now create a new permission to represent sharing
-					axios.post('http://localhost:8000/permissions/new', { 
-							document: this.state.document.id,
-							isOwner: isOwner,
-							canEdit: canEdit,
-							canView: canView,
-						}).then(res2 => {
+					axios.post('http://localhost:8000/permissions/new', {
+						document: this.state.document.id,
+						isOwner: isOwner,
+						canEdit: canEdit,
+						canView: canView,
+					}).then(res2 => {
 						console.log('New permission:', res2.data)
 						permission = res2.data;
-						
+
 						// Add the new permission_id to the shared user's list of permissions
-						axios.post('http://localhost:8000/accounts/newPermission', { 
-								permission: permission,
-								userID: sharedUserID
-							}).then(res3 =>{
-								console.log('Successfully saved permission to account', res3);
-							}).catch(error =>{
-								console.log('Share permission with account error: ', error);
-							})
+						axios.post('http://localhost:8000/accounts/newPermission', {
+							permission: permission,
+							userID: sharedUserID
+						}).then(res3 => {
+							console.log('Successfully saved permission to account', res3);
+						}).catch(error => {
+							console.log('Share permission with account error: ', error);
+						})
 					}).catch(error => {
 						console.log('permissions/new error: ', error)
 					})
-				}else{
+				} else {
 					console.log('Account not found, status:', res.status)
 				}
-				
+
 			}).catch(err => {
 				console.log('accounts/findEmail ERROR: ', err)
 			})

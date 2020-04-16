@@ -55,26 +55,26 @@ var p1 = new Permission({
 	canView: true
 })
 
-var p2 = new Permission({
-	document: d1,
-	isOwner: false,
-	canEdit: true,
-	canView: true
-})
+// var p2 = new Permission({
+// 	document: d1,
+// 	isOwner: false,
+// 	canEdit: true,
+// 	canView: true
+// })
 
-var p3 = new Permission({
-	document: d1,
-	isOwner: false,
-	canEdit: false,
-	canView: true
-})
+// var p3 = new Permission({
+// 	document: d1,
+// 	isOwner: false,
+// 	canEdit: false,
+// 	canView: true
+// })
 
-var p4 = new Permission({
-	document: d1,
-	isOwner: false,
-	canEdit: false,
-	canView: false
-})
+// var p4 = new Permission({
+// 	document: d1,
+// 	isOwner: false,
+// 	canEdit: false,
+// 	canView: false
+// })
 
 var a1 = new Account({
 	firstName: "UserA",
@@ -92,7 +92,7 @@ var a2 = new Account({
 	email: "userb@gmail.com",
 	password: "passb",
 	permissions: [
-		p2
+		// p2
 	]
 })
 
@@ -102,7 +102,7 @@ var a3 = new Account({
 	email: "userc@gmail.com",
 	password: "passc",
 	permissions: [
-		p3
+		// p3
 	]
 })
 
@@ -112,12 +112,12 @@ var a4 = new Account({
 	email: "userd@gmail.com",
 	password: "passd",
 	permissions: [
-		p4
+		// p4
 	]
 })
 
 var testAccounts = [a1, a2, a3, a4]
-var testPermissions = [p1, p2, p3, p4]
+var testPermissions = [p1]
 var testDocuments = [d1, d2, d3]
 
 const data = [
