@@ -13,6 +13,7 @@ class QuarterNote extends Note {
 			<div className={"note quarternote " + this.state.note} id="8">
 				<div className={"vline measure:" + this.state.measure + " location:" + this.state.location}></div>
 				<div className={"circle measure:" + this.state.measure + " location:" + this.state.location}></div>
+				<div className="dots">{this.getDots()}</div>
 			</ div>
 		);
 	}
