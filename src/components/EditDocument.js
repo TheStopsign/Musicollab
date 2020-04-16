@@ -6,6 +6,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import Staff from './Staff';
 import NoteTB from './noteToolbar';
+import Share from './Share';
 
 const notetb = new NoteTB()
 
@@ -70,12 +71,12 @@ class EditDocument extends Component {
 
 					</div>
 					<div className="dropdown">
-									<select id = "dotCheck">
-										<option value="0">No Dot</option>
-										<option value="1">One Dot</option>
-										<option value="2">Two Dots</option>
-									</select>
-								</div>
+						<select id="dotCheck">
+							<option value="0">No Dot</option>
+							<option value="1">One Dot</option>
+							<option value="2">Two Dots</option>
+						</select>
+					</div>
 
 					<div className="col-6 padding-0">
 
@@ -131,7 +132,7 @@ class EditDocument extends Component {
 							<h1> Current Viewers: {this.state.usercount}</h1>
 						</div>
 						<div className="col">
-							<button className="btn btn-primary" onClick={this.shareDoc}> Share</button>
+							<Share docID={this.props.match.params.id} />
 						</div>
 					</footer>
 				</div>
@@ -179,13 +180,13 @@ class EditDocument extends Component {
 
 
 					// if note count hasn't changed we don't have to update anything
-					if(this.state.noteCount == topTime * (32/bottomTime))
+					if (this.state.noteCount == topTime * (32 / bottomTime))
 						return;
 					// calculates the noteCount
-					this.state.noteCount = topTime * (32/bottomTime);
+					this.state.noteCount = topTime * (32 / bottomTime);
 					// alert(topTime + "\n--\n" + bottomTime + "       =  " + this.state.noteCount);
 					// updates the number of notes in each measure
-					for(var i=0; i <this.state.staffs.length; i++){
+					for (var i = 0; i < this.state.staffs.length; i++) {
 						this.getStaff(i).changeTime(this.state.noteCount);
 					}
 					this.setState({ staffs: this.state.staffs })
@@ -218,7 +219,7 @@ class EditDocument extends Component {
 						else {
 							//gets the currently selected notelength from the dropdown menu
 							var noteSelection = this.state.selectedNote.id;
-							if (!noteSelection){
+							if (!noteSelection) {
 								this.state.selectedNote = document.getElementById("fakenote").firstElementChild.firstElementChild;
 								this.state.selectedNote.classList.add("selected");
 								noteSelection = this.state.selectedNote.id;
@@ -237,7 +238,7 @@ class EditDocument extends Component {
 							}
 							var multiplier = 0.5
 							var noteValue = Number(noteSelection);
-							while(dotValue > 0 && (multiplier * noteSelection) >= 1){
+							while (dotValue > 0 && (multiplier * noteSelection) >= 1) {
 								noteValue += multiplier * noteSelection;
 								dotValue -= 1;
 								multiplier /= 2;
@@ -251,10 +252,10 @@ class EditDocument extends Component {
 						// get the value of the current time signature that was clicked
 						// increase it by one, if it is over 32, set it to 2
 						var val = parseInt(e.target.innerHTML)
-						if (val > 31){
+						if (val > 31) {
 							val = 1
 						}
-						e.target.innerHTML = val+1
+						e.target.innerHTML = val + 1
 					}
 				});
 				this.setState({ staffs: docInfo.state.staffs })
@@ -351,6 +352,48 @@ class EditDocument extends Component {
 			console.log('share error: ')
 			console.log(error)
 		})
+	}
+	shareDoc2(email, isOwner, canEdit, canView) {
+		let sharedUserID; // To store the sharedUserID if found from /findEmail GET
+
+		// Query database for email (account) to share document with
+		axios.get('http://localhost:8000/accounts/findEmail/' + email)
+			.then(res => {
+				//found account
+				if (res.status == 200) {
+					console.log('Account found, database id:', res.data)
+					sharedUserID = res.data;
+
+					let permission; // to store new permission object from /new POST
+					// Now create a new permission to represent sharing
+					axios.post('http://localhost:8000/permissions/new', {
+						document: this.state.document.id,
+						isOwner: isOwner,
+						canEdit: canEdit,
+						canView: canView,
+					}).then(res2 => {
+						console.log('New permission:', res2.data)
+						permission = res2.data;
+
+						// Add the new permission_id to the shared user's list of permissions
+						axios.post('http://localhost:8000/accounts/newPermission', {
+							permission: permission,
+							userID: sharedUserID
+						}).then(res3 => {
+							console.log('Successfully saved permission to account', res3);
+						}).catch(error => {
+							console.log('Share permission with account error: ', error);
+						})
+					}).catch(error => {
+						console.log('permissions/new error: ', error)
+					})
+				} else {
+					console.log('Account not found, status:', res.status)
+				}
+
+			}).catch(err => {
+				console.log('accounts/findEmail ERROR: ', err)
+			})
 	}
 }
 

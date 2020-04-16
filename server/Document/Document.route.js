@@ -26,7 +26,7 @@ documentRouter.route('/').get(function (req, res) { //when the server receives a
 
 documentRouter.route('/:id').get(function (req, res) { //when the server receives a request to the /documents/DOC_OBJ_ID route
 	let id = req.params.id;
-	console.log("/documents/" + id + "GET received")
+	console.log("/documents/" + id + " GET received")
 	mongoose.connect(config.MONGO_URI)
 		.then(() => {
 			Document.findById(id, function (err, user) { //query for specific document

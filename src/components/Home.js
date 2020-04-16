@@ -43,8 +43,8 @@ class Home extends Component {
 
 						<div className="col-2 user">
 							<ul>
-								<li><a href="/profile"> Username</a></li>
-								<li className="userID">User ID</li>
+								<li><a href="/profile"> {this.state.user.firstName} {this.state.user.lastName}</a></li>
+								<li className="userID">{this.state.user.email}</li>
 							</ul>
 						</div>
 					</div>
@@ -131,7 +131,7 @@ class Home extends Component {
 			axios.get("http://localhost:8000/permissions/" + this.state.user.permissions[i])
 				.then(res => {
 					let perm = res.data;
-					console.log(res)
+					console.log(perm)
 					//get document from permission object
 					axios.get("http://localhost:8000/documents/" + perm.document)
 						.then(res2 => {
@@ -153,7 +153,7 @@ class Home extends Component {
 	handleLogout(event) {
 		console.log('Attempting logout')
 
-		axios.get('accounts/logout')
+		axios.get('http://localhost:8000/accounts/logout')
 			.then(res => {
 				console.log('logout res:', res.data)
 				this.setState({ redirectTo: '/' });
@@ -165,11 +165,37 @@ class Home extends Component {
 	}
 	async newDoc() {
 		axios.post('http://localhost:8000/documents/new')
-			.then(response => {
-				console.log(response.data)
+			.then(res => {
+				console.log("New document created: ", res.data)
+				// Add new document to state to update page
 				let newDocs = this.getDocuments()
-				newDocs.push(response.data)
+				newDocs.push(res.data)
 				this.setState({ documents: newDocs })
+
+				let permission; // to store new permission object from /new POST
+				let doc = res.data;
+				// Now create a new permission to represent sharing
+				axios.post('http://localhost:8000/permissions/new', {
+					document: res.data._id,
+					isOwner: true,
+					canEdit: true,
+					canView: true,
+				}).then(res2 => {
+					console.log('New permission:', res2.data)
+					permission = res2.data;
+
+					// Add the new permission_id to the shared user's list of permissions
+					axios.post('http://localhost:8000/accounts/newPermission', {
+						permission: permission,
+						userID: this.state.user._id
+					}).then(res3 => {
+						console.log('Successfully saved permission to account', res3);
+					}).catch(error => {
+						console.log('share permission with account error: ', error);
+					})
+				}).catch(error => {
+					console.log('permissions/new error: ', error)
+				})
 			}).catch(error => {
 				console.log('Error creating document')
 				console.log(error)
