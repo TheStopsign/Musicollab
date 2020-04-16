@@ -43,8 +43,8 @@ class Home extends Component {
 
 						<div className="col-2 user">
 							<ul>
-								<li><a href="/profile"> Username</a></li>
-								<li className="userID">User ID</li>
+								<li><a href="/profile"> {this.state.user.firstName} {this.state.user.lastName}</a></li>
+								<li className="userID">{this.state.user.email}</li>
 							</ul>
 						</div>
 					</div>
