@@ -165,11 +165,37 @@ class Home extends Component {
 	}
 	async newDoc() {
 		axios.post('http://localhost:8000/documents/new')
-			.then(response => {
-				console.log(response.data)
+			.then(res => {
+				console.log("New document created: ", res.data)
+				// Add new document to state to update page
 				let newDocs = this.getDocuments()
-				newDocs.push(response.data)
+				newDocs.push(res.data)
 				this.setState({ documents: newDocs })
+
+				let permission; // to store new permission object from /new POST
+				let doc = res.data;
+				// Now create a new permission to represent sharing
+				axios.post('http://localhost:8000/permissions/new', { 
+						document: res.data._id,
+						isOwner: true,
+						canEdit: true,
+						canView: true,
+					}).then(res2 => {
+					console.log('New permission:', res2.data)
+					permission = res2.data;
+					
+					// Add the new permission_id to the shared user's list of permissions
+					axios.post('http://localhost:8000/accounts/newPermission', { 
+							permission: permission,
+							userID: this.state.user._id
+						}).then(res3 =>{
+							console.log('Successfully saved permission to account', res3);
+						}).catch(error =>{
+							console.log('share permission with account error: ', error);
+						})
+				}).catch(error => {
+					console.log('permissions/new error: ', error)
+				})
 			}).catch(error => {
 				console.log('Error creating document')
 				console.log(error)

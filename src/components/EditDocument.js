@@ -353,7 +353,7 @@ class EditDocument extends Component {
 		})
 	}
 	shareDoc2(email, isOwner, canEdit, canView){
-		let sharedUser; // To store the sharedUserID if found from /findEmail GET
+		let sharedUserID; // To store the sharedUserID if found from /findEmail GET
 
 		// Query database for email (account) to share document with
 		axios.get('http://localhost:8000/accounts/findEmail/'+email)
@@ -361,7 +361,7 @@ class EditDocument extends Component {
 				//found account
 				if(res.status == 200){
 					console.log('Account found, database id:', res.data)
-					sharedUser = res.data;
+					sharedUserID = res.data;
 
 					let permission; // to store new permission object from /new POST
 					// Now create a new permission to represent sharing
@@ -375,13 +375,13 @@ class EditDocument extends Component {
 						permission = res2.data;
 						
 						// Add the new permission_id to the shared user's list of permissions
-						axios.post('http://localhost:8000/accounts/share', { 
+						axios.post('http://localhost:8000/accounts/newPermission', { 
 								permission: permission,
-								sharedUser: sharedUser
+								userID: sharedUserID
 							}).then(res3 =>{
 								console.log('Successfully saved permission to account', res3);
 							}).catch(error =>{
-								console.log('share permission with account error: ', error);
+								console.log('Share permission with account error: ', error);
 							})
 					}).catch(error => {
 						console.log('permissions/new error: ', error)

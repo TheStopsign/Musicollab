@@ -68,22 +68,22 @@ accountRouter.route('/findEmail/:email').get(function (req, res) {
 			})
 });
 
-// Shares a document by adding it to the given user's permissions
-accountRouter.route('/share').post(function (req, res) {
-	console.log("/accounts/share GET received");
+// Adds new document by adding to the given user's permissions
+accountRouter.route('/newPermission').post(function (req, res) {
+	console.log("/accounts/newPermission POST received");
 
-	const { permission, sharedUser } = req.body;
+	const { permission, userID } = req.body;
 
 	mongoose.connect(config.MONGO_URI)
 		.then(() => {
-			Account.findById(sharedUser, (err, user) => {
+			Account.findById(userID, (err, user) => {
 				user.permissions.push(permission._id) // add permission to user's array of permissions
 				user.save(); // save changes to the database
 			}).then(() =>{
 				mongoose.disconnect();
 			})
 		}).catch(err =>{
-			console.log('accounts/share failed to connect to MongoDB:', err);
+			console.log('accounts/newPermission failed to connect to MongoDB:', err);
 		})
 
 });

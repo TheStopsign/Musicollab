@@ -32,7 +32,11 @@ Account.methods.validPassword = function(password){
 
 // Hash the password before saving to database 
 Account.pre('save', function (next) {
-	if (!this.password) {
+	const user = this;
+	// Don't re-hash the password if the password is not being changed
+    if (!user.isModified('password')) return next();
+
+	else if (!this.password) {
 		console.log('Account.model.js =======NO PASSWORD PROVIDED=======')
 		next()
 	} else {
