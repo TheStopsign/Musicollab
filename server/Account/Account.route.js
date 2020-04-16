@@ -25,9 +25,9 @@ accountRouter.route('/').get(function (req, res) { //when the server receives a 
 		})
 });
 
-accountRouter.route('/user/:id').get(function (req, res) { //when the server receives a request to the /accounts/ACCOUNT_OBJ_ID route
+accountRouter.route('/user/:id').get(function (req, res) { //when the server receives a request to the /accounts/user/ACCOUNT_OBJ_ID route
 	let id = req.params.id;
-	console.log("/accounts/user/" + id + "GET received")
+	console.log("/accounts/user/" + id + " GET received");
 	mongoose.connect(config.MONGO_URI)
 		.then(() => {
 			Account.findById(id, function (err, user) { //query for specific account
@@ -40,6 +40,52 @@ accountRouter.route('/user/:id').get(function (req, res) { //when the server rec
 				mongoose.disconnect()
 			})
 		})
+});
+
+// Server receives a request to find an email (AKA account) in the DB
+accountRouter.route('/findEmail/:email').get(function (req, res) {
+	let email = req.params.email;
+	console.log('/accounts/findEmail/'+ email + " GET received");
+
+	mongoose.connect(config.MONGO_URI)
+			.then(() => {
+				// console.log('now finding account to validate login')
+				Account.findOne({ email: email }, (err, account) => {
+					if (!account) {
+						console.log('account not found')
+						res.status(400)
+					}else{
+						console.log('account found, id:', account._id)
+						res.status(200).json(account._id)
+					}		
+				}).then(() => {
+					mongoose.disconnect()
+				}).catch(err =>{
+					console.log('FINDEMAIL ERROR:', err);
+				})
+			}).catch(err =>{
+				console.log('accounts/findEmail failed to connect to MongoDB:', err);
+			})
+});
+
+// Adds new document by adding to the given user's permissions
+accountRouter.route('/newPermission').post(function (req, res) {
+	console.log("/accounts/newPermission POST received");
+
+	const { permission, userID } = req.body;
+
+	mongoose.connect(config.MONGO_URI)
+		.then(() => {
+			Account.findById(userID, (err, user) => {
+				user.permissions.push(permission._id) // add permission to user's array of permissions
+				user.save(); // save changes to the database
+			}).then(() =>{
+				mongoose.disconnect();
+			})
+		}).catch(err =>{
+			console.log('accounts/newPermission failed to connect to MongoDB:', err);
+		})
+
 });
 
 
