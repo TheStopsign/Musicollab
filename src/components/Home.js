@@ -105,14 +105,45 @@ class Home extends Component {
 		super(props);
 		this.state = {
 			documents: [], //holds all the documents data
+			documents2: null,
+			permissions: this.props.location.state.permissions, //passed from user login sessions
 			redirectTo: null
 		}
-		this.handleLogout = this.handleLogout.bind(this)
+		this.handleLogout = this.handleLogout.bind(this);
+		this.loadDocuments2 = this.loadDocuments2.bind(this);
 		this.newDoc = this.newDoc.bind(this);
 	}
 	componentDidMount() {
+		console.log('passed in permissions:', this.state.permissions);
 		this.loadDocuments(); //first, get the document data
+		this.getUserData();
+		//this.loadDocuments2();
+		
 	}
+
+	loadDocuments2(){
+		console.log('inside loadDocuments2');
+
+		// Loading documents from permissions
+		axios.get('/permissions/load', { permissions: this.state.permissions })
+		.then(res => {
+			console.log('loadDocuments2 response: ', res.data);
+		})
+		.catch(function (error){
+			console.log('load documents2 error: ', error);
+		})
+	}
+
+	getUserData() {
+		axios.get('accounts/data')
+			.then(res => {
+				this.setState({ user: res.data });
+				console.log(res.data);
+			}).catch((error) => {
+				console.log(error);
+			})
+	}
+	
 	async loadDocuments() {
 		axios.get('http://localhost:8000/documents') //make GET request to server
 			.then(res => {
@@ -130,16 +161,13 @@ class Home extends Component {
 		
 		axios.get('accounts/logout') 
 			.then(res => {
-				console.log('logout res:', res)
+				console.log('logout res:', res.data)
 				this.setState({ redirectTo: '/' });
 			})
 			.catch(function (error) {
 				console.log('Logout error')
 				console.log(error);
 			})
-		
-
-		//this.setState({ redirectTo: '/' });
 	}
 	async newDoc() {
 		axios.post('http://localhost:8000/documents/new')

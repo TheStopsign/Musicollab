@@ -80,13 +80,16 @@ accountRouter.route('/signup').post(function (req, res){
     		}).then(() => {
 				mongoose.disconnect()
     		})
+		}).catch(err =>{
+			console.log('Signup failed to connect to MongoDB:', err);
 		})
 
 });
 
 // ================= LOGIN ===========================
 accountRouter.post('/login', passport.authenticate('local', { failureFlash: true}),(req, res) => {
-        console.log('/accounts/login POST received, user:', req.user);
+        console.log('Passport login authentication result:', req.user);
+        // After login, req.user contains the account
         res.status(200).json(req.user)
     }
 );
@@ -105,8 +108,15 @@ accountRouter.get('/logout', (req, res, next) => {
 			}
 		});
 		console.log('Session closed successfully');
+		mongoose.disconnect(); // disconnect any active database connections
 		return res.send({ success: true });
 	}
 });
+
+accountRouter.get('/data', (req, res, next) => {
+	console.log('/account/data GET received, session:', req.session);
+	// if user logged in successfully with passport, req.user always contains user object
+	res.json(req.user);
+})
 
 module.exports = accountRouter;

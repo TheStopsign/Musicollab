@@ -22,15 +22,21 @@ module.exports = function(passport) {
 		mongoose.connect(config.MONGO_URI)
 		.then(() => {
 			Account.findOne({ _id: user._id },(err, user) => {
+				if(!user){
+					return done(new Error('user not found'))
+				}
 				console.log('*** Deserialize user, user:')
 				console.log(user)
 				console.log('--------------')
 				done(null, user)		
+			}).catch((err) => {
+				console.log('DESERIALIZE FINDONE ERROR: ',err);
+				done(err);
 			}).then(() => {
 				mongoose.disconnect()
-			}).catch(err => {
-				console.log(err)
 			})
+		}).catch(err =>{
+			console.log('Deserialize failed to connect to MongoDB:', err);
 		})
 	})
 
@@ -42,11 +48,7 @@ module.exports = function(passport) {
 		.then(() => {
 			// console.log('now finding account to validate login')
 			Account.findOne({ email: email }, (err, account) => {
-				if (err) {
-					console.log('GENERAL ERROR: ', err)
-					return done(err)
-				}
-				else if (!account) {
+				if (!account) {
 					console.log('account not found ERROR')
 					return done(null, false, { message: 'Incorrect email' });
 				}
@@ -57,7 +59,11 @@ module.exports = function(passport) {
 				return done(null, account)
 			}).then(() => {
 				mongoose.disconnect()
+			}).catch(err =>{
+				console.log('PASSPORT FINDONE ERROR:', err);
 			})
+		}).catch(err =>{
+			console.log('Passport strategy failed to connect to MongoDB:', err);
 		})
 	}))
 }
