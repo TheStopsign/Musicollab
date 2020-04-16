@@ -27,7 +27,7 @@ class EditAccount extends Component {
 		this.getAccount(); //when page loads, first get the account info
 	}
 	async getAccount() {
-		axios.get(`http://localhost:8000/accounts/` + this.props.match.params.id) //make a GET request to the server
+		axios.get(`http://localhost:8000/accounts/user/` + this.props.match.params.id) //make a GET request to the server
 			.then(res => {
 				this.setState({ account: res.data }); //handle the result payload
 			})

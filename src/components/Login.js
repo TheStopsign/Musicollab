@@ -8,7 +8,10 @@ import axios from 'axios';
 class Login extends Component {
 	render() {
 		if (this.state.redirectTo) {
-			return <Redirect to={{ pathname: this.state.redirectTo }} />
+			return <Redirect to={{
+				pathname: this.state.redirectTo,
+				state: { user: this.state.user }
+			}} />
 		} else {
 			return (
 				<div className="Login">
@@ -100,7 +103,7 @@ class Login extends Component {
 		this.state = {
 			email: '',
 			password: '',
-			redirectTo: null
+			redirectTo: null,
 		}
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleChange = this.handleChange.bind(this)
@@ -118,16 +121,17 @@ class Login extends Component {
 		event.preventDefault()
 		console.log('login handleSubmit')
 
-		axios.post('/accounts/login', {
+		axios.post('http://localhost:8000/accounts/login', {
 			email: this.state.email,
 			password: this.state.password
 		})
-			.then(response => {
+			.then(res => {
 				console.log('login response: ')
-				console.log(response)
-				if (response.status === 200) {
+				console.log(res.data)
+				if (res.status === 200) {
 					// update the state to redirect to home
 					this.setState({
+						user: res.data,
 						redirectTo: '/home'
 					})
 				}

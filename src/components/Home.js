@@ -103,30 +103,65 @@ class Home extends Component {
 	}
 	constructor(props) {
 		super(props);
+		console.log(this.props.location)
 		this.state = {
 			documents: [], //holds all the documents data
+			user: this.props.location.state.user, //passed from user login sessions
 			redirectTo: null
 		}
-		this.handleLogout = this.handleLogout.bind(this)
+		this.handleLogout = this.handleLogout.bind(this);
 		this.newDoc = this.newDoc.bind(this);
+		this.loadDocuments = this.loadDocuments.bind(this);
 	}
 	componentDidMount() {
 		this.loadDocuments(); //first, get the document data
 	}
+
 	async loadDocuments() {
-		axios.get('http://localhost:8000/documents') //make GET request to server
-			.then(res => {
-				this.setState({ documents: res.data }); //handle response payload
-			})
-			.catch(function (error) {
-				console.log(error);
-			})
+		// axios.get('http://localhost:8000/documents') //make GET request to server
+		// 	.then(res => {
+		// 		this.setState({ documents: res.data }); //handle response payload
+		// 	})
+		// 	.catch(function (error) {
+		// 		console.log(error);
+		// 	})
+		let docs = []
+		//for each permission
+		for (let i = 0; i < this.state.user.permissions.length; i++) {
+			axios.get("http://localhost:8000/permissions/" + this.state.user.permissions[i])
+				.then(res => {
+					let perm = res.data;
+					console.log(res)
+					//get document from permission object
+					axios.get("http://localhost:8000/documents/" + perm.document)
+						.then(res2 => {
+							docs.push(res2.data)
+							this.setState({ documents: docs })
+						})
+						.catch(function (err) {
+							console.log(err)
+						})
+				})
+				.catch(function (err) {
+					console.log(err)
+				})
+		}
 	}
 	getDocuments() {
 		return this.state.documents
 	}
 	handleLogout(event) {
-		this.setState({ redirectTo: '/' })
+		console.log('Attempting logout')
+
+		axios.get('accounts/logout')
+			.then(res => {
+				console.log('logout res:', res.data)
+				this.setState({ redirectTo: '/' });
+			})
+			.catch(function (error) {
+				console.log('Logout error')
+				console.log(error);
+			})
 	}
 	async newDoc() {
 		axios.post('http://localhost:8000/documents/new')
