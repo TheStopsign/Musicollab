@@ -12,7 +12,7 @@ documentRouter.route('/').get(function (req, res) { //when the server receives a
 		.then(() => {
 			Document.find(function (err, accounts) { //query for all documents
 				if (err) {
-					console.log("ERROR!");
+					console.log("DOCUMENT GET ERROR!");
 					res.status(400).json(err);
 				} else {
 					console.log("SUCCESS!");

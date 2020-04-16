@@ -11,17 +11,19 @@ class Note extends Component {
 			offset: 0,
 			measure: props.measure,
 			location: props.location,
-			dots: 0 || props.dots
+			dots: (props.dots)
 		}
 	}
 	componentDidMount() {
-
 	}
 	setNote(newnote) {
-		this.setState({ note: newnote })
+		this.setState({ note: newnote });
 	}
 	getNote() {
-		return this.state.note
+		return this.state.note;
+	}
+	getLocation() {
+		return this.state.location;
 	}
 	getDots() {
 		let dots = [];

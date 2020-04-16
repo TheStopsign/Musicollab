@@ -43,11 +43,12 @@ app.use(
 app.use(flash());
 
 // Passport
+//app.use(express.static(__dirname + '../public'));
 app.use(passport.initialize())
 app.use(passport.session()) // calls serializeUser and deserializeUser
 
 app.use(cors());
-// app.use('/', router);
+//app.use('/', router);
 app.use('/accounts', accountRouter);
 app.use('/documents', documentRouter);
 app.use('/permissions', permissionRouter);

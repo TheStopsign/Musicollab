@@ -43,8 +43,8 @@ class Home extends Component {
 
 						<div className="col-2 user">
 							<ul>
-								<li><a href="/profile"> Username</a></li>
-								<li className="userID">User ID</li>
+								<li><a href="/profile"> {this.state.user.firstName} {this.state.user.lastName}</a></li>
+								<li className="userID">{this.state.user.email}</li>
 							</ul>
 						</div>
 					</div>
@@ -103,38 +103,99 @@ class Home extends Component {
 	}
 	constructor(props) {
 		super(props);
+		console.log(this.props.location)
 		this.state = {
 			documents: [], //holds all the documents data
+			user: this.props.location.state.user, //passed from user login sessions
 			redirectTo: null
 		}
-		this.handleLogout = this.handleLogout.bind(this)
+		this.handleLogout = this.handleLogout.bind(this);
 		this.newDoc = this.newDoc.bind(this);
+		this.loadDocuments = this.loadDocuments.bind(this);
 	}
 	componentDidMount() {
 		this.loadDocuments(); //first, get the document data
 	}
+
 	async loadDocuments() {
-		axios.get('http://localhost:8000/documents') //make GET request to server
-			.then(res => {
-				this.setState({ documents: res.data }); //handle response payload
-			})
-			.catch(function (error) {
-				console.log(error);
-			})
+		// axios.get('http://localhost:8000/documents') //make GET request to server
+		// 	.then(res => {
+		// 		this.setState({ documents: res.data }); //handle response payload
+		// 	})
+		// 	.catch(function (error) {
+		// 		console.log(error);
+		// 	})
+		let docs = []
+		//for each permission
+		for (let i = 0; i < this.state.user.permissions.length; i++) {
+			axios.get("http://localhost:8000/permissions/" + this.state.user.permissions[i])
+				.then(res => {
+					let perm = res.data;
+					console.log(perm)
+					//get document from permission object
+					axios.get("http://localhost:8000/documents/" + perm.document)
+						.then(res2 => {
+							docs.push(res2.data)
+							this.setState({ documents: docs })
+						})
+						.catch(function (err) {
+							console.log(err)
+						})
+				})
+				.catch(function (err) {
+					console.log(err)
+				})
+		}
 	}
 	getDocuments() {
 		return this.state.documents
 	}
 	handleLogout(event) {
-		this.setState({ redirectTo: '/' })
+		console.log('Attempting logout')
+
+		axios.get('http://localhost:8000/accounts/logout')
+			.then(res => {
+				console.log('logout res:', res.data)
+				this.setState({ redirectTo: '/' });
+			})
+			.catch(function (error) {
+				console.log('Logout error')
+				console.log(error);
+			})
 	}
 	async newDoc() {
 		axios.post('http://localhost:8000/documents/new')
-			.then(response => {
-				console.log(response.data)
+			.then(res => {
+				console.log("New document created: ", res.data)
+				// Add new document to state to update page
 				let newDocs = this.getDocuments()
-				newDocs.push(response.data)
+				newDocs.push(res.data)
 				this.setState({ documents: newDocs })
+
+				let permission; // to store new permission object from /new POST
+				let doc = res.data;
+				// Now create a new permission to represent sharing
+				axios.post('http://localhost:8000/permissions/new', {
+					document: res.data._id,
+					isOwner: true,
+					canEdit: true,
+					canView: true,
+				}).then(res2 => {
+					console.log('New permission:', res2.data)
+					permission = res2.data;
+
+					// Add the new permission_id to the shared user's list of permissions
+					axios.post('http://localhost:8000/accounts/newPermission', {
+						permission: permission,
+						userID: this.state.user._id
+					}).then(res3 => {
+						console.log('Successfully saved permission to account', res3);
+					}).catch(error => {
+						console.log('share permission with account error: ', error);
+					})
+				}).catch(error => {
+					console.log('permissions/new error: ', error)
+				})
 			}).catch(error => {
 				console.log('Error creating document')
 				console.log(error)

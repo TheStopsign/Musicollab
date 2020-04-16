@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import '../App.css';
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
+import { validateAll } from 'indicative/validator'
+//var validate = require('indicative')
 
 class SignUp extends Component {
 	render() {
@@ -40,6 +42,7 @@ class SignUp extends Component {
 										value={this.state.firstName}
 										onChange={this.handleChange}
 										/>
+          									<p></p>
 									</div>
 
 									<div className="row LastName">
@@ -73,6 +76,16 @@ class SignUp extends Component {
 										/>
 									</div>
 
+									<div className="row PasswordConfirm">
+										<input className="form-control" 
+										type="password"
+										name="password_confirmation"
+										placeholder="Confirm Password" 
+										value={this.state.password_confirmation}
+										onChange={this.handleChange}
+										/>
+									</div>
+
 									<div className="row justify-content-center">
 										<div className="SubmitButton">
 											<button 
@@ -84,7 +97,7 @@ class SignUp extends Component {
 									</div>
 
 									<p className="text-right toLogin">
-										Already registered <a href="/">Login?</a>
+										Already registered? <a href="/">Login</a>
 									</p>
 
 								</div>
@@ -105,6 +118,9 @@ class SignUp extends Component {
 			lastName: '',
 			email: '',
 			password: '',
+			password_confirmation:'',
+			errors: {},
+			isValidated: false,
 			redirectTo: null
 		}
 		this.handleSubmit = this.handleSubmit.bind(this)
@@ -117,34 +133,69 @@ class SignUp extends Component {
 			[event.target.name]: event.target.value
 		})
 	}
+
 	handleSubmit(event) {
-		console.log('sign-up handleSubmit, email: ')
-		console.log(this.state.email)
-		event.preventDefault()
+		console.log('Attempting sign-up');
+		console.log(this.state);
+		event.preventDefault();
+	
+		// Validate user input using indicative package
+		// take input data from state
+		var valid = false;
+		const data = this.state;
+		const rules = {
+			firstName: 'required|string',
+			lastName: 'required|string',
+			email: 'required|email',
+			password: 'required|string|min:6|confirmed'
+		};
 
-		//request to server to add a new account
-		axios.post('/accounts/signup', {
-			firstName: this.state.firstName,
-			lastName: this.state.lastName,
-			email: this.state.email,
-			password: this.state.password,
-			permissions: []
-		})
-			.then(response => {
-				console.log(response.data)
-				if (!response.data.errmsg) {
-					console.log('successful signup')
-					this.setState({ //redirect to login page
-						redirectTo: '/log-in'
+		// Custom messages to display on validation error
+		const messages = {
+			required: 'Please enter {{field}}',
+			'firstName.required': 'Please enter a name',
+			'lastName.required': 'Please enter a name',
+			'email.email': 'The email is invalid',
+			'password.confirmed': 'Password does not match',
+			'password.min': 'Password must be at least 6 characters'
+		};
+
+		// Check each of the fields for errors (left blank, password not match)
+		validateAll(data, rules, messages)
+			.then(()=>{
+				console.log('Successfully VALIDATED');
+
+				// Attempt to add new account to database
+				axios.post('/accounts/signup', {
+					firstName: this.state.firstName,
+					lastName: this.state.lastName,
+					email: this.state.email,
+					password: this.state.password,
+					permissions: []
 					})
-				} else {
-					console.log('error: email already used')
-					alert("Email already in use");
-				}
-			}).catch(error => {
-				console.log('signup error: ')
-				console.log(error)
+					.then(response => {
+						console.log(response.data)
 
+						if(!response.data.errmsg){
+							console.log('successful signup');
+							this.setState({ //redirect to login page
+								redirectTo: '/log-in'
+							})
+						}else{
+							// Account already exists with email, notify user
+							alert(response.data.errmsg)
+						}
+					}).catch(error => {
+						console.log('signup database error ');
+					})
+			})
+			.catch((errors)=>{
+				// show errors to user
+				const formattedErrors = {};
+				errors.forEach( error => formattedErrors[error.field] = error.message );
+				this.setState({errors: formattedErrors});
+				
+				console.log(this.state.errors);
 			})
 	}
 }
