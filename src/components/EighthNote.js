@@ -7,7 +7,15 @@ import Flag from './Flag'
 
 class EighthNote extends Note {
 	getSize() {
-		return 4;
+		var size = 4;
+		var dots = this.getDots().length;
+		var dotValue = 2;
+		while (dots > 0) {
+			size += dotValue;
+			dotValue /= 2;
+			dots -= 1;
+		}
+		return size;
 	}
 	render() {
 		return (
