@@ -237,7 +237,7 @@ class EditDocument extends Component {
 							}
 							var multiplier = 0.5
 							var noteValue = Number(noteSelection);
-							while(dotValue > 0 || (multiplier * noteSelection) < 1){
+							while(dotValue > 0 && (multiplier * noteSelection) >= 1){
 								noteValue += multiplier * noteSelection;
 								dotValue -= 1;
 								multiplier /= 2;
