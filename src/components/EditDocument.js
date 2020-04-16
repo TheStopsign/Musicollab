@@ -54,23 +54,20 @@ class EditDocument extends Component {
 						</div>
 					</div>
 
-					<div className="col">
-						<div className="row">
-							<div className="col-8 padding-0">
-								<h4 className="float-right"> Time Signature:&nbsp; </h4>
-							</div>
+					<div className="col keySigTB">
 
-							<div className="col padding-0">
-								<div className="dropdown">
-									<select>
-										<option value="1">4/4</option>
-										<option value="2">3/4</option>
-										<option value="3">2/4</option>
+						<h4 className=""> Time Signature:&nbsp; </h4>
 
-									</select>
-								</div>
-							</div>
+
+						<div className="ksig">
+							<span id="topTime"> 4 </span>
 						</div>
+						<span className="ksigmiddle"> / </span>
+						<div className="ksig">
+							<span id="bottomTime"> 4 </span>
+						</div>
+						<button className="btn" id="timeButton" type="button">Update</button>
+
 					</div>
 					<div className="dropdown">
 									<select id = "dotCheck">
@@ -122,8 +119,8 @@ class EditDocument extends Component {
 					</div>
 				</div>
 
-				<div className="container-fluid" style={{ position: "sticky", bottom: 0 }}>
-					<div className="row section footer users">
+				<div className="container-fluid">
+					<footer className="row section footer users">
 						<div className="col">
 							<h1> Owner: </h1>
 						</div>
@@ -136,7 +133,7 @@ class EditDocument extends Component {
 						<div className="col">
 							<button className="btn btn-primary" onClick={this.shareDoc}> Share</button>
 						</div>
-					</div>
+					</footer>
 				</div>
 
 			</div>
@@ -161,6 +158,39 @@ class EditDocument extends Component {
 					this.state.socket.emit('addstaff', { room: "" + this.state.document._id });
 				})
 
+				document.getElementById("timeButton").addEventListener("click", () => {
+
+					// <textarea cols="5" rows="1" id="topTime"></textarea>
+					// <div className="dropdown">
+					// 	<select id="bottomTime">
+					// 		<option value="2">2</option>
+					// 		<option value="4">4</option>
+					// 		<option value="8">8</option>
+					// 		<option value="16">16</option>
+					// 		<option value="32">32</option>
+					//
+					// 	</select>
+					// </div>
+
+
+					// gets the current time sig from the temporary GUI
+					var topTime = document.getElementById("topTime").innerHTML;
+					var bottomTime = document.getElementById("bottomTime").innerHTML;
+
+
+					// if note count hasn't changed we don't have to update anything
+					if(this.state.noteCount == topTime * (32/bottomTime))
+						return;
+					// calculates the noteCount
+					this.state.noteCount = topTime * (32/bottomTime);
+					// alert(topTime + "\n--\n" + bottomTime + "       =  " + this.state.noteCount);
+					// updates the number of notes in each measure
+					for(var i=0; i <this.state.staffs.length; i++){
+						this.getStaff(i).changeTime(this.state.noteCount);
+					}
+					this.setState({ staffs: this.state.staffs })
+				})
+
 				var docInfo = this;
 				document.addEventListener('click', (e) => {
 					//find path to current element
@@ -181,15 +211,21 @@ class EditDocument extends Component {
 							}
 							path[1].classList.add("selected");
 							this.state.selectedNote = path[1];
+							console.log(this.state.selectedNote);
 
 						}
 						//otherwise change current note value using selected note
 						else {
 							//gets the currently selected notelength from the dropdown menu
 							var noteSelection = this.state.selectedNote.id;
+							if (!noteSelection){
+								this.state.selectedNote = document.getElementById("fakenote").firstElementChild.firstElementChild;
+								this.state.selectedNote.classList.add("selected");
+								noteSelection = this.state.selectedNote.id;
+							}
+
 
 							//gets the newNote information and creates it
-							console.log(e.target.classList);
 							var measure = Number(e.target.classList[1].slice(8)); //wont this break with more than 9 measures?
 							var location = Number(e.target.classList[2].slice(9));
 							var newPitch = 0;
@@ -211,10 +247,19 @@ class EditDocument extends Component {
 
 							this.state.socket.emit('addnote', { room: this.state.document._id, staff: measure, note: newNote });
 						}
+					} else if ("ksig" == path[1].classList[0]) {
+						// get the value of the current time signature that was clicked
+						// increase it by one, if it is over 32, set it to 2
+						var val = parseInt(e.target.innerHTML)
+						if (val > 31){
+							val = 1
+						}
+						e.target.innerHTML = val+1
 					}
 				});
 				this.setState({ staffs: docInfo.state.staffs })
 			}); //when page loads, first get the document info
+
 	}
 	async joinEditSession() {
 		axios.get(`http://localhost:8000/documents/` + this.props.match.params.id) //make a GET request to the server
@@ -245,7 +290,7 @@ class EditDocument extends Component {
 		//adds note to the measure and updates render
 		let newNote = this.getStaff(measure).makeNote(newPitch, noteSelection, measure, location);
 		this.getStaff(measure).addNote(newNote)
-		this.setState({ saffs: this.state.staffs })
+		this.setState({ staffs: this.state.staffs })
 	}
 	getPitch(measure) {
 		//Getting pitch based on mouse x,y (WIP)
