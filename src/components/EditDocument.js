@@ -104,13 +104,23 @@ class EditDocument extends Component {
 									<center>
 										<h1 className="doc_title">{this.state.document.title}</h1>
 									</center>
-									{
-										this.state.staffs.map(function (staff) {
-											return staff.render()
-										})
-									}
-									<div className="addStaffBtnContainer">
-										<button id="addStaffBtn" className="btn">+</button>
+									<div className="row">
+										<div className ="dropdown instrumentMenu">
+											<select id = "instrument">
+												<option value="0">No Instrument</option>
+												<option value="1">Alto Saxophone</option>
+												<option value="2">Flute</option>
+												<option value="3">Clarinet</option>
+											</select>
+										</div>
+										{
+											this.state.staffs.map(function (staff) {
+												return staff.render()
+											})
+										}
+										<div className="addStaffBtnContainer">
+											<button id="addStaffBtn" className="btn">+</button>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -233,7 +243,7 @@ class EditDocument extends Component {
 							if (this.state.selectedNote.classList.contains("NTBR")) {
 								newPitch = "R"
 							} else {
-								newPitch = docInfo.getPitch(measure);
+								newPitch = docInfo.getPitch(e.offsetY, measure);
 							}
 							var multiplier = 0.5
 							var noteValue = Number(noteSelection);
@@ -255,6 +265,12 @@ class EditDocument extends Component {
 							val = 1
 						}
 						e.target.innerHTML = val+1
+					}
+					else if(path[1].classList[1] == "instrumentMenu"){
+						var instrumentValue = document.getElementById("instrument").value;
+						if(instrumentValue == 0){
+							this.setState({staffs: []})
+						}
 					}
 				});
 				this.setState({ staffs: docInfo.state.staffs })
@@ -292,7 +308,7 @@ class EditDocument extends Component {
 		this.getStaff(measure).addNote(newNote)
 		this.setState({ staffs: this.state.staffs })
 	}
-	getPitch(measure) {
+	getPitch(yPos, measure) {
 		//Getting pitch based on mouse x,y (WIP)
 		/*
 		var el = this.getStaff(measure);
@@ -320,10 +336,29 @@ class EditDocument extends Component {
 
 	    el = el.offsetParent;
 	  }
-		alert("x: " + xPos+ ", y: " + yPos);
-		*/
-
-		return "A";
+		alert("y: " + yPos);*/
+		//change note pitch based off where on the notes staff you click
+		if(yPos >= 0 && yPos < 10){
+			return "F";
+		}
+		else if(yPos >= 10 && yPos < 20){
+			return "E";
+		}
+		else if(yPos >= 20 && yPos < 30){
+			return "D";
+		}
+		else if(yPos >= 30 && yPos < 40){
+			return "C";
+		}
+		else if(yPos >= 40 && yPos < 50){
+			return "B";
+		}
+		else if(yPos >= 50 && yPos < 60){
+			return "A";
+		}
+		else if(yPos >= 60 && yPos < 70){
+			return "G";
+		}
 	}
 	addStaff() {
 		let nextStaffs = this.state.staffs
