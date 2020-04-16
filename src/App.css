@@ -32,11 +32,14 @@ a.svg:after {
   background: #727272;
   box-shadow: -3px 3px 6px rgba(0, 0, 0, 0.5),
     3px -3px 6px rgba(220, 220, 220, 0.3);
-  border-radius: 6px;
+  /* border-radius: 6px; */
   margin: 12px;
   color: #DCDCDC;
   border: none;
+  outline: none;
 }
+
+
 
 .concave {
   background: #727272;
@@ -183,7 +186,7 @@ h3 {
   padding-left: 12px;
   /* margin-left: 0px; */
   width: 96%;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .Home .userID,
@@ -235,7 +238,7 @@ h3 {
 }
 
 .EditDocument .musicsheet {
-  padding-bottom: 15px;
+  /* padding-bottom: 15px; */
 }
 
 

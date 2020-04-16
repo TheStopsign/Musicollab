@@ -7,8 +7,10 @@
 }
 
 .noteBar {
-	height: 130px;
+	height: 125px;
 	/* width: 90%; */
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 .selected {
@@ -34,6 +36,24 @@
 	height: 100px;
 	display: inline-block;
 }
+
+.ksig {
+	cursor: pointer;
+	display: inline;
+	font-size: 1.6em;
+	margin-right: 15px;
+	margin-left: 15px;
+}
+
+.ksigmiddle {
+	font-size: 1.8em;
+}
+
+.keySigTB {
+	user-select: none
+}
+
+
 
 #addStaffBtn {
 	margin: 0;

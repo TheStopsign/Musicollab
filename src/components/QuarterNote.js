@@ -6,13 +6,22 @@ import '../css/QuarterNote.css';
 
 class QuarterNote extends Note {
 	getSize() {
-		return 8;
+		var size = 8;
+		var dots = this.getDots().length;
+		var dotValue = 4;
+		while(dots > 0) {
+			size += dotValue;
+			dotValue /= 2;
+			dots -= 1;
+		}
+		return size;
 	}
 	render() {
 		return (
 			<div className={"note quarternote " + this.state.note} id="8">
 				<div className={"vline measure:" + this.state.measure + " location:" + this.state.location}></div>
 				<div className={"circle measure:" + this.state.measure + " location:" + this.state.location}></div>
+				<div className="dots">{this.getDots()}</div>
 			</ div>
 		);
 	}

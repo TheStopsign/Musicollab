@@ -37,7 +37,7 @@ class Login extends Component {
 								</div>
 
 								<div className="row Email">
-									<input className="form-control concave"
+									<input className="form-control"
 										type="text"
 										id="email"
 										name="email"
@@ -48,7 +48,7 @@ class Login extends Component {
 								</div>
 
 								<div className="row Password">
-									<input className="form-control concave"
+									<input className="form-control"
 										type="password"
 										name="password"
 										placeholder="Enter password"
@@ -104,7 +104,6 @@ class Login extends Component {
 			email: '',
 			password: '',
 			redirectTo: null,
-			userPermissions: []
 		}
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleChange = this.handleChange.bind(this)
