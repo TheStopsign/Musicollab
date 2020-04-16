@@ -36,7 +36,7 @@ Account.pre('save', function (next) {
 		console.log('Account.model.js =======NO PASSWORD PROVIDED=======')
 		next()
 	} else {
-		console.log('Account.model.js hashPassword in pre save');
+		console.log('Account.model.js hashing password');
 		
 		this.password = this.generateHash(this.password)
 		next()
