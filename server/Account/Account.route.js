@@ -5,6 +5,8 @@ const config = require('../config');
 const passport = require('passport')
 require('../passport-config');
 
+mongoose.set('useFindAndModify', false);
+
 let Account = mongoose.model('Account')
 
 accountRouter.route('/').get(function (req, res) { //when the server receives a request to the /accounts route
@@ -78,16 +80,12 @@ accountRouter.route('/newPermission').post(function (req, res) {
 		.then(() => {
 			Account.findByIdAndUpdate(
 				userID,
-				{ $push: { permissions: permission } }, function (err, user) {
-					if (err) {
-						res.send(error);
-					} else {
-						res.send(user)
-					}
-				}).then(() => {
+				{ $push: { permissions: permission } })
+				.then(() => {
+					console.log('/accounts/newPermission SUCCESS')
 					mongoose.disconnect();
 				}).catch(err => {
-					console.log('findByIDAndUpdate error:', err);
+					console.log('/accounts/newPermission ERROR:', err);
 				})
 		}).catch(err => {
 			console.log('accounts/newPermission failed to connect to MongoDB:', err);
