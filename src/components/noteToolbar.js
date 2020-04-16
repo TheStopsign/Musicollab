@@ -24,7 +24,7 @@ class NoteTB extends Component {
         <div className="notes row" id="ntb">
           {
             this.state.notes.map(function (note, i) {
-              return <div className="space" key={i}> {note.render()} </div>
+              return <div className="space" id="fakenote" key={i}> {note.render()} </div>
             })
           }
         </div>

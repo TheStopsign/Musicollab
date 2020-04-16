@@ -41,9 +41,77 @@ class Staff extends Component {
 		this.state = {
 			index: null,
 			init_notes: "",
-			notes: [new WholeRest({ note: "R", measure: props.staffNum, location: 0 })],
+			notes: this.initialNotes(props.noteCount,props.staffNum),
+			staffNum: props.staffNum,
 			noteCount: props.noteCount
 		}
+	}
+	initialNotes(time, staffNum){
+		var noteList = [];
+		var currentLocation = 0;
+		var remainingNotes = time;
+		while(remainingNotes != 0){
+			if(remainingNotes >= 32){
+				noteList.push(new WholeRest({ note: "R", measure: staffNum, location: currentLocation }))
+				remainingNotes -= 32;
+			}
+			else if(remainingNotes >= 16){
+				noteList.push(new HalfRest({ note: "R", measure: staffNum, location: currentLocation }))
+				remainingNotes -= 16;
+			}
+			else if(remainingNotes >= 8){
+				noteList.push(new QuarterRest({ note: "R", measure: staffNum, location: currentLocation }))
+				remainingNotes -= 8;
+			}
+			else if(remainingNotes >= 4){
+				noteList.push(new EighthRest({ note: "R", measure: staffNum, location: currentLocation }))
+				remainingNotes -= 4;
+			}
+			else if(remainingNotes >= 2){
+				alert("no 16ths");
+				remainingNotes -= 2;
+			}
+			else{
+				alert("no 32nds");
+				remainingNotes -= 1;
+			}
+			currentLocation += 1;
+
+		}
+		return noteList;
+	}
+	changeTime(newTime){
+		var timeChange = newTime - this.state.noteCount;
+		this.state.noteCount = newTime;
+		var nextNotes = this.state.notes
+
+		if(timeChange > 0){
+			// removes tail rests and adds them to the timeChange count
+			var isPop = true;
+			while(nextNotes.length > 0 && isPop){
+				if(nextNotes[nextNotes.length-1].getNote() == "R"){
+					timeChange += nextNotes.pop().getSize();
+				}
+				else
+					isPop = false;
+			}
+			// gets the new rests and adds them to the note array
+			var addedNotes = this.initialNotes(timeChange, this.staffNum)
+			nextNotes = nextNotes.concat(addedNotes);
+		}
+		else if(timeChange < 0){
+			while(timeChange != 0){
+				var lastNote = nextNotes.pop();
+				timeChange += lastNote.getSize();
+				// if too much was removed add the note back in but smaller
+				if(timeChange > 0){
+					var newNote = this.makeNote(lastNote.getNote(),timeChange,this.staffNum,lastNote.getLocation());
+					nextNotes.push(newNote);
+				}
+			}
+		}
+
+		this.state.notes = nextNotes;
 	}
 	makeNote(note, noteValue, measure, locationCount) {
 		if (noteValue == 1) {

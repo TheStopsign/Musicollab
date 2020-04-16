@@ -15,13 +15,15 @@ class Note extends Component {
 		}
 	}
 	componentDidMount() {
-
 	}
 	setNote(newnote) {
-		this.setState({ note: newnote })
+		this.setState({ note: newnote });
 	}
 	getNote() {
-		return this.state.note
+		return this.state.note;
+	}
+	getLocation() {
+		return this.state.location;
 	}
 	getDots() {
 		let dots = [];
