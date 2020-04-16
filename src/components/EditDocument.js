@@ -60,11 +60,11 @@ class EditDocument extends Component {
 						<h4 className=""> Time Signature:&nbsp; </h4>
 
 
-						<div className="ksig">
+						<div className="ksig top">
 							<span id="topTime"> 4 </span>
 						</div>
 						<span className="ksigmiddle"> / </span>
-						<div className="ksig">
+						<div className="ksig bot">
 							<span id="bottomTime"> 4 </span>
 						</div>
 						<button className="btn" id="timeButton" type="button">Update</button>
@@ -161,22 +161,9 @@ class EditDocument extends Component {
 
 				document.getElementById("timeButton").addEventListener("click", () => {
 
-					// <textarea cols="5" rows="1" id="topTime"></textarea>
-					// <div className="dropdown">
-					// 	<select id="bottomTime">
-					// 		<option value="2">2</option>
-					// 		<option value="4">4</option>
-					// 		<option value="8">8</option>
-					// 		<option value="16">16</option>
-					// 		<option value="32">32</option>
-					//
-					// 	</select>
-					// </div>
-
-
 					// gets the current time sig from the temporary GUI
-					var topTime = document.getElementById("topTime").innerHTML;
-					var bottomTime = document.getElementById("bottomTime").innerHTML;
+					var topTime = Number(document.getElementById("topTime").innerHTML);
+					var bottomTime = Number(document.getElementById("bottomTime").innerHTML);
 
 
 					// if note count hasn't changed we don't have to update anything
@@ -212,7 +199,6 @@ class EditDocument extends Component {
 							}
 							path[1].classList.add("selected");
 							this.state.selectedNote = path[1];
-							console.log(this.state.selectedNote);
 
 						}
 						//otherwise change current note value using selected note
@@ -252,10 +238,14 @@ class EditDocument extends Component {
 						// get the value of the current time signature that was clicked
 						// increase it by one, if it is over 32, set it to 2
 						var val = parseInt(e.target.innerHTML)
+						var increment = 1
 						if (val > 31) {
 							val = 1
 						}
-						e.target.innerHTML = val + 1
+						if (path[1].classList[1] == "bot") {
+							increment = val
+						}
+						e.target.innerHTML = val + increment
 					}
 				});
 				this.setState({ staffs: docInfo.state.staffs })
