@@ -108,7 +108,7 @@ class Home extends Component {
 		super(props);
 		console.log(this.props.location)
 		this.state = {
-			documents: [], //holds all the documents data
+			documents: [], //holds user-specific documents
 			user: this.props.location.state.user, //passed from user login sessions
 			redirectTo: null
 		}
