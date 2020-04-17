@@ -6,7 +6,15 @@ import '../css/WholeRest.css';
 
 class WholeRest extends Note {
 	getSize() {
-		return 32;
+		var size = 32;
+		var dots = this.getDots().length;
+		var dotValue = 16;
+		while(dots > 0) {
+			size += dotValue;
+			dotValue /= 2;
+			dots -= 1;
+		}
+		return size;
 	}
 	render() {
 		return (

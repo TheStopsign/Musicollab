@@ -6,7 +6,15 @@ import '../css/HalfRest.css';
 
 class HalfRest extends Note {
 	getSize() {
-		return 16;
+		var size = 16;
+		var dots = this.getDots().length;
+		var dotValue = 8;
+		while(dots > 0) {
+			size += dotValue;
+			dotValue /= 2;
+			dots -= 1;
+		}
+		return size;
 	}
 	render() {
 		return (
