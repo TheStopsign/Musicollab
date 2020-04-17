@@ -187,6 +187,7 @@ class Staff extends Component {
 		var pos = note.state.location
 		var measure = note.state.measure
 
+		// if the position of the new note doesn't exist, return
 		if (this.state.notes.length < pos) {
 			alert("addNote was given invalid note");
 			return;
@@ -195,6 +196,7 @@ class Staff extends Component {
 		var totalLength = 0;
 		var locationCount = 0;
 		let nextNotes = [];
+		// Iterages over each note and determines if a change is needed
 		for (var i = 0; i < this.state.notes.length; i++) {
 
 			// if the position of the changed note is reached determine how to add it
@@ -202,9 +204,11 @@ class Staff extends Component {
 				// determines how much the new note will change the measure
 				var lengthChange = (note.getSize() - this.getNote(i).getSize());
 				totalLength += this.getNote(i).getSize();
+
 				if (lengthChange > 0) {
 					// if the new note will not fit in the measure, have it fill the remaining space
 					if (totalLength + lengthChange > this.state.noteCount) {
+						// changes the length of the new note to equal the remaining space
 						var newLength = this.state.noteCount - totalLength + this.getNote(i).getSize();
 
 						var oldNote = this.getNote(i).state.note;
