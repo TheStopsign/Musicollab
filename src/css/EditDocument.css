@@ -27,11 +27,14 @@
 .doc_title {
 	color: black;
 }
-
+.instrumentMenu {
+	position: relative;
+	margin-top: 80px;
+}
 .addStaffBtnContainer {
 	position: relative;
-	margin-top: 100px;
-	top: 35px;
+	margin-top: 50px;
+	/*top: 35px;*/
 	width: 60px;
 	height: 100px;
 	display: inline-block;
