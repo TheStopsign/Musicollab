@@ -54,6 +54,45 @@
 }
 
 
+.document {
+  background-color: #727272;
+  margin-left: 0px;
+}
+
+.inpNotes {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  background-color: #727272;
+  margin-left: 1%;
+  /* border: 1em solid #DCDCDC; */
+  padding-left: 12px;
+  /* margin-left: 0px; */
+  width: 96%;
+  max-width: 98%
+}
+
+.musicsheet {
+  /* padding-bottom: 15px; */
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  background-color: #727272;
+  margin-left: 1%;
+  /* border: 1em solid #DCDCDC; */
+  padding-left: 12px;
+  /* margin-left: 0px; */
+  width: 96%;
+  margin-bottom: 10px;
+}
+
+
 
 #addStaffBtn {
 	margin: 0;
