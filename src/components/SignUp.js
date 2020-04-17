@@ -193,8 +193,16 @@ class SignUp extends Component {
 			.catch((errors)=>{
 				// show errors to user
 				const formattedErrors = {};
+				let errorResponse = "";
+
+				// errors from form validation
 				errors.forEach( error => formattedErrors[error.field] = error.message );
 				this.setState({errors: formattedErrors});
+
+				for(const err in formattedErrors){
+					errorResponse += formattedErrors[err]+"\n";
+				}
+				alert(errorResponse);
 
 				console.log(this.state.errors);
 			})
