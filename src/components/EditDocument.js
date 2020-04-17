@@ -167,7 +167,6 @@ class EditDocument extends Component {
 			usercount: 0, //active viewers
 			noteCount: 32 //max amount of notes in one staff
 		}
-		this.shareDoc = this.shareDoc.bind(this)
 	}
 	componentDidMount() {
 		this.joinEditSession()

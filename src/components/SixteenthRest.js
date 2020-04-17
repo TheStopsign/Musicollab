@@ -7,7 +7,15 @@ import sixteenthRest from '../assetts/sixteenth-rest.svg';
 
 class SixteenthRest extends Note {
 	getSize() {
-		return 2;
+		var size = 2;
+		var dots = this.getDots().length;
+		var dotValue = 1;
+		while (dots > 0) {
+			size += dotValue;
+			dotValue /= 2;
+			dots -= 1;
+		}
+		return size;
 	}
 	render() {
 		return (
