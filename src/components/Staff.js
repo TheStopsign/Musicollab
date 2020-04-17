@@ -179,11 +179,15 @@ class Staff extends Component {
 				return new SixteenthNote({ note: note, measure: measure, location: locationCount, dots: dots });
 		}
 		// ThirtySecond Note
-		else {
+		else if (noteValue == 1) {
 			if (note == "R")
 				return new ThirtySecondRest({ note: note, measure: measure, location: locationCount, dots: 0 });
 			else
 				return new ThirtySecondNote({ note: note, measure: measure, location: locationCount, dots: 0 });
+		}
+		// invalid input
+		else{
+			return null;
 		}
 	}
 	// adds the note to the measure and adjusts other notes so it can fit 
@@ -242,9 +246,11 @@ class Staff extends Component {
 						lengthChange = Math.abs(lengthChange);
 
 						//pushes a new note with the remaining space of the old note
-						newNote = this.makeNote(this.getNote(i).state.note, lengthChange, measure, locationCount);
-						nextNotes.push(newNote);
-						locationCount += 1;
+						if(lengthChange > 0){
+							newNote = this.makeNote(this.getNote(i).state.note, lengthChange, measure, locationCount);
+							nextNotes.push(newNote);
+							locationCount += 1;
+						}
 					}
 				}
 				// if the new note is shorter than the old one, leave part of the old note
@@ -256,9 +262,11 @@ class Staff extends Component {
 
 					// re-adds the old note with the remaining space
 					lengthChange = Math.abs(lengthChange)
-					newNote = this.makeNote(this.getNote(i).state.note, lengthChange, measure, locationCount);
-					nextNotes.push(newNote);
-					locationCount += 1;
+					if(lengthChange > 0){
+						newNote = this.makeNote(this.getNote(i).state.note, lengthChange, measure, locationCount);
+						nextNotes.push(newNote);
+						locationCount += 1;
+					}
 				}
 			}
 			// if the current note isn't changed add it back unchanged
