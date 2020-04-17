@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import '../css/Profile.css';
 import { Link } from "react-router-dom";
-import Logo from '../logo.svg';
+import Logo from '../assetts/logo.svg';
 
 class Profile extends Component {
 	render() {

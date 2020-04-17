@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import '../css/Home.css';
 import axios from 'axios'
 import { Link, Redirect } from 'react-router-dom'
-import Logo from '../logo.svg';
-import Profile from '../profile.jpg'
+import Logo from '../assetts/logo.svg';
+import Profile from '../assetts/profile.jpg'
 
 class Home extends Component {
 	render() {

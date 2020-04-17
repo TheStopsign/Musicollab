@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import '../css/Login.css';
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
+import Logo from '../assetts/logo.svg';
 
 class Login extends Component {
 	render() {
@@ -21,7 +22,7 @@ class Login extends Component {
 					<div className="row align-items-center head section">
 						<div className="col-3">
 							<a href="/home" className="svg">
-								<object type="image/svg+xml" data="../logo.svg" height="80"></object>
+								<img src={Logo} alt="Logo" height="80px" />
 							</a>
 						</div>
 					</div>
