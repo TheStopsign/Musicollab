@@ -1,0 +1,65 @@
+/*SignUp.css*/
+.colSignUpBox {
+  width: 250px;
+  margin-top: 100px;
+}
+
+.FirstName {
+  margin-bottom: 10px;
+}
+
+.LastName {
+  margin-bottom: 10px;
+}
+
+.Email {
+  margin-bottom: 10px;
+}
+
+.Password {
+  margin-bottom: 10px;
+}
+
+.FirstName p{
+  font-color: #FFF;
+}
+.title h1 {
+  margin: 0px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  color: #DCDCDC;
+}
+
+.title p {
+  margin: 0;
+}
+
+label,
+h3 {
+  color: #DCDCDC;
+}
+
+.SignUpTitle {
+  margin-bottom: 20px;
+}
+
+.SubmitButton {
+  margin-top: 5px;
+  max-width: 150px;
+}
+
+.head {
+  background-color: #727272;
+  margin-bottom: 0;
+}
+
+.title {
+  font-size: 3em;
+  padding-left: .5em;
+}
+
+.searchBar input {
+  width: 90%;
+  color: #DCDCDC;
+  font-size: 1.75em;
+}
