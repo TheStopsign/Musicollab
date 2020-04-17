@@ -5,6 +5,7 @@ import '../css/SignUp.css';
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import { validateAll } from 'indicative/validator'
+import Logo from '../assetts/logo.svg';
 //var validate = require('indicative')
 
 class SignUp extends Component {
@@ -20,7 +21,7 @@ class SignUp extends Component {
 						<div className="row align-items-center section">
 							<div className="col-3">
 								<a href="/home" className="svg">
-									<object type="image/svg+xml" data="../logo.svg" height="80"></object>
+									<img src={Logo} alt="Logo" height="80px" />
 								</a>
 							</div>
 						</div>
