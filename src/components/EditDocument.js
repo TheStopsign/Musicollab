@@ -13,12 +13,12 @@ const notetb = new NoteTB()
 class EditDocument extends Component {
 	render() {
 		return (
-
 			<div className="EditDocument">
 
 				<div className="row align-items-center head section">
 					<div className="col">
 						<div className="row">
+							{/* this is where the user selects the clef that is used in the music with a dropdown menu */}
 							<div className="col-6 padding-0">
 								<h4 className="float-right"> CLEFS:&nbsp; </h4>
 							</div>
@@ -38,6 +38,7 @@ class EditDocument extends Component {
 
 					<div className="col">
 						<div className="row">
+							{/* User can select the key signature from a dropdown of different keys */}
 							<div className="col-7 padding-0">
 								<h4 className="float-right"> Key Signature:&nbsp; </h4>
 							</div>
@@ -57,6 +58,7 @@ class EditDocument extends Component {
 
 					<div className="col keySigTB">
 
+						{/* here the user can select the time signature by clicking on either number then clicking update */}
 						<h4 className=""> Time Signature:&nbsp; </h4>
 
 
@@ -71,6 +73,7 @@ class EditDocument extends Component {
 
 					</div>
 					<div className="dropdown">
+						{/* a dropdown that allows the user to dot their notes, two dots just for fun */}
 						<select id="dotCheck">
 							<option value="0">No Dot</option>
 							<option value="1">One Dot</option>
@@ -79,7 +82,7 @@ class EditDocument extends Component {
 					</div>
 
 					<div className="col-6 padding-0">
-
+						{/* the render location for the notebar class */}
 						<div className="noteBar" id="noteBar">
 							{
 								notetb.render()
@@ -93,6 +96,7 @@ class EditDocument extends Component {
 
 				<div className="main container-fluid">
 					<div className="row subMain">
+						{/* space for faster access to certain actions, unused */}
 						<div className="col-1 quickbar section">
 							<h4> quickbar </h4>
 						</div>
@@ -102,6 +106,8 @@ class EditDocument extends Component {
 
 							<div className="musicsheet">
 								<div className='sheet'>
+									{/* this is where the actual document gets rendered in the page, see staff.js for note placement */}
+									{/* see addnote() lower in the page for how notes get added to the staff */}
 									<center>
 										<h1 className="doc_title">{this.state.document.title}</h1>
 									</center>
@@ -131,6 +137,7 @@ class EditDocument extends Component {
 				</div>
 
 				<div className="container-fluid">
+					{/* space for list of users, and a share button to share with new users */}
 					<footer className="row section footer users">
 						<div className="col">
 							<h1> Owner: </h1>
@@ -223,7 +230,7 @@ class EditDocument extends Component {
 
 
 							//gets the newNote information and creates it
-							var measure = Number(e.target.classList[1].slice(8)); //wont this break with more than 9 measures?
+							var measure = Number(e.target.classList[1].slice(8));
 							var location = Number(e.target.classList[2].slice(9));
 							var newPitch = 0;
 							var dotValue = document.getElementById("dotCheck").value
@@ -351,11 +358,13 @@ class EditDocument extends Component {
 			return "G";
 		}
 	}
+	// add a new staff to the document
 	addStaff() {
 		let nextStaffs = this.state.staffs
 		nextStaffs.push(new Staff({ noteCount: this.state.noteCount, staffNum: this.state.staffs.length }))
 		this.setState({ staffs: nextStaffs })
 	}
+	// get the ith staff
 	getStaff(i) {
 		return this.state.staffs[i]
 	}

@@ -1,7 +1,7 @@
 //src/components/Login.js
 
 import React, { Component } from 'react';
-import '../App.css';
+import '../css/Login.css';
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 

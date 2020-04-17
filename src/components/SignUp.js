@@ -1,7 +1,7 @@
 //src/components/SignUp.js
 
 import React, { Component } from 'react';
-import '../App.css';
+import '../css/SignUp.css';
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import { validateAll } from 'indicative/validator'
@@ -35,10 +35,10 @@ class SignUp extends Component {
 									</div>
 
 									<div className="row FirstName">
-										<input className="form-control" 
+										<input className="form-control"
 										type="text"
 										name="firstName"
-										placeholder="First name" 
+										placeholder="First name"
 										value={this.state.firstName}
 										onChange={this.handleChange}
 										/>
@@ -46,41 +46,41 @@ class SignUp extends Component {
 									</div>
 
 									<div className="row LastName">
-										<input className="form-control" 
+										<input className="form-control"
 										type="text"
 										name="lastName"
-										placeholder="Last name" 
+										placeholder="Last name"
 										value={this.state.lastName}
 										onChange={this.handleChange}
 										/>
 									</div>
 
 									<div className="row Email">
-										<input className="form-control" 
+										<input className="form-control"
 										type="text"
 										id="email"
 										name="email"
-										placeholder="Email" 
+										placeholder="Email"
 										value={this.state.email}
 										onChange={this.handleChange}
 										/>
 									</div>
 
 									<div className="row Password">
-										<input className="form-control" 
+										<input className="form-control"
 										type="password"
 										name="password"
-										placeholder="Password" 
+										placeholder="Password"
 										value={this.state.password}
 										onChange={this.handleChange}
 										/>
 									</div>
 
 									<div className="row PasswordConfirm">
-										<input className="form-control" 
+										<input className="form-control"
 										type="password"
 										name="password_confirmation"
-										placeholder="Confirm Password" 
+										placeholder="Confirm Password"
 										value={this.state.password_confirmation}
 										onChange={this.handleChange}
 										/>
@@ -88,7 +88,7 @@ class SignUp extends Component {
 
 									<div className="row justify-content-center">
 										<div className="SubmitButton">
-											<button 
+											<button
 												className="btn btn-primary btn-block"
 												onClick={this.handleSubmit}
 												type="submit"
@@ -138,7 +138,7 @@ class SignUp extends Component {
 		console.log('Attempting sign-up');
 		console.log(this.state);
 		event.preventDefault();
-	
+
 		// Validate user input using indicative package
 		// take input data from state
 		var valid = false;
@@ -194,7 +194,7 @@ class SignUp extends Component {
 				const formattedErrors = {};
 				errors.forEach( error => formattedErrors[error.field] = error.message );
 				this.setState({errors: formattedErrors});
-				
+
 				console.log(this.state.errors);
 			})
 	}

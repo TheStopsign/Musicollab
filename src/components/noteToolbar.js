@@ -20,7 +20,8 @@ class NoteTB extends Component {
   render() {
     return (
       <div className="toolbar">
-
+        {/* render all notes in the notes array under state to the note toolbar */}
+        {/* classname space spaces the notes out and id fakenote allows the finding of the notes when clicked */}
         <div className="notes row" id="ntb">
           {
             this.state.notes.map(function (note, i) {
@@ -34,6 +35,8 @@ class NoteTB extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // NTB makes the notes use a class designed for the notetoolbar instead of an actual
+      // note value. NTBR is the same but for rests
       notes: [
         new ThirtySecondNote({ note: "NTB" }),
         new SixteenthNote({ note: "NTB" }),

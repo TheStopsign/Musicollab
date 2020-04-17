@@ -1,0 +1,43 @@
+/*Profile.css*/
+.pic {
+  border: 3px solid #DCDCDC;
+}
+
+.footer,{
+  position: absolute;
+  bottom: 0;
+  background-color: #727272;
+  margin-left: 1%;
+  /* border: 1em solid #DCDCDC; */
+  padding-left: 12px;
+  /* margin-left: 0px; */
+  width: 96%;
+  margin-bottom: 10px;
+}
+
+.userID {
+  font-size: .8em;
+  color: #DCDCDC;
+}
+
+.user ul {
+  margin-top: .5em;
+  font-size: 1.25em;
+  list-style-type: none;
+}
+
+.head {
+  background-color: #727272;
+  margin-bottom: 0;
+}
+
+.title {
+  font-size: 3em;
+  padding-left: .5em;
+}
+
+.searchBar input {
+  width: 90%;
+  color: #DCDCDC;
+  font-size: 1.75em;
+}
