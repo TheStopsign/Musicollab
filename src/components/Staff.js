@@ -269,7 +269,7 @@ class Staff extends Component {
 				locationCount += 1;
 			}
 		}
-		//here is where the notes are updated nextNotes is just an array of the new notes ///////////////////////////////////////////////////////////////////////////////
+		//here is where the notes are updated nextNotes is just an array of the new notes
 		this.state.notes = nextNotes;
 	}
 	// gets the note at index i
