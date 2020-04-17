@@ -112,8 +112,8 @@ class EditDocument extends Component {
 										<h1 className="doc_title">{this.state.document.title}</h1>
 									</center>
 									<div className="row">
-										<div className ="dropdown instrumentMenu">
-											<select id = "instrument">
+										<div className="dropdown instrumentMenu">
+											<select id="instrument">
 												<option value="0">No Instrument</option>
 												<option value="1">Alto Saxophone</option>
 												<option value="2">Flute</option>
@@ -160,12 +160,12 @@ class EditDocument extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			staffs: [],
-			document: {}, //holds the document info
-			socket: {},
+			staffs: [], //staff objects
+			document: {}, //document object
+			socket: {}, //socket
 			selectedNote: 0,
-			usercount: 0,
-			noteCount: 32
+			usercount: 0, //active viewers
+			noteCount: 32 //max amount of notes in one staff
 		}
 		this.shareDoc = this.shareDoc.bind(this)
 	}
@@ -173,6 +173,7 @@ class EditDocument extends Component {
 		this.joinEditSession()
 			.then(() => {
 				document.getElementById("addStaffBtn").addEventListener("click", () => {
+					//request to server when you want to add a staff
 					this.state.socket.emit('addstaff', { room: "" + this.state.document._id });
 				})
 
@@ -249,6 +250,7 @@ class EditDocument extends Component {
 
 							var newNote = { pitch: newPitch, noteLength: noteValue, loc: location }
 
+							//tell the server you want to add a note
 							this.state.socket.emit('addnote', { room: this.state.document._id, staff: measure, note: newNote });
 						}
 					} else if ("ksig" == path[1].classList[0]) {
@@ -264,47 +266,48 @@ class EditDocument extends Component {
 						}
 						e.target.innerHTML = val + increment
 					}
-					else if(path[1].classList[1] == "instrumentMenu"){
+					else if (path[1].classList[1] == "instrumentMenu") {
 						var instrumentValue = document.getElementById("instrument").value;
-						if(instrumentValue == 0){
-							this.setState({staffs: []})
+						if (instrumentValue == 0) {
+							this.setState({ staffs: [] })
 						}
 					}
 				});
-				this.setState({ staffs: docInfo.state.staffs })
-			}); //when page loads, first get the document info
+				this.setState({ staffs: docInfo.state.staffs }) //re-render the staffs
+			});
 
 	}
 	async joinEditSession() {
+		//first, load the document data
 		axios.get(`http://localhost:8000/documents/` + this.props.match.params.id) //make a GET request to the server
 			.then(res => {
 				this.setState({ document: res.data }); //handle the response payload
 				const sock = io.connect("http://localhost:3001");
 				sock.on('connect', () => {
 					console.log(sock.id);
-					sock.emit("joinsession", { room: "" + this.state.document._id });
+					sock.emit("joinsession", { room: "" + this.state.document._id }); //join the editing 'room' on document connection
 				});
-				sock.on('addstaff', () => {
+				sock.on('addstaff', () => { //when anyone adds a staff
 					this.addStaff()
 				});
-				sock.on('usercount', (count) => {
+				sock.on('usercount', (count) => { //updating usercount
 					this.setState({ usercount: count })
 				});
-				sock.on('addnote', (measure, newNote) => {
+				sock.on('addnote', (measure, newNote) => { //when changes a note
 					console.log("Received addNote", newNote)
 					this.addNote(measure, newNote.pitch, newNote.noteLength, newNote.loc)
 				})
-				this.setState({ socket: sock })
+				this.setState({ socket: sock }) //to potentially reference later
 			})
 			.catch(function (error) {
 				console.log(error);
 			})
 	}
-	addNote(measure, newPitch, noteSelection, location) {
+	addNote(measure, newPitch, noteSelection, location) { //Hook for staff.addNote logic
 		//adds note to the measure and updates render
 		let newNote = this.getStaff(measure).makeNote(newPitch, noteSelection, measure, location);
 		this.getStaff(measure).addNote(newNote)
-		this.setState({ staffs: this.state.staffs })
+		this.setState({ staffs: this.state.staffs }) //update UI
 	}
 	getPitch(yPos, measure) {
 		//Getting pitch based on mouse x,y (WIP)
@@ -336,25 +339,25 @@ class EditDocument extends Component {
 	  }
 		alert("y: " + yPos);*/
 		//change note pitch based off where on the notes staff you click
-		if(yPos >= 0 && yPos < 10){
+		if (yPos >= 0 && yPos < 10) {
 			return "F";
 		}
-		else if(yPos >= 10 && yPos < 20){
+		else if (yPos >= 10 && yPos < 20) {
 			return "E";
 		}
-		else if(yPos >= 20 && yPos < 30){
+		else if (yPos >= 20 && yPos < 30) {
 			return "D";
 		}
-		else if(yPos >= 30 && yPos < 40){
+		else if (yPos >= 30 && yPos < 40) {
 			return "C";
 		}
-		else if(yPos >= 40 && yPos < 50){
+		else if (yPos >= 40 && yPos < 50) {
 			return "B";
 		}
-		else if(yPos >= 50 && yPos < 60){
+		else if (yPos >= 50 && yPos < 60) {
 			return "A";
 		}
-		else if(yPos >= 60 && yPos < 70){
+		else if (yPos >= 60 && yPos < 70) {
 			return "G";
 		}
 	}
@@ -367,67 +370,6 @@ class EditDocument extends Component {
 	// get the ith staff
 	getStaff(i) {
 		return this.state.staffs[i]
-	}
-	shareDoc() {
-		axios.post('http://localhost:8000/permissions/new', {
-			document: this.state.document._id,
-			isOwner: false,
-			canEdit: true,
-			canView: true,
-			email: 'userc@gmail.com'
-		}).then(response => {
-			console.log(response.data)
-			if (!response.data.errmsg) {
-				console.log('successful share')
-			} else {
-				console.log('error')
-			}
-		}).catch(error => {
-			console.log('share error: ')
-			console.log(error)
-		})
-	}
-	shareDoc2(email, isOwner, canEdit, canView) {
-		let sharedUserID; // To store the sharedUserID if found from /findEmail GET
-
-		// Query database for email (account) to share document with
-		axios.get('http://localhost:8000/accounts/findEmail/' + email)
-			.then(res => {
-				//found account
-				if (res.status == 200) {
-					console.log('Account found, database id:', res.data)
-					sharedUserID = res.data;
-
-					let permission; // to store new permission object from /new POST
-					// Now create a new permission to represent sharing
-					axios.post('http://localhost:8000/permissions/new', {
-						document: this.state.document.id,
-						isOwner: isOwner,
-						canEdit: canEdit,
-						canView: canView,
-					}).then(res2 => {
-						console.log('New permission:', res2.data)
-						permission = res2.data;
-
-						// Add the new permission_id to the shared user's list of permissions
-						axios.post('http://localhost:8000/accounts/newPermission', {
-							permission: permission,
-							userID: sharedUserID
-						}).then(res3 => {
-							console.log('Successfully saved permission to account', res3);
-						}).catch(error => {
-							console.log('Share permission with account error: ', error);
-						})
-					}).catch(error => {
-						console.log('permissions/new error: ', error)
-					})
-				} else {
-					console.log('Account not found, status:', res.status)
-				}
-
-			}).catch(err => {
-				console.log('accounts/findEmail ERROR: ', err)
-			})
 	}
 }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import axios from 'axios'
 
-const customStyles = {
+const customStyles = { //Modal styles
 	content: {
 		top: '50%',
 		left: '50%',
@@ -18,24 +18,24 @@ Modal.setAppElement(document.getElementById('root'));
 
 function Share(props) {
 	const [modalIsOpen, setIsOpen] = React.useState(false);
-	function openModal() {
+	function openModal() { //Hook for opening the modal
 		setIsOpen(true);
 	}
 
-	function afterOpenModal() {
+	function afterOpenModal() { //Hook for potential later development
 
 	}
 
-	function closeModal() {
+	function closeModal() { //Hook for closing the modal
 		setIsOpen(false);
 	}
 
-	function shareDoc(e) {
-		e.preventDefault()
-		let email = document.getElementById('email').value
-		let isOwner = document.getElementById('isOwner').value == "on"
-		let canEdit = document.getElementById('canEdit').value == "on"
-		let canView = document.getElementById('canView').value == "on"
+	function shareDoc(e) { //Shares the document
+		e.preventDefault() //prevents window from closing
+		let email = document.getElementById('email').value //email field value
+		let isOwner = document.getElementById('isOwner').value == "on" //checkbox value conversion
+		let canEdit = document.getElementById('canEdit').value == "on" //checkbox value conversion
+		let canView = document.getElementById('canView').value == "on" //checkbox value conversion
 		let sharedUserID; // To store the sharedUserID if found from /findEmail GET
 
 		// Query database for email (account) to share document with
@@ -87,9 +87,9 @@ function Share(props) {
 				onRequestClose={closeModal}
 				style={customStyles}
 				contentLabel="Example Modal"
-			>
-				<form onSubmit={shareDoc}>
-					<button className="btn btn-secondary" onClick={closeModal}>Nevermind</button>
+			> {/*Modal init options*/}
+				<form onSubmit={shareDoc}> {/*exec shareDoc when form is submitted*/}
+					<button className="btn btn-secondary" onClick={closeModal}>Nevermind</button> {/*Close button*/}
 					<input id="email" name="email" placeholder="Email" required />
 					<input type="checkbox" id="isOwner" name="isOwner" />
 					<label for="isOwner">Is Owner</label>
@@ -97,7 +97,7 @@ function Share(props) {
 					<label for="canEdit">Can Edit</label>
 					<input type="checkbox" id="canView" name="canView" />
 					<label for="canView">Can View</label>
-					<button type="submit" className="btn btn-primary">Share</button>
+					<button type="submit" className="btn btn-primary">Share</button> {/*Share button executes 'submit'*/}
 				</form>
 			</Modal>
 		</div>

@@ -47,9 +47,9 @@ app.use(passport.session()) // calls serializeUser and deserializeUser
 
 app.use(cors());
 //app.use('/', router);
-app.use('/accounts', accountRouter);
-app.use('/documents', documentRouter);
-app.use('/permissions', permissionRouter);
+app.use('/accounts', accountRouter); //backend API
+app.use('/documents', documentRouter); //backend API
+app.use('/permissions', permissionRouter); //backend API
 
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, '../public'));
@@ -60,36 +60,36 @@ var ioserver = require('http').createServer(app);
 var allowedOrigins = "http://localhost:* http://127.0.0.1:*";
 
 var io = socketio(ioserver, {
-	origins: allowedOrigins
+	origins: allowedOrigins //localhost testing
 });
 
-io.on('connection', function (socket) {
+io.on('connection', function (socket) { //socket.io handles all client connections and actions
 	console.log("User connected")
 	socket.on('joinsession', function (data) {
 		console.log("\tjoining session " + data.room)
-		socket.join(data.room);
+		socket.join(data.room); //set client to specific document
 		var room = io.sockets.adapter.rooms[data.room];
 		console.log("\t" + room.length + " user(s) connected")
-		io.in("" + data.room).emit('usercount', room.length);
+		io.in("" + data.room).emit('usercount', room.length); //update clients' information
 
 		socket.on('addstaff', function (data) {
 			console.log("Staff added in " + data.room)
-			io.in("" + data.room).emit("addstaff");
+			io.in("" + data.room).emit("addstaff"); //exec addstaff
 		})
 		socket.on('addnote', function (data) {
 			console.log("addnote")
 			console.log(data)
-			io.in("" + data.room).emit("addnote", data.staff, data.note);
+			io.in("" + data.room).emit("addnote", data.staff, data.note); //exec addnote
 		})
 
 		socket.on('disconnect', function () {
-			io.in("" + data.room).emit('usercount', room.length);
+			io.in("" + data.room).emit('usercount', room.length); //update clients' information
 			console.log('User Disconnected')
 		});
 	})
 })
 
-ioserver.listen(3001);
+ioserver.listen(3001); //serparate listener
 
 app.listen(PORT, function () {
 	console.log('running at localhost: ' + PORT);
