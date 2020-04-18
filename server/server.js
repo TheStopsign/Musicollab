@@ -16,11 +16,8 @@ const accountRouter = require('./Account/Account.route')
 const documentRouter = require('./Document/Document.route')
 const permissionRouter = require('./Permission/Permission.route')
 
-const passport = require('passport');
-require('./passport-config')(passport);
+
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session)
-const flash = require('connect-flash');
 
 seedDB(); // Populate database with test data
 
@@ -30,6 +27,7 @@ app.use(bodyParser.urlencoded({
 	extended: false
 }));
 
+
 // Express Session
 app.use(
 	session({
@@ -38,12 +36,6 @@ app.use(
 		saveUninitialized: false //required
 	})
 )
-app.use(flash());
-
-// Passport
-//app.use(express.static(__dirname + '../public'));
-app.use(passport.initialize())
-app.use(passport.session()) // calls serializeUser and deserializeUser
 
 app.use(cors());
 //app.use('/', router);

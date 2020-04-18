@@ -104,6 +104,7 @@ class Login extends Component {
 		this.state = {
 			email: '',
 			password: '',
+			user: {},
 			redirectTo: null,
 		}
 		this.handleSubmit = this.handleSubmit.bind(this)
@@ -122,6 +123,7 @@ class Login extends Component {
 		event.preventDefault()
 		console.log('login handleSubmit')
 
+		
 		axios.post('http://localhost:8000/accounts/login', {
 			email: this.state.email,
 			password: this.state.password
@@ -129,11 +131,18 @@ class Login extends Component {
 			.then(res => {
 				console.log('login response: ')
 				console.log(res.data)
-				if (res.status === 200) {
+				if (!res.data.errmsg) {
 					// update the state to redirect to home
+					console.log('Login success, redirecting to /home')
 					this.setState({
 						user: res.data,
 						redirectTo: '/home'
+					})
+				}else{
+					alert('Invalid email or password');
+					this.setState({
+						email: '',
+						password: ''
 					})
 				}
 			}).catch(error => {

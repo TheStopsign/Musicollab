@@ -18,7 +18,6 @@ class App extends Component {
             <div className="auth-inner">
               <Switch>
                 <Route exact path='/' component={Login} />
-                <Route path="/log-in" component={Login} />
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/home" component={Home} />
                 <Route path="/profile" component={Profile} />

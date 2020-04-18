@@ -154,8 +154,8 @@ class SignUp extends Component {
 		// Custom messages to display on validation error
 		const messages = {
 			required: 'Please enter {{field}}',
-			'firstName.required': 'Please enter a name',
-			'lastName.required': 'Please enter a name',
+			'firstName.required': 'Please enter a first name',
+			'lastName.required': 'Please enter a last name',
 			'email.email': 'The email is invalid',
 			'password.confirmed': 'Password does not match',
 			'password.min': 'Password must be at least 6 characters'
