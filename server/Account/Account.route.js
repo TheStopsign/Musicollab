@@ -105,29 +105,31 @@ accountRouter.route('/getDocuments/:id').get(function (req, res) {
 				if (err) {
 					res.status(400).json(err);
 				} else {
-					//get permissions
+					//first get permissions
 					Permission.find({
 						'_id': {
-							$in: user.permissions
+							$in: user.permissions //parse by id's
 						}
 					}, function (error, perms) {
 						if (error) {
 							console.log(error)
+							res.status(400).send(error)
 						} else {
 							doc_ids = []
 							for (let i in perms) {
-								console.log("perm:", perms[i])
 								doc_ids.push(perms[i].document)
 							}
-							console.log("doc_ids", doc_ids)
+							//then get documents
 							Document.find({
 								'_id': {
-									$in: doc_ids
+									$in: doc_ids //parse by id's
 								}
 							}, function (error, docs) {
 								if (error) {
 									console.log(error)
+									res.status(400).send(error)
 								} else {
+									console.log("/accounts/getDocuments GET SUCCESS");
 									res.status(200).json(docs)
 								}
 							});
@@ -135,7 +137,7 @@ accountRouter.route('/getDocuments/:id').get(function (req, res) {
 					});
 				}
 			}).catch(err => {
-				console.log('accounts/newPermission failed to connect to MongoDB:', err);
+				console.log('accounts/getDocuments failed to connect to MongoDB:', err);
 			})
 		});
 });
