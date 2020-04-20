@@ -1,10 +1,11 @@
 //src/components/SignUp.js
 
 import React, { Component } from 'react';
-import '../App.css';
+import '../css/SignUp.css';
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import { validateAll } from 'indicative/validator'
+import Logo from '../assetts/logo.svg';
 //var validate = require('indicative')
 
 class SignUp extends Component {
@@ -20,7 +21,7 @@ class SignUp extends Component {
 						<div className="row align-items-center section">
 							<div className="col-3">
 								<a href="/home" className="svg">
-									<object type="image/svg+xml" data="../logo.svg" height="80"></object>
+									<img src={Logo} alt="Logo" height="80px" />
 								</a>
 							</div>
 						</div>
@@ -35,10 +36,10 @@ class SignUp extends Component {
 									</div>
 
 									<div className="row FirstName">
-										<input className="form-control" 
+										<input className="form-control"
 										type="text"
 										name="firstName"
-										placeholder="First name" 
+										placeholder="First name"
 										value={this.state.firstName}
 										onChange={this.handleChange}
 										/>
@@ -46,41 +47,41 @@ class SignUp extends Component {
 									</div>
 
 									<div className="row LastName">
-										<input className="form-control" 
+										<input className="form-control"
 										type="text"
 										name="lastName"
-										placeholder="Last name" 
+										placeholder="Last name"
 										value={this.state.lastName}
 										onChange={this.handleChange}
 										/>
 									</div>
 
 									<div className="row Email">
-										<input className="form-control" 
+										<input className="form-control"
 										type="text"
 										id="email"
 										name="email"
-										placeholder="Email" 
+										placeholder="Email"
 										value={this.state.email}
 										onChange={this.handleChange}
 										/>
 									</div>
 
 									<div className="row Password">
-										<input className="form-control" 
+										<input className="form-control"
 										type="password"
 										name="password"
-										placeholder="Password" 
+										placeholder="Password"
 										value={this.state.password}
 										onChange={this.handleChange}
 										/>
 									</div>
 
 									<div className="row PasswordConfirm">
-										<input className="form-control" 
+										<input className="form-control"
 										type="password"
 										name="password_confirmation"
-										placeholder="Confirm Password" 
+										placeholder="Confirm Password"
 										value={this.state.password_confirmation}
 										onChange={this.handleChange}
 										/>
@@ -88,7 +89,7 @@ class SignUp extends Component {
 
 									<div className="row justify-content-center">
 										<div className="SubmitButton">
-											<button 
+											<button
 												className="btn btn-primary btn-block"
 												onClick={this.handleSubmit}
 												type="submit"
@@ -138,7 +139,7 @@ class SignUp extends Component {
 		console.log('Attempting sign-up');
 		console.log(this.state);
 		event.preventDefault();
-	
+
 		// Validate user input using indicative package
 		// take input data from state
 		var valid = false;
@@ -153,8 +154,8 @@ class SignUp extends Component {
 		// Custom messages to display on validation error
 		const messages = {
 			required: 'Please enter {{field}}',
-			'firstName.required': 'Please enter a name',
-			'lastName.required': 'Please enter a name',
+			'firstName.required': 'Please enter a first name',
+			'lastName.required': 'Please enter a last name',
 			'email.email': 'The email is invalid',
 			'password.confirmed': 'Password does not match',
 			'password.min': 'Password must be at least 6 characters'
@@ -192,9 +193,17 @@ class SignUp extends Component {
 			.catch((errors)=>{
 				// show errors to user
 				const formattedErrors = {};
+				let errorResponse = "";
+
+				// errors from form validation
 				errors.forEach( error => formattedErrors[error.field] = error.message );
 				this.setState({errors: formattedErrors});
-				
+
+				for(const err in formattedErrors){
+					errorResponse += formattedErrors[err]+"\n";
+				}
+				alert(errorResponse);
+
 				console.log(this.state.errors);
 			})
 	}

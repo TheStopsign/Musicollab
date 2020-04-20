@@ -13,12 +13,12 @@ const notetb = new NoteTB()
 class EditDocument extends Component {
 	render() {
 		return (
-
 			<div className="EditDocument">
 
 				<div className="row align-items-center head section">
 					<div className="col">
 						<div className="row">
+							{/* this is where the user selects the clef that is used in the music with a dropdown menu */}
 							<div className="col-6 padding-0">
 								<h4 className="float-right"> CLEFS:&nbsp; </h4>
 							</div>
@@ -38,6 +38,7 @@ class EditDocument extends Component {
 
 					<div className="col">
 						<div className="row">
+							{/* User can select the key signature from a dropdown of different keys */}
 							<div className="col-7 padding-0">
 								<h4 className="float-right"> Key Signature:&nbsp; </h4>
 							</div>
@@ -57,20 +58,22 @@ class EditDocument extends Component {
 
 					<div className="col keySigTB">
 
+						{/* here the user can select the time signature by clicking on either number then clicking update */}
 						<h4 className=""> Time Signature:&nbsp; </h4>
 
 
-						<div className="ksig">
+						<div className="ksig top">
 							<span id="topTime"> 4 </span>
 						</div>
 						<span className="ksigmiddle"> / </span>
-						<div className="ksig">
+						<div className="ksig bot">
 							<span id="bottomTime"> 4 </span>
 						</div>
 						<button className="btn" id="timeButton" type="button">Update</button>
 
 					</div>
 					<div className="dropdown">
+						{/* a dropdown that allows the user to dot their notes, two dots just for fun */}
 						<select id="dotCheck">
 							<option value="0">No Dot</option>
 							<option value="1">One Dot</option>
@@ -79,7 +82,7 @@ class EditDocument extends Component {
 					</div>
 
 					<div className="col-6 padding-0">
-
+						{/* the render location for the notebar class */}
 						<div className="noteBar" id="noteBar">
 							{
 								notetb.render()
@@ -93,6 +96,7 @@ class EditDocument extends Component {
 
 				<div className="main container-fluid">
 					<div className="row subMain">
+						{/* space for faster access to certain actions, unused */}
 						<div className="col-1 quickbar section">
 							<h4> quickbar </h4>
 						</div>
@@ -102,16 +106,28 @@ class EditDocument extends Component {
 
 							<div className="musicsheet">
 								<div className='sheet'>
+									{/* this is where the actual document gets rendered in the page, see staff.js for note placement */}
+									{/* see addnote() lower in the page for how notes get added to the staff */}
 									<center>
 										<h1 className="doc_title">{this.state.document.title}</h1>
 									</center>
-									{
-										this.state.staffs.map(function (staff) {
-											return staff.render()
-										})
-									}
-									<div className="addStaffBtnContainer">
-										<button id="addStaffBtn" className="btn">+</button>
+									<div className="row">
+										<div className="dropdown instrumentMenu">
+											<select id="instrument">
+												<option value="0">No Instrument</option>
+												<option value="1">Alto Saxophone</option>
+												<option value="2">Flute</option>
+												<option value="3">Clarinet</option>
+											</select>
+										</div>
+										{
+											this.state.staffs.map(function (staff) {
+												return staff.render()
+											})
+										}
+										<div className="addStaffBtnContainer">
+											<button id="addStaffBtn" className="btn">+</button>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -121,6 +137,7 @@ class EditDocument extends Component {
 				</div>
 
 				<div className="container-fluid">
+					{/* space for list of users, and a share button to share with new users */}
 					<footer className="row section footer users">
 						<div className="col">
 							<h1> Owner: </h1>
@@ -143,14 +160,13 @@ class EditDocument extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			staffs: [],
-			document: {}, //holds the document info
-			socket: {},
+			staffs: [], //staff objects
+			document: {}, //document object
+			socket: {}, //socket
 			selectedNote: 0,
-			usercount: 0,
-			noteCount: 32
+			usercount: 0, //active viewers
+			noteCount: 32 //max amount of notes in one staff
 		}
-		this.shareDoc = this.shareDoc.bind(this)
 	}
 	componentDidMount() {
 		this.joinEditSession()
@@ -178,27 +194,15 @@ class EditDocument extends Component {
 				this.setState({ socket: sock })
 
 				document.getElementById("addStaffBtn").addEventListener("click", () => {
+					//request to server when you want to add a staff
 					this.state.socket.emit('addstaff', { room: "" + this.state.document._id });
 				})
 
 				document.getElementById("timeButton").addEventListener("click", () => {
 
-					// <textarea cols="5" rows="1" id="topTime"></textarea>
-					// <div className="dropdown">
-					// 	<select id="bottomTime">
-					// 		<option value="2">2</option>
-					// 		<option value="4">4</option>
-					// 		<option value="8">8</option>
-					// 		<option value="16">16</option>
-					// 		<option value="32">32</option>
-					//
-					// 	</select>
-					// </div>
-
-
 					// gets the current time sig from the temporary GUI
-					var topTime = document.getElementById("topTime").innerHTML;
-					var bottomTime = document.getElementById("bottomTime").innerHTML;
+					var topTime = Number(document.getElementById("topTime").innerHTML);
+					var bottomTime = Number(document.getElementById("bottomTime").innerHTML);
 
 
 					// if note count hasn't changed we don't have to update anything
@@ -234,7 +238,6 @@ class EditDocument extends Component {
 							}
 							path[1].classList.add("selected");
 							this.state.selectedNote = path[1];
-							console.log(this.state.selectedNote);
 
 						}
 						//otherwise change current note value using selected note
@@ -249,14 +252,14 @@ class EditDocument extends Component {
 
 
 							//gets the newNote information and creates it
-							var measure = Number(e.target.classList[1].slice(8)); //wont this break with more than 9 measures?
+							var measure = Number(e.target.classList[1].slice(8));
 							var location = Number(e.target.classList[2].slice(9));
 							var newPitch = 0;
 							var dotValue = document.getElementById("dotCheck").value
 							if (this.state.selectedNote.classList.contains("NTBR")) {
 								newPitch = "R"
 							} else {
-								newPitch = docInfo.getPitch(measure);
+								newPitch = docInfo.getPitch(e.offsetY, measure);
 							}
 							var multiplier = 0.5
 							var noteValue = Number(noteSelection);
@@ -268,43 +271,55 @@ class EditDocument extends Component {
 
 							var newNote = { pitch: newPitch, noteLength: noteValue, loc: location }
 
+							//tell the server you want to add a note
 							this.state.socket.emit('addnote', { room: this.state.document._id, staff: measure, note: newNote });
 						}
 					} else if ("ksig" == path[1].classList[0]) {
 						// get the value of the current time signature that was clicked
 						// increase it by one, if it is over 32, set it to 2
 						var val = parseInt(e.target.innerHTML)
+						var increment = 1
 						if (val > 31) {
 							val = 1
 						}
-						e.target.innerHTML = val + 1
+						if (path[1].classList[1] == "bot") {
+							increment = val
+						}
+						e.target.innerHTML = val + increment
+					}
+					else if (path[1].classList[1] == "instrumentMenu") {
+						var instrumentValue = document.getElementById("instrument").value;
+						if (instrumentValue == 0) {
+							this.setState({ staffs: [] })
+						}
 					}
 				});
-				this.setState({ staffs: docInfo.state.staffs })
+				this.setState({ staffs: docInfo.state.staffs }) //re-render the staffs
 				this.build()
-			}); //when page loads, first get the document info
+			});
 
 	}
 	async joinEditSession() {
+		//first, load the document data
 		axios.get(`http://localhost:8000/documents/` + this.props.match.params.id) //make a GET request to the server
 			.then(res => {
 				this.setState({ document: res.data }); //handle the response payload
 				const sock = io.connect("http://localhost:3001");
 				sock.on('connect', () => {
 					console.log(sock.id);
-					sock.emit("joinsession", { room: "" + this.state.document._id });
+					sock.emit("joinsession", { room: "" + this.state.document._id }); //join the editing 'room' on document connection
 				});
-				sock.on('addstaff', () => {
+				sock.on('addstaff', () => { //when anyone adds a staff
 					this.addStaff()
 				});
-				sock.on('usercount', (count) => {
+				sock.on('usercount', (count) => { //updating usercount
 					this.setState({ usercount: count })
 				});
-				sock.on('addnote', (measure, newNote) => {
+				sock.on('addnote', (measure, newNote) => { //when changes a note
 					console.log("Received addNote", newNote)
 					this.addNote(measure, newNote.pitch, newNote.noteLength, newNote.loc)
 				})
-				this.setState({ socket: sock })
+				this.setState({ socket: sock }) //to potentially reference later
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -339,9 +354,9 @@ class EditDocument extends Component {
 		//adds note to the measure and updates render
 		let newNote = this.getStaff(measure).makeNote(newPitch, noteSelection, measure, location);
 		this.getStaff(measure).addNote(newNote)
-		this.setState({ staffs: this.state.staffs })
+		this.setState({ staffs: this.state.staffs }) //update UI
 	}
-	getPitch(measure) {
+	getPitch(yPos, measure) {
 		//Getting pitch based on mouse x,y (WIP)
 		/*
 		var el = this.getStaff(measure);
@@ -369,79 +384,39 @@ class EditDocument extends Component {
 
 	    el = el.offsetParent;
 	  }
-		alert("x: " + xPos+ ", y: " + yPos);
-		*/
-
-		return "A";
+		alert("y: " + yPos);*/
+		//change note pitch based off where on the notes staff you click
+		if (yPos >= 0 && yPos < 10) {
+			return "F";
+		}
+		else if (yPos >= 10 && yPos < 20) {
+			return "E";
+		}
+		else if (yPos >= 20 && yPos < 30) {
+			return "D";
+		}
+		else if (yPos >= 30 && yPos < 40) {
+			return "C";
+		}
+		else if (yPos >= 40 && yPos < 50) {
+			return "B";
+		}
+		else if (yPos >= 50 && yPos < 60) {
+			return "A";
+		}
+		else if (yPos >= 60 && yPos < 70) {
+			return "G";
+		}
 	}
+	// add a new staff to the document
 	addStaff() {
 		let nextStaffs = this.state.staffs
 		nextStaffs.push(new Staff({ noteCount: this.state.noteCount, staffNum: this.state.staffs.length }))
 		this.setState({ staffs: nextStaffs })
 	}
+	// get the ith staff
 	getStaff(i) {
 		return this.state.staffs[i]
-	}
-	shareDoc() {
-		axios.post('http://localhost:8000/permissions/new', {
-			document: this.state.document._id,
-			isOwner: false,
-			canEdit: true,
-			canView: true,
-			email: 'userc@gmail.com'
-		}).then(response => {
-			console.log(response.data)
-			if (!response.data.errmsg) {
-				console.log('successful share')
-			} else {
-				console.log('error')
-			}
-		}).catch(error => {
-			console.log('share error: ')
-			console.log(error)
-		})
-	}
-	shareDoc2(email, isOwner, canEdit, canView) {
-		let sharedUserID; // To store the sharedUserID if found from /findEmail GET
-
-		// Query database for email (account) to share document with
-		axios.get('http://localhost:8000/accounts/findEmail/' + email)
-			.then(res => {
-				//found account
-				if (res.status == 200) {
-					console.log('Account found, database id:', res.data)
-					sharedUserID = res.data;
-
-					let permission; // to store new permission object from /new POST
-					// Now create a new permission to represent sharing
-					axios.post('http://localhost:8000/permissions/new', {
-						document: this.state.document.id,
-						isOwner: isOwner,
-						canEdit: canEdit,
-						canView: canView,
-					}).then(res2 => {
-						console.log('New permission:', res2.data)
-						permission = res2.data;
-
-						// Add the new permission_id to the shared user's list of permissions
-						axios.post('http://localhost:8000/accounts/newPermission', {
-							permission: permission,
-							userID: sharedUserID
-						}).then(res3 => {
-							console.log('Successfully saved permission to account', res3);
-						}).catch(error => {
-							console.log('Share permission with account error: ', error);
-						})
-					}).catch(error => {
-						console.log('permissions/new error: ', error)
-					})
-				} else {
-					console.log('Account not found, status:', res.status)
-				}
-
-			}).catch(err => {
-				console.log('accounts/findEmail ERROR: ', err)
-			})
 	}
 }
 

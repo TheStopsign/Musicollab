@@ -1,9 +1,9 @@
 //src/components/Profile.js
 
 import React, { Component } from 'react';
-import '../App.css';
+import '../css/Profile.css';
 import { Link } from "react-router-dom";
-import Logo from '../logo.svg';
+import Logo from '../assetts/logo.svg';
 
 class Profile extends Component {
 	render() {

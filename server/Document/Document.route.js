@@ -48,11 +48,13 @@ documentRouter.route('/new').post(function (req, res) {
 	mongoose.connect(config.MONGO_URI)
 		.then(() => {
 			var newDoc = new Document()
-			newDoc.save((err, savedDoc) => {
-				if (err) res.json(err)
-				else res.json(savedDoc)
-			}).then(() => {
+			newDoc.save()
+			.then((savedDoc) => {
+				console.log('/documents/new SUCCESS')
+				res.json(savedDoc)
 				mongoose.disconnect()
+			}).catch(err=>{
+				console.log('/documents/new save ERROR', err)
 			})
 		})
 });

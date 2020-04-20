@@ -41,14 +41,13 @@ permissionRouter.route('/new').post(function (req, res) {
 				canEdit: canEdit,
 				canView: canView
 			})
-			newPerm.save((err, savedPerm) => {
-				if (err) res.json(err)
-				else {
-					res.json(savedPerm)
-					// TODO add permission to account
-				}
-			}).then(() => {
+			newPerm.save()
+			.then((savedPerm) => {
+				console.log('/permissions/new SUCCESS')
+				res.json(savedPerm)
 				mongoose.disconnect()
+			}).catch(err=>{
+				console.log('/permissions/new ERROR: ', err)
 			})
 			// }
 			// else {

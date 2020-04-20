@@ -19,6 +19,8 @@ class HalfNote extends Note {
 	render() {
 		return (
 			<div className={"note halfnote " + this.state.note} id="16">
+				{/* note and flagnote put the note in the right spot on the page halfnote is for figuring out which note it is */}
+				{/* measure and location are both for the note logic*/}
 				<div className={"vline measure:" + this.state.measure + " location:" + this.state.location}></div>
 				<div className={"half_circle measure:" + this.state.measure + " location:" + this.state.location}></div>
 				<div className="dots">{this.getDots()}</div>

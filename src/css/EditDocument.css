@@ -27,11 +27,14 @@
 .doc_title {
 	color: black;
 }
-
+.instrumentMenu {
+	position: relative;
+	margin-top: 80px;
+}
 .addStaffBtnContainer {
 	position: relative;
-	margin-top: 100px;
-	top: 35px;
+	margin-top: 50px;
+	/*top: 35px;*/
 	width: 60px;
 	height: 100px;
 	display: inline-block;
@@ -51,6 +54,45 @@
 
 .keySigTB {
 	user-select: none
+}
+
+
+.document {
+  background-color: #727272;
+  margin-left: 0px;
+}
+
+.inpNotes {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  background-color: #727272;
+  margin-left: 1%;
+  /* border: 1em solid #DCDCDC; */
+  padding-left: 12px;
+  /* margin-left: 0px; */
+  width: 96%;
+  max-width: 98%
+}
+
+.musicsheet {
+  /* padding-bottom: 15px; */
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  background-color: #727272;
+  margin-left: 1%;
+  /* border: 1em solid #DCDCDC; */
+  padding-left: 12px;
+  /* margin-left: 0px; */
+  width: 96%;
+  margin-bottom: 10px;
 }
 
 

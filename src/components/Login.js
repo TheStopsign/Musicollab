@@ -1,9 +1,10 @@
 //src/components/Login.js
 
 import React, { Component } from 'react';
-import '../App.css';
+import '../css/Login.css';
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
+import Logo from '../assetts/logo.svg';
 
 class Login extends Component {
 	render() {
@@ -21,7 +22,7 @@ class Login extends Component {
 					<div className="row align-items-center head section">
 						<div className="col-3">
 							<a href="/home" className="svg">
-								<object type="image/svg+xml" data="../logo.svg" height="80"></object>
+								<img src={Logo} alt="Logo" height="80px" />
 							</a>
 						</div>
 					</div>
@@ -103,6 +104,7 @@ class Login extends Component {
 		this.state = {
 			email: '',
 			password: '',
+			user: {},
 			redirectTo: null,
 		}
 		this.handleSubmit = this.handleSubmit.bind(this)
@@ -121,6 +123,7 @@ class Login extends Component {
 		event.preventDefault()
 		console.log('login handleSubmit')
 
+		
 		axios.post('http://localhost:8000/accounts/login', {
 			email: this.state.email,
 			password: this.state.password
@@ -128,11 +131,18 @@ class Login extends Component {
 			.then(res => {
 				console.log('login response: ')
 				console.log(res.data)
-				if (res.status === 200) {
+				if (!res.data.errmsg) {
 					// update the state to redirect to home
+					console.log('Login success, redirecting to /home')
 					this.setState({
 						user: res.data,
 						redirectTo: '/home'
+					})
+				}else{
+					alert('Invalid email or password');
+					this.setState({
+						email: '',
+						password: ''
 					})
 				}
 			}).catch(error => {

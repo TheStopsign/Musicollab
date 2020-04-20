@@ -1,10 +1,11 @@
 //src/components/Home.js
 
 import React, { Component } from 'react';
-import '../App.css';
-import axios from 'axios'
-import { Link, Redirect } from 'react-router-dom'
-import Logo from '../logo.svg';
+import '../css/Home.css';
+import axios from 'axios';
+import { Link, Redirect } from 'react-router-dom';
+import Logo from '../assetts/logo.svg';
+import Profile from '../assetts/profile.jpg';
 
 class Home extends Component {
 	render() {
@@ -21,7 +22,7 @@ class Home extends Component {
 							</a>
 						</div>
 
-						<div className="col-6 searchBar">
+						<div className="col-4 searchBar">
 							<input type="text" id="search" name="search" placeholder="Search" />
 						</div>
 
@@ -36,7 +37,7 @@ class Home extends Component {
 						</div>
 
 						<div className="col-1">
-							<img className="float-right pic" src="profile.jpg" alt="prfile picture" />
+							<img className="float-right pic" src={Profile} alt="prfile picture" />
 						</div>
 
 
@@ -80,6 +81,8 @@ class Home extends Component {
 								</div>
 							</div>
 
+							{/* list of documents as links to those documents */}
+
 							<div className="col projects section">
 								{this.state.documents.map(function (document) {
 									return <div className="documentCard" key={document._id}>
@@ -103,9 +106,9 @@ class Home extends Component {
 	}
 	constructor(props) {
 		super(props);
-		console.log(this.props.location)
+		//console.log(this.props.location)
 		this.state = {
-			documents: [], //holds all the documents data
+			documents: [], //holds user-specific documents
 			user: this.props.location.state.user, //passed from user login sessions
 			redirectTo: null
 		}
@@ -127,11 +130,12 @@ class Home extends Component {
 		// 	})
 		let docs = []
 		//for each permission
-		for (let i = 0; i < this.state.user.permissions.length; i++) {
+		if(this.state.user.permissions){
+			for (let i = 0; i < this.state.user.permissions.length; i++) {
 			axios.get("http://localhost:8000/permissions/" + this.state.user.permissions[i])
 				.then(res => {
 					let perm = res.data;
-					console.log(perm)
+					console.log('Permisson loaded:', perm)
 					//get document from permission object
 					axios.get("http://localhost:8000/documents/" + perm.document)
 						.then(res2 => {
@@ -139,13 +143,15 @@ class Home extends Component {
 							this.setState({ documents: docs })
 						})
 						.catch(function (err) {
-							console.log(err)
+							console.log('Document load error:', err)
 						})
 				})
 				.catch(function (err) {
-					console.log(err)
+					console.log('Permission load error:', err)
 				})
+			}
 		}
+		
 	}
 	getDocuments() {
 		return this.state.documents
@@ -197,8 +203,7 @@ class Home extends Component {
 					console.log('permissions/new error: ', error)
 				})
 			}).catch(error => {
-				console.log('Error creating document')
-				console.log(error)
+				console.log('Error creating document:', error)
 			})
 	}
 }

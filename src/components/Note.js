@@ -3,6 +3,9 @@
 import React, { Component } from 'react';
 import '../css/Note.css';
 
+//This is an abstract class.
+//You cannot render a note
+//NoteTypes all have universal Note states and actions
 class Note extends Component {
 	constructor(props) {
 		super(props)

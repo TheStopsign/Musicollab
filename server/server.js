@@ -16,11 +16,8 @@ const accountRouter = require('./Account/Account.route')
 const documentRouter = require('./Document/Document.route')
 const permissionRouter = require('./Permission/Permission.route')
 
-const passport = require('passport');
-require('./passport-config')(passport);
+
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session)
-const flash = require('connect-flash');
 
 const axios = require('axios');
 
@@ -32,6 +29,7 @@ app.use(bodyParser.urlencoded({
 	extended: false
 }));
 
+
 // Express Session
 app.use(
 	session({
@@ -40,18 +38,12 @@ app.use(
 		saveUninitialized: false //required
 	})
 )
-app.use(flash());
-
-// Passport
-//app.use(express.static(__dirname + '../public'));
-app.use(passport.initialize())
-app.use(passport.session()) // calls serializeUser and deserializeUser
 
 app.use(cors());
 //app.use('/', router);
-app.use('/accounts', accountRouter);
-app.use('/documents', documentRouter);
-app.use('/permissions', permissionRouter);
+app.use('/accounts', accountRouter); //backend API
+app.use('/documents', documentRouter); //backend API
+app.use('/permissions', permissionRouter); //backend API
 
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, '../public'));
@@ -62,7 +54,7 @@ var ioserver = require('http').createServer(app);
 var allowedOrigins = "http://localhost:* http://127.0.0.1:*";
 
 var io = socketio(ioserver, {
-	origins: allowedOrigins
+	origins: allowedOrigins //localhost testing
 });
 
 function updateFromHistory(docID) {
@@ -116,10 +108,10 @@ io.on('connection', function (socket) {
 	console.log("User connected")
 	socket.on('joinsession', function (data) {
 		console.log("\tjoining session " + data.room)
-		socket.join(data.room);
+		socket.join(data.room); //set client to specific document
 		var room = io.sockets.adapter.rooms[data.room];
 		console.log("\t" + room.length + " user(s) connected")
-		io.in("" + data.room).emit('usercount', room.length);
+		io.in("" + data.room).emit('usercount', room.length); //update clients' information
 
 		if (room.length == 1) {
 			//first to join room!
@@ -163,7 +155,7 @@ io.on('connection', function (socket) {
 	})
 })
 
-ioserver.listen(3001);
+ioserver.listen(3001); //serparate listener
 
 app.listen(PORT, function () {
 	console.log('running at localhost: ' + PORT);

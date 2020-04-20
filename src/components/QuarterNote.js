@@ -19,6 +19,8 @@ class QuarterNote extends Note {
 	render() {
 		return (
 			<div className={"note quarternote " + this.state.note} id="8">
+				{/* note and flagnote put the note in the right spot on the page quarternote is for figuring out which note it is */}
+				{/* measure and location are both for the note logic in  */}
 				<div className={"vline measure:" + this.state.measure + " location:" + this.state.location}></div>
 				<div className={"circle measure:" + this.state.measure + " location:" + this.state.location}></div>
 				<div className="dots">{this.getDots()}</div>
