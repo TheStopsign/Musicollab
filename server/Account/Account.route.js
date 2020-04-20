@@ -6,6 +6,8 @@ const config = require('../config');
 mongoose.set('useFindAndModify', false);
 
 let Account = mongoose.model('Account')
+let Permission = mongoose.model('Permission')
+let Document = mongoose.model('Document')
 
 accountRouter.route('/').get(function (req, res) { //when the server receives a request to the /accounts route
 	console.log("/accounts GET received")
@@ -92,6 +94,52 @@ accountRouter.route('/newPermission').post(function (req, res) {
 });
 
 
+accountRouter.route('/getDocuments/:id').get(function (req, res) {
+	console.log("/accounts/getDocuments GET received");
+
+	let id = req.params.id;
+
+	mongoose.connect(config.MONGO_URI)
+		.then(() => {
+			Account.findById(id, function (err, user) { //query for specific account
+				if (err) {
+					res.status(400).json(err);
+				} else {
+					//get permissions
+					Permission.find({
+						'_id': {
+							$in: user.permissions
+						}
+					}, function (error, perms) {
+						if (error) {
+							console.log(error)
+						} else {
+							doc_ids = []
+							for (let i in perms) {
+								console.log("perm:", perms[i])
+								doc_ids.push(perms[i].document)
+							}
+							console.log("doc_ids", doc_ids)
+							Document.find({
+								'_id': {
+									$in: doc_ids
+								}
+							}, function (error, docs) {
+								if (error) {
+									console.log(error)
+								} else {
+									res.status(200).json(docs)
+								}
+							});
+						}
+					});
+				}
+			}).catch(err => {
+				console.log('accounts/newPermission failed to connect to MongoDB:', err);
+			})
+		});
+});
+
 // ============== SIGN UP ======================
 accountRouter.route('/signup').post(function (req, res) {
 	console.log("/accounts/signup POST received");
@@ -161,16 +209,16 @@ accountRouter.post('/login', (req, res, next) => {
 				else if (!account.validPassword(password)) {
 					console.log('/accounts/login INCORRECT PASSWORD')
 					res.json({ errmsg: 'Incorrect email' })
-				}else{
+				} else {
 					console.log('/accounts/login SUCCESS', account)
 					return res.status(200).json(account);
 				}
 			}).then(() => {
 				mongoose.disconnect()
-			}).catch(err =>{
+			}).catch(err => {
 				console.log('/accounts/login ERROR', err);
 			})
-		}).catch(err =>{
+		}).catch(err => {
 			console.log('/accounts/login failed to connect to MongoDB:', err);
 		})
 

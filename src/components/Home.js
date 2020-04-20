@@ -128,30 +128,15 @@ class Home extends Component {
 		// 	.catch(function (error) {
 		// 		console.log(error);
 		// 	})
-		let docs = []
-		//for each permission
-		if(this.state.user.permissions){
-			for (let i = 0; i < this.state.user.permissions.length; i++) {
-			axios.get("http://localhost:8000/permissions/" + this.state.user.permissions[i])
-				.then(res => {
-					let perm = res.data;
-					console.log('Permisson loaded:', perm)
-					//get document from permission object
-					axios.get("http://localhost:8000/documents/" + perm.document)
-						.then(res2 => {
-							docs.push(res2.data)
-							this.setState({ documents: docs })
-						})
-						.catch(function (err) {
-							console.log('Document load error:', err)
-						})
-				})
-				.catch(function (err) {
-					console.log('Permission load error:', err)
-				})
-			}
-		}
-		
+		axios.get("http://localhost:8000/accounts/getDocuments/" + this.state.user._id)
+			.then(res => {
+				this.setState({ documents: res.data })
+				console.log("Docs load successful", this.state.documents)
+			})
+			.catch(function (err) {
+				console.log('Docs load error:', err)
+			})
+
 	}
 	getDocuments() {
 		return this.state.documents
@@ -189,7 +174,9 @@ class Home extends Component {
 				}).then(res2 => {
 					console.log('New permission:', res2.data)
 					permission = res2.data;
-
+					let tmpuser = this.state.user
+					tmpuser.permissions.push(permission)
+					this.setState({ user: tmpuser })
 					// Add the new permission_id to the shared user's list of permissions
 					axios.post('http://localhost:8000/accounts/newPermission', {
 						permission: permission,
