@@ -19,6 +19,8 @@ const permissionRouter = require('./Permission/Permission.route')
 
 const session = require('express-session');
 
+const axios = require('axios');
+
 seedDB(); // Populate database with test data
 
 var app = express();
@@ -55,7 +57,25 @@ var io = socketio(ioserver, {
 	origins: allowedOrigins //localhost testing
 });
 
-io.on('connection', function (socket) { //socket.io handles all client connections and actions
+function updateFromHistory(docID) {
+	let updated_doc = {
+		title: roomData.get(docID).title,
+		history: roomData.get(docID).history
+	}
+	axios.post(`http://localhost:8000/documents/update/` + docID, { updated_doc })
+		.then(res => {
+			console.log("Successfully updated document")
+			roomData.delete(docID)
+			console.log("History cleared in " + docID)
+		})
+		.catch(function (error) {
+			console.log(error);
+		})
+}
+
+var roomData = new Map()
+
+io.on('connection', function (socket) {
 	console.log("User connected")
 	socket.on('joinsession', function (data) {
 		console.log("\tjoining session " + data.room)
@@ -64,19 +84,41 @@ io.on('connection', function (socket) { //socket.io handles all client connectio
 		console.log("\t" + room.length + " user(s) connected")
 		io.in("" + data.room).emit('usercount', room.length); //update clients' information
 
+		if (room.length == 1) {
+			//first to join room!
+			roomData.set(data.room, data.document)
+		}
+		let hist = roomData.get(data.room).history;
+		console.log("\tHistory", hist)
+		for (let i = 0; i < hist.length; i++) {
+			let action = hist[i]
+			console.log(action)
+			if (action[0] == "addstaff") {
+				console.log("executing history addstaff")
+				socket.emit(action[0]);
+			} else if (action[0] == "addnote") {
+				console.log("executing history addnote")
+				socket.emit(action[0], action[1].staff, action[1].note);
+			}
+		}
+
 		socket.on('addstaff', function (data) {
-			console.log("Staff added in " + data.room)
-			io.in("" + data.room).emit("addstaff"); //exec addstaff
+			io.in("" + data.room).emit("addstaff");
+			roomData.get(data.room).history.push(["addstaff", data])
+			console.log("History", roomData.get(data.room).history)
 		})
 		socket.on('addnote', function (data) {
-			console.log("addnote")
-			console.log(data)
-			io.in("" + data.room).emit("addnote", data.staff, data.note); //exec addnote
+			io.in("" + data.room).emit("addnote", data.staff, data.note);
+			roomData.get(data.room).history.push(["addnote", data])
+			console.log("History", roomData.get(data.room).history)
 		})
 
 		socket.on('disconnect', function () {
-			io.in("" + data.room).emit('usercount', room.length); //update clients' information
-			console.log('User Disconnected')
+			io.in("" + data.room).emit('usercount', room.length);
+			console.log('User disconnected from ' + data.room)
+			if (room.length == 0) {
+				updateFromHistory(data.room)
+			}
 		});
 	})
 })

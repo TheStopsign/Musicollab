@@ -49,12 +49,39 @@ documentRouter.route('/new').post(function (req, res) {
 		.then(() => {
 			var newDoc = new Document()
 			newDoc.save()
-			.then((savedDoc) => {
-				console.log('/documents/new SUCCESS')
-				res.json(savedDoc)
-				mongoose.disconnect()
-			}).catch(err=>{
-				console.log('/documents/new save ERROR', err)
+				.then((savedDoc) => {
+					console.log('/documents/new SUCCESS')
+					res.json(savedDoc)
+					mongoose.disconnect()
+				}).catch(err => {
+					console.log('/documents/new save ERROR', err)
+				})
+		})
+});
+
+documentRouter.route('/update/:id').post(function (req, res) {
+	let id = req.params.id;
+	console.log("/documents/" + id + " POST received")
+
+	mongoose.connect(config.MONGO_URI)
+		.then(() => {
+			let updated_doc = req.body.updated_doc;
+			Document.findByIdAndUpdate(id,
+				{
+					title: updated_doc.title,
+					history: updated_doc.history
+				},
+				function (err, document) {
+					if (err)
+						res.status(404).send("submission not found");
+					else {
+						res.json(document);
+					}
+				}
+			).then(() => {
+				mongoose.disconnect();
+			}).catch(function (err) {
+				console.log("ERROR IN findByIdAndUpdate: ", err)
 			})
 		})
 });

@@ -7,9 +7,11 @@ let Document = new Schema({
 		type: String,
 		default: "Untitled Document"
 	},
-	musicData: {
-		type: String,
-		default: ""
+	history: {
+		type: Array,
+		default: [
+
+		]
 	}
 });
 

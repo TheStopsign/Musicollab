@@ -33,19 +33,92 @@ const seedDB = async () => {
 	});
 }
 
+// list of notes in the form {accidental}{note value}{octave}{note length}{dot} ie. nc32f nr03f sb23t
+// accidental would be s = sharp, f = flat, or n = natural (need to check key sig before rendering)
+// note value would be pitch {a ... g, r} 
+// octave is at most {0, ..., 8} but is limited by instrument range
+// length would be 32 = whole, 16 = half, ..., or 1 = 32nd
+// dot is {f,t} and determines if a note has a dot, this mmultiplies the length by 1.5
+
 var d1 = new Document({
 	title: "Test Doc 1",
-	musicData: ""
+	notes: [
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+		"NR450",
+	]
 })
 
 var d2 = new Document({
 	title: "Test Doc 2",
-	musicData: ""
+	notes: [
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+		"NA400",
+	]
 })
 
 var d3 = new Document({
 	title: "Test Doc 3",
-	musicData: ""
+	notes: []
 })
 
 var p1 = new Permission({
