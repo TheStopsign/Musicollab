@@ -7,41 +7,10 @@ let Document = new Schema({
 		type: String,
 		default: "Untitled Document"
 	},
-	notes: {
+	history: {
 		type: Array,
 		default: [
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
-			"NR450",
+
 		]
 	}
 });

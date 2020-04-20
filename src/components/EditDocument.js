@@ -195,7 +195,7 @@ class EditDocument extends Component {
 
 				document.getElementById("addStaffBtn").addEventListener("click", () => {
 					//request to server when you want to add a staff
-					this.state.socket.emit('addstaff', { room: "" + this.state.document._id });
+					this.state.socket.emit('addstaff', { room: "" + this.state.document._id, document: this.state.document });
 				})
 
 				document.getElementById("timeButton").addEventListener("click", () => {
@@ -295,60 +295,8 @@ class EditDocument extends Component {
 					}
 				});
 				this.setState({ staffs: docInfo.state.staffs }) //re-render the staffs
-				this.build()
 			});
 
-	}
-	async joinEditSession() {
-		//first, load the document data
-		axios.get(`http://localhost:8000/documents/` + this.props.match.params.id) //make a GET request to the server
-			.then(res => {
-				this.setState({ document: res.data }); //handle the response payload
-				const sock = io.connect("http://localhost:3001");
-				sock.on('connect', () => {
-					console.log(sock.id);
-					sock.emit("joinsession", { room: "" + this.state.document._id }); //join the editing 'room' on document connection
-				});
-				sock.on('addstaff', () => { //when anyone adds a staff
-					this.addStaff()
-				});
-				sock.on('usercount', (count) => { //updating usercount
-					this.setState({ usercount: count })
-				});
-				sock.on('addnote', (measure, newNote) => { //when changes a note
-					console.log("Received addNote", newNote)
-					this.addNote(measure, newNote.pitch, newNote.noteLength, newNote.loc)
-				})
-				this.setState({ socket: sock }) //to potentially reference later
-			})
-			.catch(function (error) {
-				console.log(error);
-			})
-	}
-	build() {
-		let notes = this.state.document.notes
-		let i = 0
-		let note = 0
-		let localnote = 0
-		let measure = -1
-		while (i < notes.length) {
-			if (i % 32 == 0) {
-				this.addStaff();
-				measure++;
-				localnote = 0;
-			}
-			//add note
-			let note = notes[i];
-			let accidental = note[0];
-			let letter = note[1];
-			let octave = parseInt(note[2])
-			let length = 2 ** parseInt(note[3]);
-			let dots = parseInt(note[4])
-			this.addNote(measure, letter, length, localnote)
-			note++;
-			localnote++;
-			i = i + length;
-		}
 	}
 	addNote(measure, newPitch, noteSelection, location) {
 		//adds note to the measure and updates render

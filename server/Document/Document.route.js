@@ -49,13 +49,13 @@ documentRouter.route('/new').post(function (req, res) {
 		.then(() => {
 			var newDoc = new Document()
 			newDoc.save()
-			.then((savedDoc) => {
-				console.log('/documents/new SUCCESS')
-				res.json(savedDoc)
-				mongoose.disconnect()
-			}).catch(err=>{
-				console.log('/documents/new save ERROR', err)
-			})
+				.then((savedDoc) => {
+					console.log('/documents/new SUCCESS')
+					res.json(savedDoc)
+					mongoose.disconnect()
+				}).catch(err => {
+					console.log('/documents/new save ERROR', err)
+				})
 		})
 });
 
@@ -69,7 +69,7 @@ documentRouter.route('/update/:id').post(function (req, res) {
 			Document.findByIdAndUpdate(id,
 				{
 					title: updated_doc.title,
-					notes: updated_doc.notes
+					history: updated_doc.history
 				},
 				function (err, document) {
 					if (err)

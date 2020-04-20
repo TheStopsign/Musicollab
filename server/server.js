@@ -58,41 +58,13 @@ var io = socketio(ioserver, {
 });
 
 function updateFromHistory(docID) {
-	let updated_notes = roomData.get(docID).notes;
-	let hist = roomHistory.get(docID);
-	for (let i = 0; i < hist.length; i++) {
-		let action = hist[i]
-		if (action[0] == "addstaff") {
-			updated_notes = updated_notes.concat(Array(32).fill("NR450"))
-		} else if (action[0] == "addnote") {
-			let staff_offset = action[1].staff * 32
-			let note_offset = action[1].note.loc
-			let n = 0
-			let localIndex = 0
-			while (n != note_offset) {
-				localIndex += 2 ** (parseInt(updated_notes[staff_offset + localIndex][3]))
-				console.log(localIndex)
-				n++;
-			}
-			let len = parseInt(action[1].note.noteLength)
-			toadd = "N" + action[1].note.pitch + "4" + Math.log2(len) + "0";
-			let j = 0
-			while (j < len) {
-				updated_notes[staff_offset + localIndex + j] = toadd
-				j++
-			}
-			console.log(updated_notes)
-			//FILL IN DYNAMICALLY ADDED NOTES
-		}
-	}
 	let updated_doc = {
 		title: roomData.get(docID).title,
-		notes: updated_notes
+		history: roomData.get(docID).history
 	}
 	axios.post(`http://localhost:8000/documents/update/` + docID, { updated_doc })
 		.then(res => {
 			console.log("Successfully updated document")
-			roomHistory.delete(docID)
 			roomData.delete(docID)
 			console.log("History cleared in " + docID)
 		})
@@ -101,7 +73,6 @@ function updateFromHistory(docID) {
 		})
 }
 
-var roomHistory = new Map()
 var roomData = new Map()
 
 io.on('connection', function (socket) {
@@ -115,34 +86,31 @@ io.on('connection', function (socket) {
 
 		if (room.length == 1) {
 			//first to join room!
-			roomHistory.set(data.room, [])
 			roomData.set(data.room, data.document)
-			console.log("History", roomHistory.get(data.room))
-		} else {
-			console.log("History", roomHistory.get(data.room))
-			let hist = roomHistory.get(data.room);
-			for (let i = 0; i < hist.length; i++) {
-				let action = hist[i]
-				console.log(action)
-				if (action[0] == "addstaff") {
-					console.log("executing history addstaff")
-					socket.emit(action[0]);
-				} else if (action[0] == "addnote") {
-					console.log("executing history addnote")
-					socket.emit(action[0], action[1].staff, action[1].note);
-				}
+		}
+		let hist = roomData.get(data.room).history;
+		console.log("\tHistory", hist)
+		for (let i = 0; i < hist.length; i++) {
+			let action = hist[i]
+			console.log(action)
+			if (action[0] == "addstaff") {
+				console.log("executing history addstaff")
+				socket.emit(action[0]);
+			} else if (action[0] == "addnote") {
+				console.log("executing history addnote")
+				socket.emit(action[0], action[1].staff, action[1].note);
 			}
 		}
 
 		socket.on('addstaff', function (data) {
 			io.in("" + data.room).emit("addstaff");
-			roomHistory.get(data.room).push(["addstaff", data])
-			console.log("History", roomHistory.get(data.room))
+			roomData.get(data.room).history.push(["addstaff", data])
+			console.log("History", roomData.get(data.room).history)
 		})
 		socket.on('addnote', function (data) {
 			io.in("" + data.room).emit("addnote", data.staff, data.note);
-			roomHistory.get(data.room).push(["addnote", data])
-			console.log("History", roomHistory.get(data.room))
+			roomData.get(data.room).history.push(["addnote", data])
+			console.log("History", roomData.get(data.room).history)
 		})
 
 		socket.on('disconnect', function () {
