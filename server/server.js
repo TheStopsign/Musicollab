@@ -99,6 +99,9 @@ io.on('connection', function (socket) {
 			} else if (action[0] == "addnote") {
 				console.log("executing history addnote")
 				socket.emit(action[0], action[1].staff, action[1].note);
+			} else if (action[0] == "changetime") {
+				console.log("executing history changetime")
+				socket.emit(action[0], action[1].newTime);
 			}
 		}
 
@@ -110,6 +113,11 @@ io.on('connection', function (socket) {
 		socket.on('addnote', function (data) {
 			io.in("" + data.room).emit("addnote", data.staff, data.note);
 			roomData.get(data.room).history.push(["addnote", data])
+			console.log("History", roomData.get(data.room).history)
+		})
+		socket.on('changetime', function(data){
+			io.in("" + data.room).emit("changetime", data.newTime);
+			roomData.get(data.room).history.push(["changetime", data])
 			console.log("History", roomData.get(data.room).history)
 		})
 

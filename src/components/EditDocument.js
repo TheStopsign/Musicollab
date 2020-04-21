@@ -187,6 +187,10 @@ class EditDocument extends Component {
 					console.log("Received addNote", newNote)
 					this.addNote(measure, newNote.pitch, newNote.noteLength, newNote.loc)
 				})
+				sock.on('changetime', (newTime) => {
+					console.log("Received changetime", newTime)
+					this.changeTime(newTime)
+				})
 				sock.on('connect', () => {
 					console.log(sock.id);
 					sock.emit("joinsession", { room: "" + this.state.document._id, document: this.state.document });
@@ -205,17 +209,9 @@ class EditDocument extends Component {
 					var bottomTime = Number(document.getElementById("bottomTime").innerHTML);
 
 
-					// if note count hasn't changed we don't have to update anything
-					if (this.state.noteCount == topTime * (32 / bottomTime))
-						return;
-					// calculates the noteCount
-					this.state.noteCount = topTime * (32 / bottomTime);
-					// alert(topTime + "\n--\n" + bottomTime + "       =  " + this.state.noteCount);
-					// updates the number of notes in each measure
-					for (var i = 0; i < this.state.staffs.length; i++) {
-						this.getStaff(i).changeTime(this.state.noteCount);
-					}
-					this.setState({ staffs: this.state.staffs })
+					var newTime = topTime * (32 / bottomTime)
+
+					this.state.socket.emit('changetime', { room: this.state.document._id, newTime: newTime});
 				})
 
 				var docInfo = this;
@@ -365,6 +361,17 @@ class EditDocument extends Component {
 	// get the ith staff
 	getStaff(i) {
 		return this.state.staffs[i]
+	}
+
+	//changes the time signature
+	changeTime(newTime) {
+		// calculates the noteCount
+		this.state.noteCount = newTime;
+		// updates the number of notes in each measure
+		for (var i = 0; i < this.state.staffs.length; i++) {
+			this.getStaff(i).changeTime(this.state.noteCount);
+		}
+		this.setState({ staffs: this.state.staffs })
 	}
 }
 
