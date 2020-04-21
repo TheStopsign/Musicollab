@@ -41,29 +41,69 @@ class Staff extends Component {
 		this.state = {
 			index: null,
 			init_notes: "",
-			notes: this.initialNotes(props.noteCount, props.staffNum),
+			notes: this.initialNotes("R", props.noteCount, props.staffNum, 0),
 			staffNum: props.staffNum,
 			noteCount: props.noteCount
 		}
 	}
-	// given a length, generates a list of rests to fill it
-	initialNotes(time, staffNum, initialLocation) {
+	// given a length, generates a list of notes to fill it
+	initialNotes(pitch, time, staffNum, initialLocation) {
 		var noteList = [];
 		var currentLocation = initialLocation;
 		var remainingNotes = time;
 		// adds whole rests until there is not enough space left
 		while(remainingNotes >= 32){
-			noteList.push(new WholeRest({ note: "R", measure: staffNum, location: currentLocation }))
+			if (pitch == "R")
+				noteList.push(new WholeRest({ note: pitch, measure: staffNum, location: currentLocation}));
+			else
+				noteList.push(new WholeNote({ note: pitch, measure: staffNum, location: currentLocation}));
+			// noteList.push(new WholeRest({ note: "R", measure: staffNum, location: currentLocation }))
 			remainingNotes -= 32;
 			currentLocation += 1;
 		}
-
-		// fills in the remaining space 
-		if(remainingNotes > 0)
-			noteList.push(this.makeNote("R", remainingNotes, staffNum, currentLocation));
-
+		while(remainingNotes >= 16){
+			if (pitch == "R")
+				noteList.push(new HalfRest({ note: pitch, measure: staffNum, location: currentLocation}));
+			else
+				noteList.push(new HalfNote({ note: pitch, measure: staffNum, location: currentLocation}));
+			remainingNotes -= 16;
+			currentLocation += 1;
+		}
+		while(remainingNotes >= 8){
+			if (pitch == "R")
+				noteList.push(new QuarterRest({ note: pitch, measure: staffNum, location: currentLocation}));
+			else
+				noteList.push(new QuarterNote({ note: pitch, measure: staffNum, location: currentLocation}));
+			remainingNotes -= 8;
+			currentLocation += 1;
+		}
+		while(remainingNotes >= 4){
+			if (pitch == "R")
+				noteList.push(new EighthRest({ note: pitch, measure: staffNum, location: currentLocation}));
+			else
+				noteList.push(new EighthNote({ note: pitch, measure: staffNum, location: currentLocation}));
+			remainingNotes -= 4;
+			currentLocation += 1;
+		}
+		while(remainingNotes >= 2){
+			if (pitch == "R")
+				noteList.push(new SixteenthRest({ note: pitch, measure: staffNum, location: currentLocation}));
+			else
+				noteList.push(new SixteenthNote({ note: pitch, measure: staffNum, location: currentLocation}));
+			remainingNotes -= 2;
+			currentLocation += 1;
+		}
+		while(remainingNotes >= 1){
+			if (pitch == "R")
+				noteList.push(new ThirtySecondRest({ note: pitch, measure: staffNum, location: currentLocation}));
+			else
+				noteList.push(new ThirtySecondNote({ note: pitch, measure: staffNum, location: currentLocation}));
+			remainingNotes -= 1;
+			currentLocation += 1;
+		}
 		return noteList;
 	}
+
 	// updates the time sig of the measure
 	changeTime(newTime) {
 		// gets the amount of change and updates the member variable
@@ -83,7 +123,7 @@ class Staff extends Component {
 					isPop = false;
 			}
 			// gets the new rests and adds them to the note array
-			var addedNotes = this.initialNotes(timeChange, this.staffNum,nextNotes.length + 1);
+			var addedNotes = this.initialNotes("R", timeChange, this.state.staffNum,nextNotes.length + 1);
 			nextNotes = nextNotes.concat(addedNotes);
 		}
 		// if the length has decreased, remove notes from the end
@@ -95,8 +135,8 @@ class Staff extends Component {
 				timeChange += lastNote.getSize();
 				// if too much was removed add the note back in but smaller
 				if (timeChange > 0) {
-					var newNote = this.makeNote(lastNote.getNote(), timeChange, this.staffNum, lastNote.getLocation());
-					nextNotes.push(newNote);
+					var newNotes = this.initialNotes(lastNote.getNote(), timeChange, this.state.staffNum, lastNote.getLocation());
+					nextNotes = nextNotes.concat(newNotes);
 					break;
 				}
 			}
@@ -105,6 +145,7 @@ class Staff extends Component {
 		//updates measure with the new notes
 		this.state.notes = nextNotes;
 	}
+
 	// given a notes information, creates the corresponding note object
 	makeNote(note, noteValue, measure, locationCount) {
 		var dots = 0;
@@ -190,6 +231,7 @@ class Staff extends Component {
 			return null;
 		}
 	}
+
 	// adds the note to the measure and adjusts other notes so it can fit 
 	addNote(note) {
 
@@ -222,8 +264,15 @@ class Staff extends Component {
 						var newLength = this.state.noteCount - totalLength + this.getNote(i).getSize();
 
 						// adds the new note and updates the location
-						var newNote = this.makeNote(note.getNote(), newLength, measure, locationCount);
-						nextNotes.push(newNote);
+						if(this.canBeOne(newLength)){
+							var newNote = this.makeNote(note.getNote(), newLength, measure, locationCount);
+							nextNotes.push(newNote);
+						}
+						else{
+							var newNotes = this.initialNotes(note.getNote(), newLength, measure, locationCount);
+							nextNotes = nextNotes.concat(newNotes);
+						}
+						
 						locationCount += 1;
 
 						// ends the for loop since the new note will be the last in the measure
@@ -256,6 +305,7 @@ class Staff extends Component {
 				// if the new note is shorter than the old one, leave part of the old note
 				else if (lengthChange <= 0) {
 					// adds the new note and updates the location
+
 					var newNote = this.makeNote(note.getNote(), note.getSize(), measure, locationCount);
 					nextNotes.push(newNote);
 					locationCount += 1;
@@ -263,8 +313,14 @@ class Staff extends Component {
 					// re-adds the old note with the remaining space
 					lengthChange = Math.abs(lengthChange)
 					if(lengthChange > 0){
-						newNote = this.makeNote(this.getNote(i).state.note, lengthChange, measure, locationCount);
-						nextNotes.push(newNote);
+						if(this.canBeOne(lengthChange)){
+							newNote = this.makeNote(this.getNote(i).state.note, lengthChange, measure, locationCount);
+							nextNotes.push(newNote);
+						}
+						else{
+							var newNotes = this.initialNotes(this.getNote(i).state.note, lengthChange, measure, locationCount);
+							nextNotes = nextNotes.concat(newNotes);
+						}
 						locationCount += 1;
 					}
 				}
@@ -287,6 +343,12 @@ class Staff extends Component {
 	// directly changes the note at index i
 	changeNote(i, component) {
 		this.state.notes[i] = component;
+	}
+
+	// checks if given length can be represented as a single note
+	canBeOne(noteLength){
+		var exist = [1,2,3,4,6,7,8,12,14,15,16,24,28,30,31,32,48,56,60,62,63];
+		return exist.includes(noteLength);
 	}
 }
 
