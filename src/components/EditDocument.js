@@ -209,6 +209,10 @@ class EditDocument extends Component {
 					this.getInstrument(newNote.instrument).addNote(measure, newNote.pitch, newNote.noteLength, newNote.loc)
 					this.setState({ instruments: this.state.instruments })
 				})
+				sock.on('changetime', (newTime) => {
+					console.log("Received changetime", newTime)
+					this.changeTime(newTime)
+				})
 				sock.on('connect', () => {
 					sock.emit("joinsession", { room: "" + this.state.document._id, document: this.state.document });
 				});
@@ -235,19 +239,10 @@ class EditDocument extends Component {
 					var bottomTime = Number(document.getElementById("bottomTime").innerHTML);
 
 
-					// if note count hasn't changed we don't have to update anything
-					if (this.state.noteCount == topTime * (32 / bottomTime))
-						return;
-					// calculates the noteCount
-					this.state.noteCount = topTime * (32 / bottomTime);
-					// alert(topTime + "\n--\n" + bottomTime + "       =  " + this.state.noteCount);
-					// updates the number of notes in each measure
-					for (let j = 0; j < this.state.instruments.length; j++) {
-						for (var i = 0; i < this.state.instruments[j].staffs.length; i++) {
-							this.getStaff(i).changeTime(this.state.noteCount);
-						}
-						this.state.instruments[j].setState({ staffs: this.state.instruments[j].staffs })
-					}
+					var newTime = topTime * (32 / bottomTime)
+
+					this.state.socket.emit('changetime', { room: this.state.document._id, newTime: newTime});
+					
 				})
 
 				this.addInstrument("Piano")
@@ -462,6 +457,21 @@ class EditDocument extends Component {
 		}
 		return ments
 	}
+
+	//changes the time signature
+	changeTime(newTime) {
+		// calculates the noteCount
+		this.state.noteCount = newTime;
+
+		for (let j = 0; j < this.state.instruments.length; j++) {
+			var instrument = this.state.instruments[j]
+			for (var i = 0; i < instrument.state.staffs.length; i++) {
+				instrument.getStaff(i).changeTime(this.state.noteCount);
+			}
+		}
+		this.setState({ instruments: this.state.instruments })
+	}
+
 }
 
 export default EditDocument;
