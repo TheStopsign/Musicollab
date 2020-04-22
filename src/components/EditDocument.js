@@ -99,17 +99,17 @@ class EditDocument extends Component {
 					<div className="row subMain">
 						{/* space for faster access to certain actions, unused */}
 						<div className="col-1 quickbar section">
-							<div className="dropdown instrumentMenu">
-								<select id="instrument">
-									{
-										this.state.instruments.map(function (instrument, i) {
-											return <option value={i} key={i}>{instrument}</option>
-										})
-									}
-								</select>
-
-							</div>
-							<div class="row">
+							<ul id="instruments">
+								{
+									this.state.instruments.map(function (instrument, i) {
+										return <li key={i}>
+											<input type="checkbox" className="instrumentCheckbox" value={instrument.getName()} id={instrument.getName()} />
+											<label htmlFor={instrument.getName()}>{instrument.getName()}</label>
+										</li>
+									})
+								}
+							</ul>
+							<div className="row">
 								<input type="text" id="newInstrument"></input>
 								<button className="btn btn-primary" id="addInstrumentBtn">Add</button>
 							</div>
@@ -125,10 +125,15 @@ class EditDocument extends Component {
 									<center>
 										<h1 className="doc_title">{this.state.document.title}</h1>
 									</center>
+
+									{/* Try to display groups */}
+
 									<div className="row">
 										{
-											this.state.staffs.map(function (staff) {
-												return staff.render()
+											this.state.instruments.map(function (ment) {
+												if (ment.state.show) {
+													return <div>{ment.getName()}</div>
+												}
 											})
 										}
 										<div className="addStaffBtnContainer">
@@ -172,13 +177,15 @@ class EditDocument extends Component {
 			selectedNote: 0,
 			usercount: 0, //active viewers
 			noteCount: 32, //max amount of notes in one staff
-			instruments: ["Piano"]
+			instruments: [], //instrument objects
 		}
+		this.getSelectedInstruments = this.getSelectedInstruments.bind(this);
 	}
 	componentDidMount() {
 		this.joinEditSession()
 	}
 	joinEditSession() {
+		let self = this;
 		axios.get(`http://localhost:8000/documents/` + this.props.match.params.id) //make a GET request to the server
 			.then(res => {
 				this.setState({ document: res.data }); //handle the response payload
@@ -187,31 +194,30 @@ class EditDocument extends Component {
 				sock.on('addstaff', () => {
 					this.addStaff()
 				});
+				sock.on('addinstrument', (instrument) => {
+					this.addInstrument(instrument)
+				});
 				sock.on('usercount', (count) => {
 					this.setState({ usercount: count })
 				});
 				sock.on('addnote', (measure, newNote) => {
-					console.log("Received addNote", newNote)
 					this.addNote(measure, newNote.pitch, newNote.noteLength, newNote.loc)
 				})
 				sock.on('connect', () => {
-					console.log(sock.id);
 					sock.emit("joinsession", { room: "" + this.state.document._id, document: this.state.document });
 				});
 				this.setState({ socket: sock })
 
 				document.getElementById("addStaffBtn").addEventListener("click", () => {
 					//request to server when you want to add a staff
-					this.state.socket.emit('addstaff', { room: "" + this.state.document._id, document: this.state.document });
+					this.state.socket.emit('addstaff', { room: "" + this.state.document._id });
 				})
 
 				document.getElementById("addInstrumentBtn").addEventListener("click", () => {
-					//request to server when you want to add a staff
+					//request to server when you want to add an instrument
 					let newInstrument = document.getElementById("newInstrument")
 					if (newInstrument.value != "" && !this.state.instruments.includes(newInstrument.value)) {
-						let ments = this.state.instruments
-						ments.push(newInstrument.value)
-						this.setState({ instruments: ments })
+						this.state.socket.emit('addinstrument', { room: "" + this.state.document._id, instrument: newInstrument.value });
 						newInstrument.value = ""
 					}
 				})
@@ -235,6 +241,8 @@ class EditDocument extends Component {
 					}
 					this.setState({ staffs: this.state.staffs })
 				})
+
+				this.addInstrument("Piano")
 
 				var docInfo = this;
 				document.addEventListener('click', (e) => {
@@ -315,6 +323,33 @@ class EditDocument extends Component {
 				this.setState({ staffs: docInfo.state.staffs }) //re-render the staffs
 			});
 
+	}
+	addInstrument(instrument) {
+		let ments = this.state.instruments
+		let newMent = new Instrument({ name: instrument })
+		ments.push(newMent)
+		this.setState({ instruments: ments })
+
+		var checkbox = document.querySelector("input[id=" + instrument + "]")
+
+		let self = this
+		checkbox.addEventListener('change', function () {
+			if (this.checked) {
+				newMent.state.show = true
+			} else {
+				newMent.state.show = false
+			}
+			self.setState({ instruments: self.state.instruments })
+		});
+	}
+	getSelectedInstruments() {
+		let ments = []
+		for (let i in this.state.instruments) {
+			if (this.state.instruments[i].state.show) {
+				ments.push(this.state.instruments[i])
+			}
+		}
+		return ments
 	}
 	addNote(measure, newPitch, noteSelection, location) {
 		//adds note to the measure and updates render

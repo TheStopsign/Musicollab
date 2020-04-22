@@ -33,8 +33,10 @@
 	margin-top: 15px;
 }
 
-#instrument {
-	width: 100%;
+#instruments {
+	list-style-type: none;
+	padding-left: 5px;
+	/* margin: 0; */
 }
 
 .addStaffBtnContainer {
