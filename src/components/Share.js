@@ -65,9 +65,11 @@ function Share(props) {
 							console.log('Successfully saved permission to account', res3);
 						}).catch(error => {
 							console.log('Share permission with account error: ', error);
+							alert("Document share failed")
 						})
 					}).catch(error => {
 						console.log('permissions/new error: ', error)
+						alert("Document share failed")
 					})
 				} else {
 					alert('Invalid account')
@@ -76,6 +78,7 @@ function Share(props) {
 
 			}).catch(err => {
 				console.log('accounts/findEmail ERROR: ', err)
+				alert("Document share failed: No account found")
 			})
 	}
 
