@@ -127,19 +127,20 @@ class EditDocument extends Component {
 									</center>
 
 									{/* Try to display groups */}
-
-									<div className="row">
-										{
-											this.state.instruments.map(function (ment) {
-												if (ment.state.show) {
-													return <div>{ment.getName()}</div>
-												}
-											})
-										}
-										<div className="addStaffBtnContainer">
-											<button id="addStaffBtn" className="btn">+</button>
-										</div>
+									{
+										this.state.instruments.map(function (ment, i) {
+											if (ment.state.show) {
+												return <div className="row">
+													<div key={i}><h6 className="instrumentlabel">{ment.getName()}</h6></div>
+													{ment.render()}
+												</div>
+											}
+										})
+									}
+									<div className="addStaffBtnContainer">
+										<button id="addStaffBtn" className="btn">+</button>
 									</div>
+
 								</div>
 							</div>
 						</div>
@@ -171,7 +172,6 @@ class EditDocument extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			staffs: [], //staff objects
 			document: {}, //document object
 			socket: {}, //socket
 			selectedNote: 0,
@@ -192,7 +192,9 @@ class EditDocument extends Component {
 				const sock = io.connect("http://localhost:3001");
 
 				sock.on('addstaff', () => {
-					this.addStaff()
+					for (let i in self.state.instruments) {
+						self.state.instruments[i].addStaff()
+					}
 				});
 				sock.on('addinstrument', (instrument) => {
 					this.addInstrument(instrument)
@@ -236,10 +238,12 @@ class EditDocument extends Component {
 					this.state.noteCount = topTime * (32 / bottomTime);
 					// alert(topTime + "\n--\n" + bottomTime + "       =  " + this.state.noteCount);
 					// updates the number of notes in each measure
-					for (var i = 0; i < this.state.staffs.length; i++) {
-						this.getStaff(i).changeTime(this.state.noteCount);
+					for (let j = 0; j < this.state.instruments.length; j++) {
+						for (var i = 0; i < this.state.instruments[j].staffs.length; i++) {
+							this.getStaff(i).changeTime(this.state.noteCount);
+						}
+						this.state.instruments[j].setState({ staffs: this.state.instruments[j].staffs })
 					}
-					this.setState({ staffs: this.state.staffs })
 				})
 
 				this.addInstrument("Piano")
@@ -313,14 +317,7 @@ class EditDocument extends Component {
 						}
 						e.target.innerHTML = val + increment
 					}
-					else if (path[1].classList[1] == "instrumentMenu") {
-						var instrumentValue = document.getElementById("instrument").value;
-						if (instrumentValue == 0) {
-							this.setState({ staffs: [] })
-						}
-					}
 				});
-				this.setState({ staffs: docInfo.state.staffs }) //re-render the staffs
 			});
 
 	}
@@ -350,12 +347,6 @@ class EditDocument extends Component {
 			}
 		}
 		return ments
-	}
-	addNote(measure, newPitch, noteSelection, location) {
-		//adds note to the measure and updates render
-		let newNote = this.getStaff(measure).makeNote(newPitch, noteSelection, measure, location);
-		this.getStaff(measure).addNote(newNote)
-		this.setState({ staffs: this.state.staffs }) //update UI
 	}
 	getPitch(yPos, measure) {
 		//Getting pitch based on mouse x,y (WIP)
@@ -408,16 +399,6 @@ class EditDocument extends Component {
 		else if (yPos >= 60 && yPos < 70) {
 			return "G";
 		}
-	}
-	// add a new staff to the document
-	addStaff() {
-		let nextStaffs = this.state.staffs
-		nextStaffs.push(new Staff({ noteCount: this.state.noteCount, staffNum: this.state.staffs.length }))
-		this.setState({ staffs: nextStaffs })
-	}
-	// get the ith staff
-	getStaff(i) {
-		return this.state.staffs[i]
 	}
 }
 
