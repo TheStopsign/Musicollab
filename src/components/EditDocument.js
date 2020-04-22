@@ -163,7 +163,8 @@ class EditDocument extends Component {
 			staffs: [], //staff objects
 			document: {}, //document object
 			socket: {}, //socket
-			selectedNote: 0,
+			selectedNoteTB: 0,
+			selectedNoteDOC: 0,
 			usercount: 0, //active viewers
 			noteCount: 32 //max amount of notes in one staff
 		}
@@ -233,46 +234,24 @@ class EditDocument extends Component {
 
 						// if current note is on the toolbar at the top, select it
 						if (path[3].id == "ntb" || path[4].id == "ntb") {
-							if (this.state.selectedNote != 0) {
-								this.state.selectedNote.className = this.state.selectedNote.className.slice(0, -8);
+							if (this.state.selectedNoteTB != 0) {
+								this.state.selectedNoteTB.className = this.state.selectedNoteTB.className.slice(0, -8);
 							}
 							path[1].classList.add("selected");
-							this.state.selectedNote = path[1];
+							this.state.selectedNoteTB = path[1];
 
 						}
 						//otherwise change current note value using selected note
 						else {
-							//gets the currently selected notelength from the dropdown menu
-							var noteSelection = this.state.selectedNote.id;
-							if (!noteSelection) {
-								this.state.selectedNote = document.getElementById("fakenote").firstElementChild.firstElementChild;
-								this.state.selectedNote.classList.add("selected");
-								noteSelection = this.state.selectedNote.id;
-							}
 
+							console.log(path[1]);
+							console.log("asdf");
+							console.log(e.target);
 
-							//gets the newNote information and creates it
-							var measure = Number(e.target.classList[1].slice(8));
-							var location = Number(e.target.classList[2].slice(9));
-							var newPitch = 0;
-							var dotValue = document.getElementById("dotCheck").value
-							if (this.state.selectedNote.classList.contains("NTBR")) {
-								newPitch = "R"
-							} else {
-								newPitch = docInfo.getPitch(e.offsetY, measure);
-							}
-							var multiplier = 0.5
-							var noteValue = Number(noteSelection);
-							while (dotValue > 0 && (multiplier * noteSelection) >= 1) {
-								noteValue += multiplier * noteSelection;
-								dotValue -= 1;
-								multiplier /= 2;
-							}
+							path[1].classList.add("selected")
+							this.state.selectedNoteDOC = path[1]
 
-							var newNote = { pitch: newPitch, noteLength: noteValue, loc: location }
-
-							//tell the server you want to add a note
-							this.state.socket.emit('addnote', { room: this.state.document._id, staff: measure, note: newNote });
+							// console.log(this.state.staffs[measure].state.notes[location]);
 						}
 					} else if ("ksig" == path[1].classList[0]) {
 						// get the value of the current time signature that was clicked
@@ -294,12 +273,61 @@ class EditDocument extends Component {
 						}
 					}
 				});
+
+				document.addEventListener('keypress', (e) => {
+					var usedKeys = ['a','s','d','f','g','j','k','l','i','r']
+					if(usedKeys.includes(e.key)) {
+						//gets the currently selected notelength from the dropdown menu
+						var noteSelectionTB = this.state.selectedNoteTB.id;
+						if (!noteSelectionTB) {
+							this.state.selectedNoteTB = document.getElementById("fakenote").firstElementChild.firstElementChild;
+							this.state.selectedNoteTB.classList.add("selected");
+							noteSelectionTB = this.state.selectedNoteTB.id;
+						}
+						var noteSelectionDOC = this.state.selectedNoteDOC;
+						if (!noteSelectionDOC) {
+							return
+						} else {
+							noteSelectionDOC = this.state.selectedNoteDOC.children[0]
+						}
+
+						//gets the newNote information and creates it
+						var measure = Number(noteSelectionDOC.classList[1].slice(8));
+						var location = Number(noteSelectionDOC.classList[2].slice(9));
+
+
+						var newPitch = 0;
+						var dotValue = document.getElementById("dotCheck").value
+						if (this.state.selectedNoteTB.classList.contains("NTBR")) {
+							newPitch = "R"
+						} else {
+							newPitch = docInfo.getPitch(e.offsetY, measure);
+						}
+						var multiplier = 0.5
+						var noteValue = Number(noteSelectionTB);
+						while (dotValue > 0 && (multiplier * noteSelectionTB) >= 1) {
+							noteValue += multiplier * noteSelectionTB;
+							dotValue -= 1;
+							multiplier /= 2;
+						}
+
+						var newNote = { pitch: newPitch, noteLength: noteValue, loc: location }
+
+						console.log(measure);
+						console.log(newNote);
+
+						//tell the server you want to add a note
+						this.state.socket.emit('addnote', { room: this.state.document._id, staff: measure, note: newNote });
+
+					}
+				});
 				this.setState({ staffs: docInfo.state.staffs }) //re-render the staffs
 			});
 
 	}
 	addNote(measure, newPitch, noteSelection, location) {
 		//adds note to the measure and updates render
+		console.log(measure);
 		let newNote = this.getStaff(measure).makeNote(newPitch, noteSelection, measure, location);
 		this.getStaff(measure).addNote(newNote)
 		this.setState({ staffs: this.state.staffs }) //update UI
@@ -334,27 +362,7 @@ class EditDocument extends Component {
 	  }
 		alert("y: " + yPos);*/
 		//change note pitch based off where on the notes staff you click
-		if (yPos >= 0 && yPos < 10) {
-			return "F";
-		}
-		else if (yPos >= 10 && yPos < 20) {
-			return "E";
-		}
-		else if (yPos >= 20 && yPos < 30) {
-			return "D";
-		}
-		else if (yPos >= 30 && yPos < 40) {
-			return "C";
-		}
-		else if (yPos >= 40 && yPos < 50) {
-			return "B";
-		}
-		else if (yPos >= 50 && yPos < 60) {
-			return "A";
-		}
-		else if (yPos >= 60 && yPos < 70) {
-			return "G";
-		}
+		return "a"
 	}
 	// add a new staff to the document
 	addStaff() {
