@@ -7,6 +7,7 @@ import io from 'socket.io-client';
 import Staff from './Staff';
 import NoteTB from './noteToolbar';
 import Share from './Share';
+import Instrument from './Instrument';
 
 const notetb = new NoteTB()
 
@@ -98,7 +99,20 @@ class EditDocument extends Component {
 					<div className="row subMain">
 						{/* space for faster access to certain actions, unused */}
 						<div className="col-1 quickbar section">
-							<h4> quickbar </h4>
+							<div className="dropdown instrumentMenu">
+								<select id="instrument">
+									{
+										this.state.instruments.map(function (instrument, i) {
+											return <option value={i} key={i}>{instrument}</option>
+										})
+									}
+								</select>
+
+							</div>
+							<div class="row">
+								<input type="text" id="newInstrument"></input>
+								<button className="btn btn-primary" id="addInstrumentBtn">Add</button>
+							</div>
 						</div>
 
 
@@ -112,14 +126,6 @@ class EditDocument extends Component {
 										<h1 className="doc_title">{this.state.document.title}</h1>
 									</center>
 									<div className="row">
-										<div className="dropdown instrumentMenu">
-											<select id="instrument">
-												<option value="0">No Instrument</option>
-												<option value="1">Alto Saxophone</option>
-												<option value="2">Flute</option>
-												<option value="3">Clarinet</option>
-											</select>
-										</div>
 										{
 											this.state.staffs.map(function (staff) {
 												return staff.render()
@@ -165,7 +171,8 @@ class EditDocument extends Component {
 			socket: {}, //socket
 			selectedNote: 0,
 			usercount: 0, //active viewers
-			noteCount: 32 //max amount of notes in one staff
+			noteCount: 32, //max amount of notes in one staff
+			instruments: ["Piano"]
 		}
 	}
 	componentDidMount() {
@@ -196,6 +203,17 @@ class EditDocument extends Component {
 				document.getElementById("addStaffBtn").addEventListener("click", () => {
 					//request to server when you want to add a staff
 					this.state.socket.emit('addstaff', { room: "" + this.state.document._id, document: this.state.document });
+				})
+
+				document.getElementById("addInstrumentBtn").addEventListener("click", () => {
+					//request to server when you want to add a staff
+					let newInstrument = document.getElementById("newInstrument")
+					if (newInstrument.value != "" && !this.state.instruments.includes(newInstrument.value)) {
+						let ments = this.state.instruments
+						ments.push(newInstrument.value)
+						this.setState({ instruments: ments })
+						newInstrument.value = ""
+					}
 				})
 
 				document.getElementById("timeButton").addEventListener("click", () => {
