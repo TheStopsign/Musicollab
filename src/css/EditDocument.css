@@ -116,3 +116,11 @@
 	background: white;
 	color: black;
 }
+
+
+.clef {
+	display: inline-block;
+	margin-top: 30px;
+	/* need to have bottom padding or the clef moves down when creating an f note */
+	padding-bottom: 50px;
+}
