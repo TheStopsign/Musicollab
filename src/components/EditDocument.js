@@ -244,14 +244,9 @@ class EditDocument extends Component {
 						//otherwise change current note value using selected note
 						else {
 
-							console.log(path[1]);
-							console.log("asdf");
-							console.log(e.target);
-
 							path[1].classList.add("selected")
 							this.state.selectedNoteDOC = path[1]
 
-							// console.log(this.state.staffs[measure].state.notes[location]);
 						}
 					} else if ("ksig" == path[1].classList[0]) {
 						// get the value of the current time signature that was clicked
@@ -288,6 +283,7 @@ class EditDocument extends Component {
 						if (!noteSelectionDOC) {
 							return
 						} else {
+							console.log(noteSelectionDOC);
 							noteSelectionDOC = this.state.selectedNoteDOC.children[0]
 						}
 
@@ -313,11 +309,21 @@ class EditDocument extends Component {
 
 						var newNote = { pitch: newPitch, noteLength: noteValue, loc: location }
 
-						console.log(measure);
-						console.log(newNote);
 
 						//tell the server you want to add a note
 						this.state.socket.emit('addnote', { room: this.state.document._id, staff: measure, note: newNote });
+
+						// due to the nature of react this needs to wait for the new note to be added to the page
+						// otherwise it will only find the old note
+
+						setTimeout(() => {
+							var newSelection = document.getElementsByClassName("measure:"+measure+" location:"+location)[0].parentElement;
+							console.log(newSelection);
+							newSelection.classList.add("selected")
+
+							console.log(newSelection);
+							this.state.selectedNoteDOC = newSelection
+						}, 50);
 
 					}
 				});
@@ -327,7 +333,7 @@ class EditDocument extends Component {
 	}
 	addNote(measure, newPitch, noteSelection, location) {
 		//adds note to the measure and updates render
-		console.log(measure);
+
 		let newNote = this.getStaff(measure).makeNote(newPitch, noteSelection, measure, location);
 		this.getStaff(measure).addNote(newNote)
 		this.setState({ staffs: this.state.staffs }) //update UI
