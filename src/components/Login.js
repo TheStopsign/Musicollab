@@ -111,7 +111,7 @@ class Login extends Component {
 		this.handleChange = this.handleChange.bind(this)
 
 	}
-
+	
 	// sets state to the text typed in the form (aka displays what you typed in the box)
 	handleChange(event) {
 		this.setState({
@@ -122,7 +122,6 @@ class Login extends Component {
 	handleSubmit(event) {
 		event.preventDefault()
 		console.log('login handleSubmit')
-
 		
 		axios.post('http://localhost:8000/accounts/login', {
 			email: this.state.email,
@@ -132,8 +131,11 @@ class Login extends Component {
 				console.log('login response: ')
 				console.log(res.data)
 				if (!res.data.errmsg) {
-					// update the state to redirect to home
+					// save user status and information
+					localStorage.setItem('isLoggedIn', true)
+					localStorage.setItem('user', JSON.stringify(res.data))
 					console.log('Login success, redirecting to /home')
+					// update state to redirect to home
 					this.setState({
 						user: res.data,
 						redirectTo: '/home'
