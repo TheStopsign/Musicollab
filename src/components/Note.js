@@ -14,6 +14,7 @@ class Note extends Component {
 			offset: 0,
 			measure: props.measure,
 			location: props.location,
+			instrument: props.instrument,
 			dots: (props.dots)
 		}
 	}
@@ -37,6 +38,7 @@ class Note extends Component {
 		}
 		return dots;
 	}
+
 }
 
 export default Note;

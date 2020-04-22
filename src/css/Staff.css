@@ -10,7 +10,8 @@
 	height: 25px;
 }
 
-.E {
+.bar.E,
+.note.E {
 	border-bottom: solid 3px black;
 }
 
