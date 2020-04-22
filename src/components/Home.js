@@ -109,7 +109,8 @@ class Home extends Component {
 		//console.log(this.props.location)
 		this.state = {
 			documents: [], //holds user-specific documents
-			user: this.props.location.state.user, //passed from user login sessions
+			// user: this.props.location.state.user,
+			user: JSON.parse(localStorage.getItem('user')), // User saved in local storage
 			redirectTo: null
 		}
 		this.handleLogout = this.handleLogout.bind(this);
@@ -143,6 +144,10 @@ class Home extends Component {
 	}
 	handleLogout(event) {
 		console.log('Attempting logout')
+
+		// Removing saved user status and information
+		localStorage.removeItem('user')
+		localStorage.removeItem('isLoggedIn')
 
 		axios.get('http://localhost:8000/accounts/logout')
 			.then(res => {
