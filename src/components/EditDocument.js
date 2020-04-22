@@ -7,6 +7,7 @@ import io from 'socket.io-client';
 import NoteTB from './noteToolbar';
 import Share from './Share';
 import Instrument from './Instrument';
+import clef from '../assetts/g-clef.svg'
 
 const notetb = new NoteTB()
 
@@ -131,6 +132,7 @@ class EditDocument extends Component {
 											if (ment.state.show) {
 												return <div className="row">
 													<div key={i}><h6 className="instrumentlabel">{ment.getName()}</h6></div>
+													<img className="clef" src={clef}></img>
 													{ment.render()}
 												</div>
 											}
@@ -455,59 +457,6 @@ class EditDocument extends Component {
 		}
 		return ments
 	}
-	getPitch(yPos, measure) {
-		//Getting pitch based on mouse x,y (WIP)
-		/*
-		var el = this.getStaff(measure);
-
-		// var posXY = el.getBoundingClientRect();
-
-		//variables to store the topleft position of the measure
-		var xPos = 0;
-  	var yPos = 0;
-
-	  while (el) {
-	    if (el.tagName == "BODY") {
-	      // deal with browser quirks with body/window/document and page scroll
-	      var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
-	      var yScroll = el.scrollTop || document.documentElement.scrollTop;
-
-	      xPos += (el.offsetLeft - xScroll + el.clientLeft);
-	      yPos += (el.offsetTop - yScroll + el.clientTop);
-	    }
-	    else {
-	      // for all other non-BODY elements
-	      xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
-	      yPos += (el.offsetTop - el.scrollTop + el.clientTop);
-	    }
-
-	    el = el.offsetParent;
-	  }
-		alert("y: " + yPos);*/
-		//change note pitch based off where on the notes staff you click
-		if (yPos >= 0 && yPos < 10) {
-			return "F";
-		}
-		else if (yPos >= 10 && yPos < 20) {
-			return "E";
-		}
-		else if (yPos >= 20 && yPos < 30) {
-			return "D";
-		}
-		else if (yPos >= 30 && yPos < 40) {
-			return "C";
-		}
-		else if (yPos >= 40 && yPos < 50) {
-			return "B";
-		}
-		else if (yPos >= 50 && yPos < 60) {
-			return "A";
-		}
-		else if (yPos >= 60 && yPos < 70) {
-			return "G";
-		}
-
-	}
 
 	//changes the time signature
 	changeTime(newTime) {
@@ -525,6 +474,7 @@ class EditDocument extends Component {
 		}
 		// this.setState({ staffs: this.state.staffs })
 	}
+
 }
 
 export default EditDocument;
