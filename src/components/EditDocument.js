@@ -462,17 +462,14 @@ class EditDocument extends Component {
 	changeTime(newTime) {
 		// calculates the noteCount
 		this.state.noteCount = newTime;
-		// updates the number of notes in each measure
-		for (var i = 0; i < this.state.staffs.length; i++) {
-			this.getStaff(i).changeTime(this.state.noteCount);
-		}
+
 		for (let j = 0; j < this.state.instruments.length; j++) {
-			for (var i = 0; i < this.state.instruments[j].staffs.length; i++) {
-				this.getStaff(i).changeTime(this.state.noteCount);
+			var instrument = this.state.instruments[j]
+			for (var i = 0; i < instrument.state.staffs.length; i++) {
+				instrument.getStaff(i).changeTime(this.state.noteCount);
 			}
-			this.state.instruments[j].setState({ staffs: this.state.instruments[j].staffs })
 		}
-		// this.setState({ staffs: this.state.staffs })
+		this.setState({ instruments: this.state.instruments })
 	}
 
 }
