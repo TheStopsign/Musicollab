@@ -37,6 +37,7 @@ class Note extends Component {
 		}
 		return dots;
 	}
+
 }
 
 export default Note;
