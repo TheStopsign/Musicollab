@@ -241,11 +241,15 @@ class EditDocument extends Component {
 							this.state.selectedNoteTB = path[1];
 
 						}
-						//otherwise change current note value using selected note
+						//otherwise we are selecting a note in the document itself
 						else {
 
-							path[1].classList.add("selected")
-							this.state.selectedNoteDOC = path[1]
+							if(this.state.selectedNoteDOC != 0 ){
+								this.state.selectedNoteDOC.className = this.state.selectedNoteDOC.className.slice(0, -8);
+							}
+
+							path[1].classList.add("selected");
+							this.state.selectedNoteDOC = path[1];
 
 						}
 					} else if ("ksig" == path[1].classList[0]) {
@@ -293,12 +297,31 @@ class EditDocument extends Component {
 
 
 						var newPitch = 0;
+						switch(e.key) {
+						  case 'a':
+						   	newPitch = "E"
+						    break;
+						  case 's':
+						   	newPitch = "F"
+						    break;
+						  case 'd':
+						   	newPitch = "G"
+						    break;
+						  case 'f':
+						   	newPitch = "A"
+						    break;
+						  case 'g':
+						   	newPitch = "B"
+						    break;
+						  default:
+						    console.log("hello");
+						}
 						var dotValue = document.getElementById("dotCheck").value
 						if (this.state.selectedNoteTB.classList.contains("NTBR")) {
 							newPitch = "R"
-						} else {
-							newPitch = docInfo.getPitch(e.offsetY, measure);
 						}
+
+
 						var multiplier = 0.5
 						var noteValue = Number(noteSelectionTB);
 						while (dotValue > 0 && (multiplier * noteSelectionTB) >= 1) {
@@ -318,10 +341,7 @@ class EditDocument extends Component {
 
 						setTimeout(() => {
 							var newSelection = document.getElementsByClassName("measure:"+measure+" location:"+location)[0].parentElement;
-							console.log(newSelection);
 							newSelection.classList.add("selected")
-
-							console.log(newSelection);
 							this.state.selectedNoteDOC = newSelection
 						}, 50);
 
@@ -338,38 +358,7 @@ class EditDocument extends Component {
 		this.getStaff(measure).addNote(newNote)
 		this.setState({ staffs: this.state.staffs }) //update UI
 	}
-	getPitch(yPos, measure) {
-		//Getting pitch based on mouse x,y (WIP)
-		/*
-		var el = this.getStaff(measure);
 
-		// var posXY = el.getBoundingClientRect();
-
-		//variables to store the topleft position of the measure
-		var xPos = 0;
-  	var yPos = 0;
-
-	  while (el) {
-	    if (el.tagName == "BODY") {
-	      // deal with browser quirks with body/window/document and page scroll
-	      var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
-	      var yScroll = el.scrollTop || document.documentElement.scrollTop;
-
-	      xPos += (el.offsetLeft - xScroll + el.clientLeft);
-	      yPos += (el.offsetTop - yScroll + el.clientTop);
-	    }
-	    else {
-	      // for all other non-BODY elements
-	      xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
-	      yPos += (el.offsetTop - el.scrollTop + el.clientTop);
-	    }
-
-	    el = el.offsetParent;
-	  }
-		alert("y: " + yPos);*/
-		//change note pitch based off where on the notes staff you click
-		return "a"
-	}
 	// add a new staff to the document
 	addStaff() {
 		let nextStaffs = this.state.staffs
