@@ -273,8 +273,9 @@ class EditDocument extends Component {
 					}
 				});
 
-				document.addEventListener('keypress', (e) => {
-					var usedKeys = ['a','s','d','f','g','j','k','l','i','r']
+				document.addEventListener('keydown', (e) => {
+					var usedKeys = ['a','s','d','f','g','r'] //'j','k','l','i',
+					var navKeys = ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"]
 					if(usedKeys.includes(e.key)) {
 						//gets the currently selected notelength from the dropdown menu
 						var noteSelectionTB = this.state.selectedNoteTB.id;
@@ -283,6 +284,8 @@ class EditDocument extends Component {
 							this.state.selectedNoteTB.classList.add("selected");
 							noteSelectionTB = this.state.selectedNoteTB.id;
 						}
+						//gets the currently selected note in the doc
+						//do nothing if no note is selected
 						var noteSelectionDOC = this.state.selectedNoteDOC;
 						if (!noteSelectionDOC) {
 							return
@@ -295,7 +298,7 @@ class EditDocument extends Component {
 						var measure = Number(noteSelectionDOC.classList[1].slice(8));
 						var location = Number(noteSelectionDOC.classList[2].slice(9));
 
-
+						//select pitch using the key the user pressed
 						var newPitch = 0;
 						switch(e.key) {
 						  case 'a':
@@ -321,7 +324,6 @@ class EditDocument extends Component {
 							newPitch = "R"
 						}
 
-
 						var multiplier = 0.5
 						var noteValue = Number(noteSelectionTB);
 						while (dotValue > 0 && (multiplier * noteSelectionTB) >= 1) {
@@ -331,7 +333,6 @@ class EditDocument extends Component {
 						}
 
 						var newNote = { pitch: newPitch, noteLength: noteValue, loc: location }
-
 
 						//tell the server you want to add a note
 						this.state.socket.emit('addnote', { room: this.state.document._id, staff: measure, note: newNote });
@@ -344,6 +345,49 @@ class EditDocument extends Component {
 							newSelection.classList.add("selected")
 							this.state.selectedNoteDOC = newSelection
 						}, 50);
+
+					}
+					else if (navKeys.includes(e.key)) {
+						if(this.state.selectedNoteDOC == 0) {
+							return
+						}
+						e.preventDefault()
+						//gets the currently selected note in the doc
+						//do nothing if no note is selected
+						var noteSelectionDOC = this.state.selectedNoteDOC;
+						if (!noteSelectionDOC) {
+							return
+						} else {
+							noteSelectionDOC = this.state.selectedNoteDOC.children[0]
+						}
+
+						//gets the newNote information and creates it
+						var measure = Number(noteSelectionDOC.classList[1].slice(8));
+						var location = Number(noteSelectionDOC.classList[2].slice(9));
+
+						if( (location+1 == this.state.staffs[measure].state.notes.length && measure+1 == this.state.staffs.length && e.key == "ArrowRight") ||
+							(location == 0 && measure == 0 && e.key == "ArrowLeft") ){
+							return
+						}
+						else if (location+1 == this.state.staffs[measure].state.notes.length && e.key == "ArrowRight") {
+							measure += 1;
+							location = 0;
+						}
+						else if (location == 0 && e.key == "ArrowLeft") {
+							measure -= 1;
+							location = this.state.staffs[measure].state.notes.length -1
+						}
+						else if (e.key == "ArrowRight"){
+							location += 1;
+						}
+						else if (e.key == "ArrowLeft"){
+							location -= 1;
+						}
+						// remove selection from old element, add selection to new element, change selected element to new element
+						this.state.selectedNoteDOC.className = this.state.selectedNoteDOC.className.slice(0, -8);
+						var newSelection = document.getElementsByClassName("measure:"+measure+" location:"+location)[0].parentElement;
+						newSelection.classList.add("selected")
+						this.state.selectedNoteDOC = newSelection
 
 					}
 				});
