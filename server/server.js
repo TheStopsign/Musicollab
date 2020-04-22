@@ -96,15 +96,23 @@ io.on('connection', function (socket) {
 			if (action[0] == "addstaff") {
 				console.log("executing history addstaff")
 				socket.emit(action[0]);
+			} else if (action[0] == "addinstrument") {
+				console.log("executing history addinstrument")
+				socket.emit(action[0], action[1].instrument);
 			} else if (action[0] == "addnote") {
 				console.log("executing history addnote")
-				socket.emit(action[0], action[1].staff, action[1].note);
+				socket.emit(action[0], action[1].staff, action[1].note, action[1].instrument);
 			}
 		}
 
 		socket.on('addstaff', function (data) {
 			io.in("" + data.room).emit("addstaff");
 			roomData.get(data.room).history.push(["addstaff", data])
+			console.log("History", roomData.get(data.room).history)
+		})
+		socket.on('addinstrument', function (data) {
+			io.in("" + data.room).emit("addinstrument", data.instrument);
+			roomData.get(data.room).history.push(["addinstrument", data])
 			console.log("History", roomData.get(data.room).history)
 		})
 		socket.on('addnote', function (data) {

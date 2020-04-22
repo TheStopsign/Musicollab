@@ -14,6 +14,7 @@ class Note extends Component {
 			offset: 0,
 			measure: props.measure,
 			location: props.location,
+			instrument: props.instrument,
 			dots: (props.dots)
 		}
 	}

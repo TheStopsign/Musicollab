@@ -27,10 +27,22 @@
 .doc_title {
 	color: black;
 }
+
 .instrumentMenu {
 	position: relative;
-	margin-top: 80px;
+	margin-top: 15px;
 }
+
+#instruments {
+	list-style-type: none;
+	padding-left: 5px;
+	/* margin: 0; */
+}
+
+.instrumentlabel {
+	color: black;
+}
+
 .addStaffBtnContainer {
 	position: relative;
 	margin-top: 50px;
@@ -58,41 +70,41 @@
 
 
 .document {
-  background-color: #727272;
-  margin-left: 0px;
+	background-color: #727272;
+	margin-left: 0px;
 }
 
 .inpNotes {
-  margin-top: 15px;
-  margin-bottom: 10px;
+	margin-top: 15px;
+	margin-bottom: 10px;
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  background-color: #727272;
-  margin-left: 1%;
-  /* border: 1em solid #DCDCDC; */
-  padding-left: 12px;
-  /* margin-left: 0px; */
-  width: 96%;
-  max-width: 98%
+	position: absolute;
+	bottom: 0;
+	background-color: #727272;
+	margin-left: 1%;
+	/* border: 1em solid #DCDCDC; */
+	padding-left: 12px;
+	/* margin-left: 0px; */
+	width: 96%;
+	max-width: 98%
 }
 
 .musicsheet {
-  /* padding-bottom: 15px; */
+	/* padding-bottom: 15px; */
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  background-color: #727272;
-  margin-left: 1%;
-  /* border: 1em solid #DCDCDC; */
-  padding-left: 12px;
-  /* margin-left: 0px; */
-  width: 96%;
-  margin-bottom: 10px;
+	position: absolute;
+	bottom: 0;
+	background-color: #727272;
+	margin-left: 1%;
+	/* border: 1em solid #DCDCDC; */
+	padding-left: 12px;
+	/* margin-left: 0px; */
+	width: 96%;
+	margin-bottom: 10px;
 }
 
 

@@ -23,8 +23,8 @@ class EighthNote extends Note {
 				{/* note and flagnote put the note in the right spot on the page eighthnote is for figuring out which note it is */}
 				{/* measure and location are both for the note logic*/}
 				<div className={"note eighthnote "} id="4">
-					<div className={"vline measure:" + this.state.measure + " location:" + this.state.location}></div>
-					<div className={"circle measure:" + this.state.measure + " location:" + this.state.location}></div>
+					<div className={"vline measure:" + this.state.measure + " location:" + this.state.location + " instrument:" + this.state.instrument}></div>
+					<div className={"circle measure:" + this.state.measure + " location:" + this.state.location + " instrument:" + this.state.instrument}></div>
 					<div className="dots">{this.getDots()}</div>
 				</ div>
 				<Flag />
