@@ -274,7 +274,7 @@ class EditDocument extends Component {
 				});
 
 				document.addEventListener('keydown', (e) => {
-					var usedKeys = ['a','s','d','f','g','r'] //'j','k','l','i',
+					var usedKeys = ['e','f','g','a','b','c','d','r'] //'j','k','l','i',
 					var navKeys = ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"]
 					if(usedKeys.includes(e.key)) {
 						//gets the currently selected notelength from the dropdown menu
@@ -301,20 +301,26 @@ class EditDocument extends Component {
 						//select pitch using the key the user pressed
 						var newPitch = 0;
 						switch(e.key) {
-						  case 'a':
+						  case 'e':
 						   	newPitch = "E"
 						    break;
-						  case 's':
+						  case 'f':
 						   	newPitch = "F"
 						    break;
-						  case 'd':
+						  case 'g':
 						   	newPitch = "G"
 						    break;
-						  case 'f':
+						  case 'a':
 						   	newPitch = "A"
 						    break;
-						  case 'g':
+						  case 'b':
 						   	newPitch = "B"
+						    break;
+						  case 'c':
+						   	newPitch = "C"
+						    break;
+						  case 'd':
+						   	newPitch = "D"
 						    break;
 						  default:
 						    console.log("hello");
