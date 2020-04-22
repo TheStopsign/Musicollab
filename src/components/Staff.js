@@ -52,7 +52,6 @@ class Staff extends Component {
 		var noteList = [];
 		var currentLocation = initialLocation;
 		var remainingNotes = time;
-		console.log(instrument)
 		// adds whole rests until there is not enough space left
 		while (remainingNotes >= 32) {
 			if (pitch == "R")
@@ -320,7 +319,7 @@ class Staff extends Component {
 							nextNotes.push(newNote);
 						}
 						else {
-							var newNotes = this.initialNotes(this.getNote(i).state.note, lengthChange, measure, locationCount, this.state.instrument );
+							var newNotes = this.initialNotes(this.getNote(i).state.note, lengthChange, measure, locationCount, this.state.instrument);
 							nextNotes = nextNotes.concat(newNotes);
 						}
 						locationCount += 1;

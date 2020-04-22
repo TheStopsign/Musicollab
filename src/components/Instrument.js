@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Staff from './Staff'
 import '../css/EditDocument.css';
+import Clef from './Clef'
 
 class Instrument extends Component {
 	render() {
-		console.log("RENDERING")
 		return <div>
+			<Clef />
 			{
-				this.state.staffs.map(function (staff) {
+				this.state.staffs.map(function (staff, i) {
 					return staff.render()
 				})
 			}
