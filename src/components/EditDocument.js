@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import '../css/EditDocument.css';
 import axios from 'axios';
 import io from 'socket.io-client';
-import Staff from './Staff';
 import NoteTB from './noteToolbar';
 import Share from './Share';
 import Instrument from './Instrument';

@@ -3,9 +3,14 @@ import Staff from './Staff'
 
 class Instrument extends Component {
 	render() {
-		return <div>{this.state.staffs.map(function (staff) {
-			staff.render()
-		})}</div>
+		console.log("RENDERING")
+		return <div>
+			{
+				this.state.staffs.map(function (staff) {
+					return staff.render()
+				})
+			}
+		</div>
 	}
 	constructor(props) {
 		super(props)
