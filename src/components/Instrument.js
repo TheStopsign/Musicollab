@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Staff from './Staff'
+import '../css/EditDocument.css';
 
 class Instrument extends Component {
 	render() {
@@ -17,7 +18,8 @@ class Instrument extends Component {
 		this.state = {
 			name: props.name,
 			staffs: [],
-			show: false
+			show: false,
+			noteCount: 32, //max amount of notes in one staff
 		}
 	}
 	getName() {
@@ -25,14 +27,14 @@ class Instrument extends Component {
 	}
 	addNote(measure, newPitch, noteSelection, location) {
 		//adds note to the measure and updates render
-		let newNote = this.getStaff(measure).makeNote(newPitch, noteSelection, measure, location);
+		let newNote = this.getStaff(measure).makeNote(newPitch, noteSelection, measure, location, this.state.name);
 		this.getStaff(measure).addNote(newNote)
 		this.setState({ staffs: this.state.staffs }) //update UI
 	}
 	// add a new staff to the document
 	addStaff() {
 		let nextStaffs = this.state.staffs
-		nextStaffs.push(new Staff({ noteCount: this.state.noteCount, staffNum: this.state.staffs.length }))
+		nextStaffs.push(new Staff({ noteCount: this.state.noteCount, staffNum: this.state.staffs.length, instrument: this.state.name }))
 		this.setState({ staffs: nextStaffs })
 	}
 	// get the ith staff

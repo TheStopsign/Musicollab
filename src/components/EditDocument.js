@@ -175,9 +175,9 @@ class EditDocument extends Component {
 			socket: {}, //socket
 			selectedNote: 0,
 			usercount: 0, //active viewers
-			noteCount: 32, //max amount of notes in one staff
 			instruments: [], //instrument objects
 		}
+		this.getInstrument = this.getInstrument.bind(this);
 		this.getSelectedInstruments = this.getSelectedInstruments.bind(this);
 	}
 	componentDidMount() {
@@ -202,7 +202,7 @@ class EditDocument extends Component {
 					this.setState({ usercount: count })
 				});
 				sock.on('addnote', (measure, newNote) => {
-					this.addNote(measure, newNote.pitch, newNote.noteLength, newNote.loc)
+					this.getInstrument(newNote.instrument).addNote(measure, newNote.pitch, newNote.noteLength, newNote.loc)
 				})
 				sock.on('connect', () => {
 					sock.emit("joinsession", { room: "" + this.state.document._id, document: this.state.document });
@@ -283,6 +283,7 @@ class EditDocument extends Component {
 							//gets the newNote information and creates it
 							var measure = Number(e.target.classList[1].slice(8));
 							var location = Number(e.target.classList[2].slice(9));
+							var instrument = e.target.classList[3].slice(11);
 							var newPitch = 0;
 							var dotValue = document.getElementById("dotCheck").value
 							if (this.state.selectedNote.classList.contains("NTBR")) {
@@ -298,7 +299,7 @@ class EditDocument extends Component {
 								multiplier /= 2;
 							}
 
-							var newNote = { pitch: newPitch, noteLength: noteValue, loc: location }
+							var newNote = { pitch: newPitch, noteLength: noteValue, loc: location, instrument: instrument }
 
 							//tell the server you want to add a note
 							this.state.socket.emit('addnote', { room: this.state.document._id, staff: measure, note: newNote });
@@ -337,6 +338,16 @@ class EditDocument extends Component {
 			}
 			self.setState({ instruments: self.state.instruments })
 		});
+		//TODO fill in missing staffs to catch up
+	}
+	getInstrument(instrument) {
+		for (let i in this.state.instruments) {
+			console.log(this.state.instruments[i])
+			if (this.state.instruments[i].getName() == instrument) {
+				return this.state.instruments[i]
+			}
+		}
+		return null
 	}
 	getSelectedInstruments() {
 		let ments = []
