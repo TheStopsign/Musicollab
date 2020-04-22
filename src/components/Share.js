@@ -56,7 +56,7 @@ function Share(props) {
 					}).then(res2 => {
 						console.log('New permission:', res2.data)
 						permission = res2.data;
-
+						alert("Document successfully shared")
 						// Add the new permission_id to the shared user's list of permissions
 						axios.post('http://localhost:8000/accounts/newPermission', {
 							permission: permission,
@@ -70,6 +70,7 @@ function Share(props) {
 						console.log('permissions/new error: ', error)
 					})
 				} else {
+					alert('Invalid account')
 					console.log('Account not found, status:', res.status)
 				}
 

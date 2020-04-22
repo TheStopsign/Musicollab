@@ -84,12 +84,6 @@ class Login extends Component {
 									</div>
 								</div>
 							</div>
-							<div className="col-0 v-line"></div>
-							<div className="col">
-								<div className="row justify-content-center GoogleLogin">
-									<h3> Google </h3>
-								</div>
-							</div>
 						</div>
 
 					</div>
@@ -138,6 +132,7 @@ class Login extends Component {
 						user: res.data,
 						redirectTo: '/home'
 					})
+					alert('Login success')
 				}else{
 					alert('Invalid email or password');
 					this.setState({
@@ -146,6 +141,7 @@ class Login extends Component {
 					})
 				}
 			}).catch(error => {
+				alert('Login error')
 				console.log('login error: ')
 				console.log(error);
 

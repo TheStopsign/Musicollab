@@ -147,6 +147,7 @@ class Home extends Component {
 		axios.get('http://localhost:8000/accounts/logout')
 			.then(res => {
 				console.log('logout res:', res.data)
+				alert("Logging out")
 				this.setState({ redirectTo: '/' });
 			})
 			.catch(function (error) {
