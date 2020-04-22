@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import Staff from './Staff'
 import '../css/EditDocument.css';
-import Clef from './Clef'
 
 class Instrument extends Component {
 	render() {
-		return <div>
-			<Clef />
-			{
-				this.state.staffs.map(function (staff, i) {
-					return staff.render()
-				})
-			}
-		</div>
+		return (
+			this.state.staffs.map(function (staff) {
+				return staff.render()
+			})
+		)
 	}
 	constructor(props) {
 		super(props)
