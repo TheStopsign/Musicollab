@@ -16,7 +16,7 @@ class EditDocument extends Component {
 		return (
 			<div className="EditDocument">
 
-				<div className="row align-items-center head section">
+				<div className="row align-items-center Doctoolbar">
 					<div className="col">
 						<div className="row">
 							{/* this is where the user selects the clef that is used in the music with a dropdown menu */}
@@ -97,29 +97,31 @@ class EditDocument extends Component {
 
 				<div className="main container-fluid">
 					<div className="row subMain">
-						{/* space for faster access to certain actions, unused */}
-						<div className="col-1 quickbar section">
-							<ul id="instruments">
-								{
-									this.state.instruments.map(function (instrument, i) {
-										return <li key={i}>
-											<input type="checkbox" className="instrumentCheckbox" value={instrument.getName()} id={instrument.getName()} />
-											<label htmlFor={instrument.getName()}>{instrument.getName()}</label>
-										</li>
-									})
-								}
-							</ul>
-							<div className="row">
+						{/* space for adding instruments*/}
+						<div className="col-2 quickbar section">
+							<div className="row instrumentRow">
+								<ul id="instruments">
+									{
+										this.state.instruments.map(function (instrument, i) {
+											return <li key={i}>
+												<input type="checkbox" className="instrumentCheckbox" value={instrument.getName()} id={instrument.getName()} />
+												<label htmlFor={instrument.getName()}>{instrument.getName()}</label>
+											</li>
+										})
+									}
+								</ul>
+							</div>
+							<div className="row InstrumentAdder">
 								<input type="text" id="newInstrument"></input>
-								<button className="btn btn-primary" id="addInstrumentBtn">Add</button>
+								<button className="btn btn-primary addInstrumentBtn" id="addInstrumentBtn">Add</button>
 							</div>
 						</div>
 
 
 						<div className="col document section">
 
-							<div className="musicsheet">
-								<div className='sheet'>
+							<div className="container-fluid musicsheet">
+								<div className='container-fluid sheet'>
 									{/* this is where the actual document gets rendered in the page, see staff.js for note placement */}
 									{/* see addnote() lower in the page for how notes get added to the staff */}
 									<center>
@@ -139,7 +141,7 @@ class EditDocument extends Component {
 										})
 									}
 									<div className="addStaffBtnContainer">
-										<button id="addStaffBtn" className="btn">+</button>
+										<button id="addStaffBtn" className="btn addStaffBtn">+</button>
 									</div>
 
 								</div>
@@ -151,7 +153,7 @@ class EditDocument extends Component {
 
 				<div className="container-fluid">
 					{/* space for list of users, and a share button to share with new users */}
-					<footer className="row section footer users">
+					<div className="row section users">
 						<div className="col">
 							<h1> Owner: </h1>
 						</div>
@@ -161,10 +163,10 @@ class EditDocument extends Component {
 						<div className="col">
 							<h1> Current Viewers: {this.state.usercount}</h1>
 						</div>
-						<div className="col">
+						<div className="col shareCol">
 							<Share docID={this.props.match.params.id} />
 						</div>
-					</footer>
+					</div>
 				</div>
 
 			</div>

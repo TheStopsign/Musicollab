@@ -1,7 +1,14 @@
 /*SignUp.css*/
+.SignUp {
+  background-color: lightblue;
+  overflow-y: hidden !important;
+  overflow-x: hidden;
+}
+
 .colSignUpBox {
   width: 250px;
-  margin-top: 100px;
+  margin-top: 0px;
+  overflow-y: hidden !important;
 }
 
 .FirstName {
@@ -23,43 +30,21 @@
 .FirstName p{
   font-color: #FFF;
 }
-.title h1 {
-  margin: 0px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  color: #DCDCDC;
-}
-
-.title p {
-  margin: 0;
-}
-
-label,
-h3 {
-  color: #DCDCDC;
-}
 
 .SignUpTitle {
   margin-bottom: 20px;
 }
 
 .SubmitButton {
-  margin-top: 5px;
+  margin-top: 10px;
   max-width: 150px;
 }
 
-.head {
-  background-color: #727272;
-  margin-bottom: 0;
+.toLogin {
+  padding-left: 20px;
 }
-
-.title {
-  font-size: 3em;
-  padding-left: .5em;
-}
-
-.searchBar input {
-  width: 90%;
-  color: #DCDCDC;
-  font-size: 1.75em;
+.SignUp .filler{
+  margin-bottom: 6.3%;
+  color: lightblue;
+  overflow-y: hidden !important;
 }

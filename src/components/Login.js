@@ -19,11 +19,9 @@ class Login extends Component {
 
 					{/* <div class="container-fluid"> */}
 
-					<div className="row align-items-center head section">
-						<div className="col-3">
-							<a href="/home" className="svg">
-								<img src={Logo} alt="Logo" height="80px" />
-							</a>
+					<div className="row align-items-center logoRow">
+						<div className="col logoCol">
+							<img src={Logo} alt="Logo" height="150px" />
 						</div>
 					</div>
 
@@ -71,7 +69,7 @@ class Login extends Component {
 									<div className="col flex-grow"></div>
 
 									<div className="col-xlg SignupButton">
-										<Link to="/sign-up" className="btn btn-link btn-sm raised">Sign up</Link>
+										<Link to="/sign-up" className="btn btn-outline-primary btn-sm raised">Sign up</Link>
 									</div>
 								</div>
 
@@ -87,6 +85,7 @@ class Login extends Component {
 						</div>
 
 					</div>
+					<div className="row filler"></div>
 
 				</div>
 			);

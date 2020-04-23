@@ -15,8 +15,8 @@ class Home extends Component {
 			return (
 				<div className="Home">
 
-					<div className="row align-items-center head section">
-						<div className="col-3">
+					<div className="row align-items-center hotBar">
+						<div className="col-2">
 							<a href="/home" className="svg">
 								<img src={Logo} alt="Logo" height="80px" />
 							</a>
@@ -25,7 +25,18 @@ class Home extends Component {
 						<div className="col-4 searchBar">
 							<input type="text" id="search" name="search" placeholder="Search" />
 						</div>
+						<div className="col-1"></div>
+				
+						<div className="col-1 picCol">
+							<img className="float-right pic" src={Profile} alt="prfile picture" />
+						</div>
 
+						<div className="col-2 user">
+							<ul>
+								<li> {this.state.user.firstName} {this.state.user.lastName} </li>
+								<li className="userID">{this.state.user.email}</li>
+							</ul>
+						</div>
 						<div className="col-1">
 							<div className="LogoutButton">
 								<button
@@ -34,19 +45,6 @@ class Home extends Component {
 									type="logout"
 								>Logout</button>
 							</div>
-						</div>
-
-						<div className="col-1">
-							<img className="float-right pic" src={Profile} alt="prfile picture" />
-						</div>
-
-
-
-						<div className="col-2 user">
-							<ul>
-								<li><a href="/profile"> {this.state.user.firstName} {this.state.user.lastName}</a></li>
-								<li className="userID">{this.state.user.email}</li>
-							</ul>
 						</div>
 					</div>
 
@@ -80,7 +78,6 @@ class Home extends Component {
 									</div>
 								</div>
 							</div>
-
 							{/* list of documents as links to those documents */}
 
 							<div className="col projects section">
@@ -91,13 +88,14 @@ class Home extends Component {
 								})}
 								<button className="btn btn-primary" onClick={this.newDoc}>+</button>
 							</div>
+							<div className="col-1 sideFill"></div>
 						</div>
 					</div>
 
-					<div className="container-fluid">
-						<footer className="footer section">
+					<div className="row footHolder">
+						<footer className="col Homefooter">
 							Musicollab is a 2020 SD&D project
-	        	</footer>
+	        			</footer>
 					</div>
 				</div>
 			);

@@ -1,6 +1,6 @@
-.main {
-  /* font-size: calc(10px + 2vmin); */
-  /* top: 0; */
+/*.main {
+  /* font-size: calc(10px + 2vmin);
+  /* top: 0;
 
   min-height: 100%;
   position: relative;
@@ -32,7 +32,7 @@ a.svg:after {
   background: #727272;
   box-shadow: -3px 3px 6px rgba(0, 0, 0, 0.5),
     3px -3px 6px rgba(220, 220, 220, 0.3);
-  /* border-radius: 6px; */
+  /* border-radius: 6px;
   margin: 12px;
   color: #DCDCDC;
   border: none;
@@ -66,7 +66,7 @@ a.svg:after {
 .EditDocument .users h1 {
   font-size: 100%;
 }
-
+*/
 .padding-0 {
   padding-right: 0;
   padding-left: 0;
