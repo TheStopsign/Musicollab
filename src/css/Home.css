@@ -1,28 +1,40 @@
 /*Home.css*/
+.Home {
+  background-color: #368BC1;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 .filters {
-  background-color: #727272;
-  /* border: 5px solid #DCDCDC; */
+  background-color: lightblue;
+  border: 5px solid lightblue;
+  height: 500px;
+  box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
+  6px -6px 12px rgba(220, 220, 220, 0.3);
+  border-radius: 12px;
+  margin: 10px;
 }
 
 .projects {
-  background-color: #727272;
-  margin-left: 0px;
-  /* border: 5px solid #DCDCDC; */
+  background-color: lightblue;
+  margin-left: 10px;
+  box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
+  6px -6px 12px rgba(220, 220, 220, 0.3);
+  border-radius: 12px;
+  margin: 10px;
 }
 
-.head {
-  background-color: #727272;
-  margin-bottom: 0;
-}
 
-.title {
-  font-size: 3em;
-  padding-left: .5em;
+.hotBar{
+  box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
+  6px -6px 12px rgba(220, 220, 220, 0.3);
+  border-radius: 12px;
+  margin: 10px;
+  background-color: lightblue;
 }
-
 .searchBar input {
-  width: 90%;
-  color: #DCDCDC;
+  width: 100%;
+  color: lightblue;
   font-size: 1.75em;
 }
 
@@ -30,21 +42,19 @@
   border: 3px solid #DCDCDC;
 }
 
-.footer {
-  position: absolute;
+.footHolder {
+  height: 30px;
+}
+
+.Homefooter {
   bottom: 0;
-  background-color: #727272;
-  margin-left: 1%;
-  /* border: 1em solid #DCDCDC; */
-  padding-left: 12px;
-  /* margin-left: 0px; */
-  width: 96%;
-  margin-bottom: 10px;
+  padding-left: 25px;
+  width: 100%;
 }
 
 .userID {
   font-size: .8em;
-  color: #DCDCDC;
+  /*color: #DCDCDC;*/
 }
 
 .user ul {
@@ -52,3 +62,4 @@
   font-size: 1.25em;
   list-style-type: none;
 }
+

@@ -21,7 +21,7 @@ class SignUp extends Component {
 						<div className="row align-items-center section">
 							<div className="col-3">
 								<a href="/home" className="svg">
-									<img src={Logo} alt="Logo" height="80px" />
+									<img src={Logo} alt="Logo" height="150px" />
 								</a>
 							</div>
 						</div>
@@ -97,7 +97,7 @@ class SignUp extends Component {
 										</div>
 									</div>
 
-									<p className="text-right toLogin">
+									<p className="text-left toLogin">
 										Already registered? <a href="/">Login</a>
 									</p>
 
@@ -106,6 +106,7 @@ class SignUp extends Component {
 						</div>
 
 					</div>
+					<div className="row filler"></div>
 
 				</div>
 			);
@@ -179,8 +180,9 @@ class SignUp extends Component {
 
 						if(!response.data.errmsg){
 							console.log('successful signup');
+							alert("Successful Signup")
 							this.setState({ //redirect to login page
-								redirectTo: '/log-in'
+								redirectTo: '/'
 							})
 						}else{
 							// Account already exists with email, notify user

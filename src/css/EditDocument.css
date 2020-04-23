@@ -1,9 +1,75 @@
+.EditDocument{
+	padding-top: 0;
+	margin-top: 0;
+	background-color: #368BC1;
+}
+.EditDocument .Doctoolbar {
+	padding-left: 50px;
+	background-color:  lightblue;
+	box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
+    6px -6px 12px rgba(220, 220, 220, 0.3);
+    border-radius: 12px;
+  	margin: 10px;
+  	height: 175px;
+}
+
+.EditDocument .quickbar {
+  font-size: 100%;
+  padding-left: 25px;
+  background-color: lightblue;
+  box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
+  6px -6px 12px rgba(220, 220, 220, 0.3);
+  border-radius: 12px;
+  margin: 10px;
+}
+
+.instrumentRow {
+	padding-top: 10px;
+}
+
+.InstrumentAdder {
+	padding-left: 5px;
+}
+
+.addInstrumentBtn {
+	margin-top: 10px;
+}
+
+.EditDocument .document {
+  height: 700px;
+  box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
+  6px -6px 12px rgba(220, 220, 220, 0.3);
+  border-radius: 12px;
+  margin: 10px;
+  overflow-y: hidden;
+  background-color: lightblue;
+}
+
 .musicsheet {
-	height: 800px;
+	height: 700px;
 	width: 80%;
 	overflow-y: scroll;
 	margin-right: 5%;
 	margin-left: auto;
+    color: white;
+}
+
+.EditDocument .users{
+	height: 50px;
+	box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
+    6px -6px 12px rgba(220, 220, 220, 0.3);
+ 	border-radius: 12px;
+ 	background-color: lightblue;
+ 	margin: 2px;
+}
+
+.EditDocument .users h1 {
+  font-size: 100%;
+  padding-top: 10px;
+}
+
+.EditDocument .users .shareCol {
+ 	padding-top: 5px;
 }
 
 .noteBar {
@@ -19,7 +85,7 @@
 
 .sheet {
 	width: 100%;
-	height: 11in;
+	min-height: 11in;
 	background: white;
 	padding: 0 1in;
 }
@@ -46,7 +112,6 @@
 .addStaffBtnContainer {
 	position: relative;
 	margin-top: 50px;
-	/*top: 35px;*/
 	width: 60px;
 	height: 100px;
 	display: inline-block;
@@ -79,42 +144,15 @@
 	margin-bottom: 10px;
 }
 
-.footer {
-	position: absolute;
-	bottom: 0;
-	background-color: #727272;
-	margin-left: 1%;
-	/* border: 1em solid #DCDCDC; */
-	padding-left: 12px;
-	/* margin-left: 0px; */
-	width: 96%;
-	max-width: 98%
-}
-
-.musicsheet {
-	/* padding-bottom: 15px; */
-}
-
-.footer {
-	position: absolute;
-	bottom: 0;
-	background-color: #727272;
-	margin-left: 1%;
-	/* border: 1em solid #DCDCDC; */
-	padding-left: 12px;
-	/* margin-left: 0px; */
-	width: 96%;
-	margin-bottom: 10px;
-}
-
-
-
 #addStaffBtn {
 	margin: 0;
 	margin-left: 15px;
-	height: 100px;
+	height: 75px;
 	background: white;
 	color: black;
+	box-shadow: -3px 3px 6px rgba(0, 0, 0, 0.5),
+    3px -3px 6px rgba(220, 220, 220, 0.3);
+    border-radius: 3px;
 }
 
 

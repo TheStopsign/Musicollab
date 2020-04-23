@@ -56,25 +56,29 @@ function Share(props) {
 					}).then(res2 => {
 						console.log('New permission:', res2.data)
 						permission = res2.data;
-
 						// Add the new permission_id to the shared user's list of permissions
 						axios.post('http://localhost:8000/accounts/newPermission', {
 							permission: permission,
 							userID: sharedUserID
 						}).then(res3 => {
+							alert("Document successfully shared")
 							console.log('Successfully saved permission to account', res3);
 						}).catch(error => {
 							console.log('Share permission with account error: ', error);
+							alert("Document share failed")
 						})
 					}).catch(error => {
 						console.log('permissions/new error: ', error)
+						alert("Document share failed")
 					})
 				} else {
+					alert('Invalid account')
 					console.log('Account not found, status:', res.status)
 				}
 
 			}).catch(err => {
 				console.log('accounts/findEmail ERROR: ', err)
+				alert("Document share failed: No account found")
 			})
 	}
 
