@@ -7,7 +7,8 @@ import io from 'socket.io-client';
 import NoteTB from './noteToolbar';
 import Share from './Share';
 import Instrument from './Instrument';
-import clef from '../assetts/g-clef.svg'
+import clef from '../assetts/g-clef.svg';
+import Logo from '../assetts/logo.svg';
 
 const notetb = new NoteTB()
 
@@ -17,47 +18,14 @@ class EditDocument extends Component {
 			<div className="EditDocument">
 
 				<div className="row align-items-center Doctoolbar">
-					<div className="col">
-						<div className="row">
-							{/* this is where the user selects the clef that is used in the music with a dropdown menu */}
-							<div className="col-6 padding-0">
-								<h4 className="float-right"> CLEFS:&nbsp; </h4>
-							</div>
 
-							<div className="col padding-0">
-								<div className="dropdown">
-									<select>
-										<option value="1">Treble</option>
-										<option value="2">Bass</option>
-										<option value="3">Alto</option>
-										<option value="4">Tenor</option>
-									</select>
-								</div>
-							</div>
-						</div>
+					<div className="col-2">
+						<a href="/home" className="svg">
+							<img src={Logo} alt="Logo" height="80px" />
+						</a>
 					</div>
 
-					<div className="col">
-						<div className="row">
-							{/* User can select the key signature from a dropdown of different keys */}
-							<div className="col-7 padding-0">
-								<h4 className="float-right"> Key Signature:&nbsp; </h4>
-							</div>
-
-							<div className="col padding-0">
-								<div className="dropdown">
-									<select>
-										<option value="1">C major</option>
-										<option value="2">G major</option>
-										<option value="3">D major</option>
-
-									</select>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div className="col keySigTB">
+					<div className="col-2 keySigTB">
 
 						{/* here the user can select the time signature by clicking on either number then clicking update */}
 						<h4 className=""> Time Signature:&nbsp; </h4>
@@ -82,7 +50,7 @@ class EditDocument extends Component {
 						</select>
 					</div>
 
-					<div className="col-6 padding-0">
+					<div className="col padding-0">
 						{/* the render location for the notebar class */}
 						<div className="noteBar" id="noteBar">
 							{
@@ -95,7 +63,7 @@ class EditDocument extends Component {
 
 				</div>
 
-				<div className="main container-fluid">
+				<div className="row main container-fluid">
 					<div className="row subMain">
 						{/* space for adding instruments*/}
 						<div className="col-2 quickbar section">
@@ -151,7 +119,7 @@ class EditDocument extends Component {
 					</div>
 				</div>
 
-				<div className="container-fluid">
+				<div className="row viewers container-fluid">
 					{/* space for list of users, and a share button to share with new users */}
 					<div className="row section users">
 						<div className="col">
@@ -243,8 +211,8 @@ class EditDocument extends Component {
 
 					var newTime = topTime * (32 / bottomTime)
 
-					this.state.socket.emit('changetime', { room: this.state.document._id, newTime: newTime});
-					
+					this.state.socket.emit('changetime', { room: this.state.document._id, newTime: newTime });
+
 				})
 
 				this.addInstrument("Piano")

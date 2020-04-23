@@ -26,7 +26,7 @@ class Home extends Component {
 							<input type="text" id="search" name="search" placeholder="Search" />
 						</div>
 						<div className="col-1"></div>
-				
+
 						<div className="col-1 picCol">
 							<img className="float-right pic" src={Profile} alt="prfile picture" />
 						</div>
@@ -90,12 +90,6 @@ class Home extends Component {
 							</div>
 							<div className="col-1 sideFill"></div>
 						</div>
-					</div>
-
-					<div className="row footHolder">
-						<footer className="col Homefooter">
-							Musicollab is a 2020 SD&D project
-	        			</footer>
 					</div>
 				</div>
 			);

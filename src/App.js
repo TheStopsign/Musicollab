@@ -7,7 +7,7 @@ import Profile from './components/Profile';
 import Accounts from './components/Accounts';
 import EditAccount from './components/EditAccount';
 import EditDocument from './components/EditDocument';
-import { ProtectedRoute }  from './protectedRoute.js';
+import { ProtectedRoute } from './protectedRoute.js';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends Component {
@@ -15,19 +15,20 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <div className="auth-wrapper">
-            <div className="auth-inner">
-              <Switch>
-                <Route exact path='/' component={Login} />
-                <Route path="/sign-up" component={SignUp} />
-                <ProtectedRoute path="/home" component={Home} />
-                <Route path="/profile" component={Profile} />
-                <Route exact path="/accounts" component={Accounts} />
-                <Route path='/accounts/:id' component={EditAccount} />
-                <Route path='/documents/:id' component={EditDocument} />
-              </Switch>
-            </div>
+          <div className="row AppView">
+            <Switch>
+              <Route exact path='/' component={Login} />
+              <Route path="/sign-up" component={SignUp} />
+              <ProtectedRoute path="/home" component={Home} />
+              <Route path="/profile" component={Profile} />
+              <Route exact path="/accounts" component={Accounts} />
+              <Route path='/accounts/:id' component={EditAccount} />
+              <Route path='/documents/:id' component={EditDocument} />
+            </Switch>
           </div>
+          <footer className="row myfooter">
+            Musicollab is a 2020 SD&D project
+	        </footer>
         </div>
       </Router>
     );

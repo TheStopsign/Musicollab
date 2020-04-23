@@ -1,10 +1,13 @@
 /*Login.css*/
-.Login{
-  max-height: 100%;
+.Login {
+  height: 100%;
+  width: 100%;
+  /* max-height: 100%; */
   background-color: lightblue;
   overflow-y: hidden !important;
   overflow-x: hidden;
 }
+
 .colLoginBox {
   width: 250px;
   max-width: 250px;
@@ -22,8 +25,7 @@
 }
 
 
-.custom-checkbox label
-{
+.custom-checkbox label {
   color: black;
 }
 
@@ -31,7 +33,7 @@
   margin-bottom: 20px;
 }
 
-.SignInTitle h3{
+.SignInTitle h3 {
   color: black;
 }
 
@@ -45,7 +47,7 @@
   max-height: 75px;
 }
 
-.filler{
+.filler {
   margin-bottom: 17.5%;
   color: lightblue;
   overflow-y: hidden;

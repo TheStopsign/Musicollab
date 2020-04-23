@@ -1,5 +1,7 @@
 /*SignUp.css*/
 .SignUp {
+  height: 100%;
+  width: 100%;
   background-color: lightblue;
   overflow-y: hidden !important;
   overflow-x: hidden;
@@ -27,7 +29,7 @@
   margin-bottom: 10px;
 }
 
-.FirstName p{
+.FirstName p {
   font-color: #FFF;
 }
 
@@ -43,7 +45,8 @@
 .toLogin {
   padding-left: 20px;
 }
-.SignUp .filler{
+
+.SignUp .filler {
   margin-bottom: 6.3%;
   color: lightblue;
   overflow-y: hidden !important;

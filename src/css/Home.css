@@ -1,5 +1,7 @@
 /*Home.css*/
 .Home {
+  height: 100%;
+  width: 100%;
   background-color: #368BC1;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -10,7 +12,7 @@
   border: 5px solid lightblue;
   height: 500px;
   box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
-  6px -6px 12px rgba(220, 220, 220, 0.3);
+    6px -6px 12px rgba(220, 220, 220, 0.3);
   border-radius: 12px;
   margin: 10px;
 }
@@ -19,19 +21,20 @@
   background-color: lightblue;
   margin-left: 10px;
   box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
-  6px -6px 12px rgba(220, 220, 220, 0.3);
+    6px -6px 12px rgba(220, 220, 220, 0.3);
   border-radius: 12px;
   margin: 10px;
 }
 
 
-.hotBar{
+.hotBar {
   box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
-  6px -6px 12px rgba(220, 220, 220, 0.3);
+    6px -6px 12px rgba(220, 220, 220, 0.3);
   border-radius: 12px;
   margin: 10px;
   background-color: lightblue;
 }
+
 .searchBar input {
   width: 100%;
   color: lightblue;
@@ -40,16 +43,6 @@
 
 .pic {
   border: 3px solid #DCDCDC;
-}
-
-.footHolder {
-  height: 30px;
-}
-
-.Homefooter {
-  bottom: 0;
-  padding-left: 25px;
-  width: 100%;
 }
 
 .userID {
@@ -62,4 +55,3 @@
   font-size: 1.25em;
   list-style-type: none;
 }
-

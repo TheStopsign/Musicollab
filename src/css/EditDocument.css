@@ -1,26 +1,30 @@
-.EditDocument{
-	padding-top: 0;
-	margin-top: 0;
+.EditDocument {
+	height: 100%;
+	width: 100%;
+	/* padding-top: 0;
+	margin-top: 0; */
 	background-color: #368BC1;
 }
+
 .EditDocument .Doctoolbar {
 	padding-left: 50px;
-	background-color:  lightblue;
+	background-color: lightblue;
 	box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
-    6px -6px 12px rgba(220, 220, 220, 0.3);
-    border-radius: 12px;
-  	margin: 10px;
-  	height: 175px;
+		6px -6px 12px rgba(220, 220, 220, 0.3);
+	border-radius: 12px;
+	margin: 10px;
+	margin-top: 0px;
+	height: 175px;
 }
 
 .EditDocument .quickbar {
-  font-size: 100%;
-  padding-left: 25px;
-  background-color: lightblue;
-  box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
-  6px -6px 12px rgba(220, 220, 220, 0.3);
-  border-radius: 12px;
-  margin: 10px;
+	font-size: 100%;
+	padding-left: 25px;
+	background-color: lightblue;
+	box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
+		6px -6px 12px rgba(220, 220, 220, 0.3);
+	border-radius: 12px;
+	margin: 10px;
 }
 
 .instrumentRow {
@@ -35,41 +39,51 @@
 	margin-top: 10px;
 }
 
+/* .main {
+	margin: 0;
+	padding: 0;
+} */
+
+.subMain {
+	width: 100%;
+}
+
 .EditDocument .document {
-  height: 700px;
-  box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
-  6px -6px 12px rgba(220, 220, 220, 0.3);
-  border-radius: 12px;
-  margin: 10px;
-  overflow-y: hidden;
-  background-color: lightblue;
+	height: 650px;
+	box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
+		6px -6px 12px rgba(220, 220, 220, 0.3);
+	border-radius: 12px;
+	margin: 10px;
+	margin-right: 0px;
+	overflow-y: hidden;
+	background-color: lightblue;
 }
 
 .musicsheet {
-	height: 700px;
+	height: 100%;
 	width: 80%;
 	overflow-y: scroll;
 	margin-right: 5%;
 	margin-left: auto;
-    color: white;
+	color: white;
 }
 
-.EditDocument .users{
+.EditDocument .users {
 	height: 50px;
 	box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.5),
-    6px -6px 12px rgba(220, 220, 220, 0.3);
- 	border-radius: 12px;
- 	background-color: lightblue;
- 	margin: 2px;
+		6px -6px 12px rgba(220, 220, 220, 0.3);
+	border-radius: 12px;
+	background-color: lightblue;
+	margin: 2px;
 }
 
 .EditDocument .users h1 {
-  font-size: 100%;
-  padding-top: 10px;
+	font-size: 100%;
+	padding-top: 10px;
 }
 
 .EditDocument .users .shareCol {
- 	padding-top: 5px;
+	padding-top: 5px;
 }
 
 .noteBar {
@@ -151,10 +165,13 @@
 	background: white;
 	color: black;
 	box-shadow: -3px 3px 6px rgba(0, 0, 0, 0.5),
-    3px -3px 6px rgba(220, 220, 220, 0.3);
-    border-radius: 3px;
+		3px -3px 6px rgba(220, 220, 220, 0.3);
+	border-radius: 3px;
 }
 
+.users {
+	width: 100%;
+}
 
 .clef {
 	display: inline-block;

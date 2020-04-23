@@ -81,3 +81,24 @@ a.svg:after {
   padding-left: -30px;
   padding-right: 0;
 }
+
+.App {
+  margin: 0;
+  height: 100%;
+}
+
+.AppView {
+  width: 100%;
+  height: 97%;
+  margin: 0;
+}
+
+.myfooter {
+  position: absolute;
+  margin: 0;
+  height: 3%;
+  bottom: 0;
+  padding: 0;
+  width: 100%;
+  background: #368BC1;
+}
