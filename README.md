@@ -12,7 +12,7 @@ Install node
 
 Install nodemon
 
-# Running the project for testing
+# Running the product
 To run the project...
 
 PREREQUISITE: navigate into the project directory, and run 'npm install'. This will install all project dependencies from package.json
