@@ -21,10 +21,8 @@ THIRD make sure the react client is running. Open a new terminal window, navigat
 
 If the website does not automatically open, go to 'http://localhost:3000/' in your browser
 
-#################################################################################################################################################
-
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).s
+To learn React, check out the [React documentation](https://reactjs.org/).
