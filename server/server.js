@@ -75,6 +75,7 @@ function updateFromHistory(docID) {
 
 var roomData = new Map()
 
+// This is an observer that logs user changes
 io.on('connection', function (socket) {
 	console.log("User connected")
 	socket.on('joinsession', function (data) {

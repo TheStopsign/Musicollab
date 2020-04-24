@@ -147,6 +147,7 @@ class Staff extends Component {
 		this.state.notes = nextNotes;
 	}
 
+	// this is a factory pattern for creating notes
 	// given a notes information, creates the corresponding note object
 	makeNote(note, noteValue, measure, locationCount, instrument) {
 		var dots = 0;
