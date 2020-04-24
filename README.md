@@ -10,8 +10,6 @@ Install npm
 
 Install node
 
-Install nodemon
-
 # Running the product
 To run the project...
 
@@ -19,7 +17,7 @@ PREREQUISITE: navigate into the project directory, and run 'npm install'. This w
 
 FIRST make sure the database is running. Open a new terminal window, navigate to 'musicollab/server' and run 'mongod'
 
-SECOND make sure the server is running. Open a new terminal window, navigate to 'musicollab/server' and run 'nodemon server.js'
+SECOND make sure the server is running. Open a new terminal window, navigate to 'musicollab/server' and run 'node server.js'
 
 THIRD make sure the react client is running. Open a new terminal window, navigate to 'musicollab' and run 'npm start'
 
