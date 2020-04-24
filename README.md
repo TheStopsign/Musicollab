@@ -6,8 +6,6 @@ Free, open source, real-time collaborative music composition website.
 # Requirements
 Install mongodb
 
-Install a CORS browser plugin and enable it. Otherwise, localhost->localhost requests will fail.
-
 # Running the project for testing
 To run the project...
 
