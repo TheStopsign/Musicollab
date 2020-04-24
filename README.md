@@ -5,6 +5,9 @@ Free, open source, real-time collaborative music composition website.
 
 # Requirements
 Install mongodb
+Install npm
+Install node
+Install nodemon
 
 # Running the project for testing
 To run the project...
