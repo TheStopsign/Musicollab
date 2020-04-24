@@ -19,6 +19,8 @@ SECOND make sure the server is running. Open a new terminal window, navigate to 
 
 THIRD make sure the react client is running. Open a new terminal window, navigate to 'musicollab' and run 'npm start'
 
+If the website does not automatically open, go to 'http://localhost:3000/' in your browser
+
 #################################################################################################################################################
 
 ## Learn More
